@@ -1,14 +1,12 @@
 import 'package:abhiyanth/utilities/gradient_background.dart';
 import 'package:flutter/material.dart';
 import 'views/home_page.dart';
-
-void main() {
-  runApp(const MyApp());
+import 'package:abhiyanth/services/Routes/routesname.dart';
+import 'package:abhiyanth/services/Routes/routes.dart';
+void main(){
+  runApp(MyApp());
 }
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,6 +16,8 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.black,
       ),
       home: const HomePage(),
+      initialRoute: RoutesName.splash,
+     onGenerateRoute: Routes.generateRoute,
     );
   }
 }
