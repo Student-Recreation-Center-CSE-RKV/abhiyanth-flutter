@@ -19,7 +19,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
+    SizeConfig.init(context);
 
     return Scaffold(
       backgroundColor: Color(0xFFF1F6F9),
