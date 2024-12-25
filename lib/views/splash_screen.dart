@@ -5,6 +5,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:abhiyanth/services/size_config.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -14,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   void initState() {
     super.initState();
 
-    Timer(Duration(seconds: 4), () {
+    Timer(const Duration(seconds: 4), () {
      Navigator.pushNamed(context, RoutesName.signup);
     });
   }

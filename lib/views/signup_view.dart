@@ -105,6 +105,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     SnackBar(content: Text(result["message"])),
                                   );
                                 }
+                                Navigator.pushNamed(context, RoutesName.home);
                               }
                             },
                             style: ElevatedButton.styleFrom(
