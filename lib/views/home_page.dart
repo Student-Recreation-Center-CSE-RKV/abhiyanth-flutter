@@ -12,19 +12,10 @@ class HomePage extends StatefulWidget {
   HomePage({super.key});
   @override
   State<HomePage> createState() => _HomePageState();
-  // Widget _buildNavItem(IconData icon, String label) {
-  //   return Column(
-  //     mainAxisSize: MainAxisSize.min,
-  //     children: [
-  //       GradientIcon(icon: icon, size: 28),
-  //       GradientText(text: label, size: 12),
-  //     ],
-  //   );
 }
 
 class _HomePageState extends State<HomePage> {
   int _currentPage = 0;
-
   final PageController _pageController = PageController(initialPage: 0);
 
   @override
@@ -49,8 +40,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // final navigationViewModel = NavigationViewModel();
-
     return GradientBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -87,94 +76,48 @@ class _HomePageState extends State<HomePage> {
             ProfilePage(),
           ],
         ),
-        bottomNavigationBar: CurvedNavigationBar(
-          index: _currentPage,
-          height: 55,
-          animationDuration: Duration(milliseconds: 400),
-          color:LinearGradient(
-            colors: [
-              Color(0xFF261E35),
-              Colors.black,
-              Colors.black,
-              Colors.black, // Third black (extra stop)
-              Color(0xFF261E35), // Side color
-            ],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            stops: [0.005, 0.4, 0.5, 0.6, 0.995],
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFF261E35),
+                Colors.black,
+                Colors.black,
+                Colors.black, // Third black (extra stop)
+                Color(0xFF261E35), // Side color
+              ],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              stops: [0.005, 0.4, 0.5, 0.6, 0.995],
+            ),
           ),
-          backgroundColor: Colors.white60,
-          buttonBackgroundColor: Colors.black,
-          items: <Widget>[
-            GradientIcon(
-              icon: Icons.home,
-              size: 30,
-            ),
-            GradientIcon(
-              icon: Icons.event,
-              size: 30,
-            ),
-            GradientIcon(
-              icon: Icons.apartment_outlined,
-              size: 30,
-            ),
-            GradientIcon(
-              icon: Icons.person,
-              size: 30,
-            ),
-          ],
-          onTap: _onBottomNavTapped,
+          child: CurvedNavigationBar(
+            index: _currentPage,
+            height: 55,
+            animationDuration: Duration(milliseconds: 400),
+            backgroundColor: Colors.transparent, // Make background transparent
+            buttonBackgroundColor: Colors.black,
+            items: <Widget>[
+              GradientIcon(
+                icon: Icons.home,
+                size: 30,
+              ),
+              GradientIcon(
+                icon: Icons.event,
+                size: 30,
+              ),
+              GradientIcon(
+                icon: Icons.apartment_outlined,
+                size: 30,
+              ),
+              GradientIcon(
+                icon: Icons.person,
+                size: 30,
+              ),
+            ],
+            onTap: _onBottomNavTapped,
+          ),
         ),
-        // bottomNavigationBar: FlashyTabBar(
-        //   height: 48,
-        //   backgroundColor: Colors.black,
-        //   animationCurve: Curves.linear,
-        //   selectedIndex: _currentPage,
-        //   iconSize: 25,
-        //   animationDuration: Duration(milliseconds: 500),
-        //   showElevation: false,
-        //   onItemSelected: (index) => setState(() {
-        //     _currentPage = index;
-        //   }),
-        //   items: [
-        //     FlashyTabBarItem(
-        //       icon:GradientIcon(icon: Icons.home),
-        //       title: GradientText(text: "home",size: 15,),
-        //       activeColor: LinearGradient(
-        //         colors: [
-        //           Color(0xFF261E35), // Side color
-        //           Colors.black, // Center color
-        //           Colors.black, // Second black (extra stop)
-        //           Colors.black, // Third black (extra stop)
-        //           Color(0xFF261E35), // Side color
-        //         ],
-        //         begin: Alignment.centerLeft,
-        //         end: Alignment.centerRight,
-        //         stops: [0.005, 0.4, 0.5, 0.6, 0.995],
-        //       ),
-        //     ),
-        //     FlashyTabBarItem(
-        //       icon: Icon(Icons.calendar_month_outlined),
-        //       title: Text('Events'),
-        //     ),
-        //     FlashyTabBarItem(
-        //       icon: Icon(Icons.apartment_outlined),
-        //       title: Text('Department',style: TextStyle(fontSize: 11),),
-        //     ),
-        //     FlashyTabBarItem(
-        //       icon: Icon(Icons.person),
-        //       title: Text('Profile'),
-        //     ),
-        //   ],
-        // ),
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () {
-        //     print('Home Button Pressed');
-        //   },
-        //   tooltip: 'Home',
-        //   child: const Icon(Icons.home),
-        // ),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
   }
