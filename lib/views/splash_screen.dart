@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     super.initState();
 
     Timer(const Duration(seconds: 4), () {
-     Navigator.pushNamed(context, RoutesName.signup);
+     Navigator.pushNamed(context, RoutesName.login);
     });
   }
 
