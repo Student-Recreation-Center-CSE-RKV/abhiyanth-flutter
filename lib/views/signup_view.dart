@@ -1,158 +1,196 @@
-import 'package:flutter/material.dart';
-import 'package:abhiyanth/viewmodels/signupview_model.dart';
-import 'package:abhiyanth/services/size_config.dart';
 import 'package:abhiyanth/services/Routes/routesname.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:abhiyanth/services/size_config.dart';
 
-class SignUpPage extends StatefulWidget {
+class SignupPage extends StatefulWidget {
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _SignupPageState createState() => _SignupPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final SignupviewModel _viewModel = SignupviewModel();
-  bool _obscuretext=true;
-  void obscure(){
+class _SignupPageState extends State<SignupPage> {
+  bool _obscuretext = true;
+
+  void _toggleObscureText() {
     setState(() {
-      _obscuretext=!_obscuretext;
+      _obscuretext = !_obscuretext;
     });
   }
+
   @override
   Widget build(BuildContext context) {
+    // Initialize SizeConfig
     SizeConfig.init(context);
 
     return Scaffold(
-      backgroundColor: Color(0xFFF1F6F9),
-      body: Center(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.safeBlockHorizontal! * 3,
-          ),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                // Logo
-                Image.asset(
-                  'assets/images/SignupPic.png',
-                  height: SizeConfig.safeBlockVertical! * 50,
-                  width: SizeConfig.safeBlockHorizontal! * 70,
-                ),
+      backgroundColor: Colors.black,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: SizeConfig.safeBlockVertical*3,),
+            Image.asset(
+              'assets/images/Abhiyanthlogo2.png',
+              width:SizeConfig.safeBlockHorizontal*40,
+              height:SizeConfig.safeBlockVertical*40,
+            ),
 
-                SizedBox(height: 8),
-
-                // Card Container
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+            Image.asset(
+              'assets/images/loginpic.png',
+              fit: BoxFit.cover,
+              width: SizeConfig.safeBlockHorizontal * 50,
+              height: SizeConfig.safeBlockVertical*25,
+            ),
+            SizedBox(height: SizeConfig.safeBlockVertical *2),
+            // Email TextField
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.safeBlockHorizontal * 5),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 2,
+                    color: Colors.transparent,
                   ),
-                  elevation: 4,
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        // Email Field
-                        TextFormField(
-                          initialValue: _viewModel.email,
-                          validator: _viewModel.validateEmail,
-                          onChanged: (value) => _viewModel.setEmail(value),
-                          decoration: InputDecoration(
-                            hintText: "Email",
-                            prefixIcon: Icon(Icons.email),
-                            filled: true,
-                            fillColor: Color(0xFFF1F6F9),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
+                  borderRadius: BorderRadius.circular(
+                      SizeConfig.safeBlockHorizontal * 10),
+                  gradient: LinearGradient(
+                    colors: [Color(0xFFFF6AB7), Color(0xFF6AE4FF)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(
+                        SizeConfig.safeBlockHorizontal * 10),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.safeBlockHorizontal * 3),
+                  child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      hintText: "Enter your email",
+                      hintStyle: TextStyle(color: Colors.white70),
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.email, color: Colors.white),
 
-                        // Password Field
-                        TextFormField(
-                          initialValue: _viewModel.password,
-                          validator: _viewModel.validatePassword,
-                          obscureText: _obscuretext,
-                          onChanged: (value) => _viewModel.setPassword(value),
-                          decoration: InputDecoration(
-                            hintText: "Password",
-                            prefixIcon: Icon(Icons.lock),
-                            suffixIcon: IconButton(onPressed: obscure
-                                , icon:_obscuretext==true?Icon(Icons.visibility_off):Icon(Icons.visibility) ),
-                            filled: true,
-                            fillColor: Color(0xFFF1F6F9),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
+                    ),
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: SizeConfig.safeBlockVertical * 2),
+            // Password TextField
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.safeBlockHorizontal * 5),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 2,
+                    color: Colors.transparent,
+                  ),
+                  borderRadius: BorderRadius.circular(
+                      SizeConfig.safeBlockHorizontal * 10),
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF6AE4FF), Color(0xFFFF6AB7)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(
+                        SizeConfig.safeBlockHorizontal * 10),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.safeBlockHorizontal * 3),
+                  child: TextFormField(
+                    obscureText: _obscuretext,
+                    decoration: InputDecoration(
+                      hintText: "Enter your password",
+                      hintStyle: const TextStyle(color: Colors.white70),
+                      border: InputBorder.none,
+                      prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                      suffixIcon: IconButton(
+                        onPressed: _toggleObscureText,
+                        icon: Icon(
+                          _obscuretext
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Colors.white,
                         ),
-                        SizedBox(height: 16),
+                      ),
+                    ),
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: SizeConfig.safeBlockVertical * 3),
+            // Login Button
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, RoutesName.home);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Signin successfully"),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
 
-                        // Login Button
-                        _viewModel.isLoading
-                            ? CircularProgressIndicator()
-                            : SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              if (_formKey.currentState!.validate()) {
-                                final result = await _viewModel.submit();
-                                if (result["success"]) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(result["message"])),
-                                  );
-                                }
-                                Navigator.pushNamed(context, RoutesName.home);
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF0A2647),
-                              padding: EdgeInsets.symmetric(vertical: 14),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
-                            child: Text(
-                              "Sign Up",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 8),
-
-                        // Error Message
-                        if (_viewModel.errorMessage.isNotEmpty)
-                          Text(
-                            _viewModel.errorMessage,
-                            style: TextStyle(color: Colors.red),
-                          ),
-
-                        // Sign Up
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, RoutesName.login);
-                          },
-                          child: Text(
-                            "Already have an account? Login",
-                            style: TextStyle(
-                              color: Color(0xFF144272),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
+              },
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      SizeConfig.safeBlockHorizontal * 2),
+                ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.safeBlockHorizontal * 6,
+                  vertical: SizeConfig.safeBlockVertical * 1.5,
+                ),
+                backgroundColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+              ),
+              child: Ink(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFFFF6AB7), Color(0xFF6AE4FF)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                child: Container(
+                  alignment: Alignment.center,
+                  height: SizeConfig.safeBlockVertical * 5,
+                  child: Text(
+                    "SignUp",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: SizeConfig.safeBlockHorizontal * 5,
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
+            Text.rich(
+              TextSpan(text:"Already have an account...?",style:const TextStyle(color:Colors.white),
+                  children:[
+                    TextSpan(text: 'Login',style:const TextStyle(color: Colors.blue),
+                  recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  // Handle navigation to the registration page
+                  Navigator.pushNamed(context, RoutesName.login);
+                },
+                    ),
+                  ]),
+            )
+          ],
         ),
       ),
     );
