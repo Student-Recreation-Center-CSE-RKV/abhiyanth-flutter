@@ -12,10 +12,10 @@ class DepartmentsPage extends StatefulWidget {
 class _DepartmentsPageState extends State<DepartmentsPage> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return  const Scaffold(
       backgroundColor: Colors.transparent,
           body: Center(
-            child: const Text(
+            child: Text(
               "Departments Page",
               style: TextStyle(color: Colors.white, fontFamily: "Audiowide"),
             ),

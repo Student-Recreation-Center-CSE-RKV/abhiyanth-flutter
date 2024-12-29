@@ -5,6 +5,7 @@ import 'package:abhiyanth/views/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/views/home_page.dart';
+import 'package:abhiyanth/views/aboutus_page.dart';
 
 class Routes{
   static Route<dynamic> generateRoute(RouteSettings settings){
@@ -17,7 +18,8 @@ class Routes{
         return MaterialPageRoute(builder: (BuildContext context)=>SplashScreen());
       case RoutesName.home:
         return MaterialPageRoute(builder: (BuildContext context)=> HomePage());
-      
+      case RoutesName.aboutus:
+        return MaterialPageRoute(builder: (BuildContext context)=> AboutUsPage());
       default:
         return MaterialPageRoute(builder: (_){
           return Scaffold(
