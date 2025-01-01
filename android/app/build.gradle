@@ -3,6 +3,7 @@ plugins {
     id "kotlin-android"
 
     id "dev.flutter.flutter-gradle-plugin"
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -22,7 +23,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.abhiyanth"
-        minSdk = 21 // Minimum SDK version, set it according to your project requirements
+        minSdk = 23 // Minimum SDK version, set it according to your project requirements
         targetSdk = 34 // Replace 33 with 35 if targeting Android 14
         versionCode = 1
         versionName = "1.0"
@@ -40,3 +41,11 @@ android {
 flutter {
     source = "../.."
 }
+dependencies {
+    // Add your dependencies here
+    implementation platform('com.google.firebase:firebase-bom:33.7.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    // Add other dependencies that your Flutter app needs for Android
+}
+
+apply plugin: 'com.google.gms.google-services'
