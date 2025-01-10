@@ -1,60 +1,104 @@
-import 'package:abhiyanth/models/login_model.dart';
-class LoginViewModel{
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import '../services/Routes/routesname.dart';
+
+class LoginViewModel extends ChangeNotifier {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  String? _email;
+  String? _password;
   bool _isLoading = false;
-  String _errorMessage=" ";
+
+  String get email => _email ?? '';
+  String get password => _password ?? '';
   bool get isLoading => _isLoading;
-  String get errorMessage => _errorMessage;
 
-  final LoginModel _loginModel = LoginModel(email: "", password: "");
-
-  String get email => _loginModel.email;
-  String get password => _loginModel.password;
-
-  void setEmail(String value) {
-    _loginModel.email = value;
+  // Set email and password
+  void setEmail(String email) {
+    _email = email;
+    notifyListeners();
   }
 
-  void setPassword(String value) {
-    _loginModel.password = value;
+  void setPassword(String password) {
+    _password = password;
+    notifyListeners();
   }
 
-
-
-  String? validateEmail(String? email){
-    if(email==null || email.isEmpty){
-      return "Please enter your email";
+  // Login function using Firebase Auth
+  Future<void> login(BuildContext context) async {
+    if (_email == null || _password == null || _email!.isEmpty || _password!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please enter both email and password")),
+      );
+      return;
     }
-    if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$').hasMatch(email)) {
-      return "Enter a valid email address";
-    }
-    return null;
-  }
 
+    try {
+      // Start loading state
+      _isLoading = true;
+      notifyListeners();
 
+      // Attempt to sign in with Firebase Authentication
+      final userCredential = await _auth.signInWithEmailAndPassword(
+        email: _email!,
+        password: _password!,
+      );
 
-  String? validatePassword(String? password){
-    if(password==null || password.isEmpty){
-      return "Please enter your password";
-    }
-    if (password.length < 6) {
-      return "Password must be at least 6 characters";
-    }
-    return null;
-  }
+      // Show success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Login successful")),
+      );
 
+      // Navigate to the home screen
+      Navigator.pushReplacementNamed(context, RoutesName.home);
 
-  Future<Map<String, dynamic>> submit() async {
-    _isLoading = true;
-
-    await Future.delayed(const Duration(seconds: 2));
-    if (_loginModel.email == "test@example.com" &&
-        _loginModel.password == "password123") {
+      // Stop loading state
       _isLoading = false;
-      return {"success": true, "message": "Login Successful"};
-    } else {
+      notifyListeners();
+
+    } on FirebaseAuthException catch (e) {
+      // Detailed error handling for FirebaseAuthException
+      String errorMessage = "An error occurred. Please try again.";
+      print("FirebaseAuthException: ${e.code}, ${e.message}");
+
+      // Handle specific Firebase error codes
+      switch (e.code) {
+        case 'user-not-found':
+          errorMessage = "No user found with this email.";
+          break;
+        case 'wrong-password':
+          errorMessage = "Incorrect password.";
+          break;
+        case 'invalid-email':
+          errorMessage = "The email address is invalid.";
+          break;
+        case 'network-request-failed':
+          errorMessage = "Network error. Please check your internet connection.";
+          break;
+        default:
+          errorMessage = "Error: ${e.message}";
+      }
+
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(errorMessage)),
+      );
+
+      // Stop loading state
       _isLoading = false;
-      _errorMessage = "Invalid email or password";
-      return {"success": false, "message": _errorMessage};
+      notifyListeners();
+
+    } catch (e) {
+      // General error catch
+      print("General error: $e");
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("An unexpected error occurred. Please try again.")),
+      );
+
+      // Stop loading state
+      _isLoading = false;
+      notifyListeners();
     }
   }
 
