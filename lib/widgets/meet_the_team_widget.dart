@@ -1,6 +1,7 @@
 import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:flutter/material.dart';
 
+import 'package:url_launcher/url_launcher.dart';
 
 class MeetTheTeamWidget extends StatelessWidget {
 
@@ -75,12 +76,17 @@ class MeetTheTeamWidget extends StatelessWidget {
 
             // Button
             ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, RoutesName.aboutus);
+              onPressed: () async {
+                const upiUrl =
+                    'https://abhiyanthrkv.in/ourTeam/';
+                if (await canLaunchUrl(Uri.parse(upiUrl))) {
+                  await launchUrl(Uri.parse(upiUrl));
+                } else {
+                  throw 'Could not launch $upiUrl';
+                }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    Colors.transparent, // Transparent background 
+                backgroundColor: Colors.transparent,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 shape: RoundedRectangleBorder(
@@ -93,18 +99,18 @@ class MeetTheTeamWidget extends StatelessWidget {
                   border: Border(
                     left: BorderSide(
                       color: Colors.pinkAccent
-                          .withOpacity(0.6), // Border with gradient effect
+                          .withOpacity(0.6),
                       width: 2,
                     ),
                     top: BorderSide(
                       color: Colors.pinkAccent
                           .withOpacity(0.6), // Border with gradient effect
                       width: 2,
-                  ),
+                    ),
                   ),
                   gradient: const LinearGradient(
                     colors: [
-                      Color(0xFF261E35), 
+                      Color(0xFF261E35),
                       Colors.black,
                       Color(0xFF261E35),
                     ], // Gradient colors

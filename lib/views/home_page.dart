@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
         body: PageView(
           controller: _pageController,
           onPageChanged: _onPageChanged,
-          children: [
+          children: const [
             LandingPage(),
             EventPage(),
             DepartmentsPage(),
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         bottomNavigationBar: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
                 Color(0xFF261E35),
@@ -93,10 +93,10 @@ class _HomePageState extends State<HomePage> {
           child: CurvedNavigationBar(
             index: _currentPage,
             height: 55,
-            animationDuration: Duration(milliseconds: 400),
+            animationDuration: const Duration(milliseconds: 400),
             backgroundColor: Colors.transparent, // Make background transparent
             buttonBackgroundColor: Colors.black,
-            items: <Widget>[
+            items: const <Widget>[
               GradientIcon(
                 icon: Icons.home,
                 size: 30,
