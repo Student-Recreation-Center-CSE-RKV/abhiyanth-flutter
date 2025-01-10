@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:abhiyanth/viewmodels/loginview_model.dart';
-import 'package:abhiyanth/services/size_config.dart';
 import 'package:abhiyanth/services/Routes/routesname.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:abhiyanth/services/size_config.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -9,176 +9,205 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final LoginViewModel _viewModel = LoginViewModel();
-  bool _obscuretext=true;
-  void obscure(){
+  bool _obscuretext = true;
+
+  void _toggleObscureText() {
     setState(() {
-      _obscuretext=!_obscuretext;
+      _obscuretext = !_obscuretext;
     });
   }
+
   @override
   Widget build(BuildContext context) {
+    // Initialize SizeConfig
     SizeConfig.init(context);
-    return Scaffold(
-      backgroundColor: Color(0xFFF1F6F9),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: SizeConfig.safeBlockHorizontal! * 6,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                // Logo
-                SizedBox(height: 30,),
-                Container(
-                  margin: EdgeInsets.zero,
 
-                  child: Image.asset(
-                    'assets/images/LoginPic.png',
-                    height: SizeConfig.safeBlockVertical! * 30,
-                    width: SizeConfig.safeBlockHorizontal! * 70,
-                    
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+
+            Image.asset(
+              'assets/images/Abhiyanthlogo2.png',
+              width:SizeConfig.safeBlockHorizontal*40,
+              height:SizeConfig.safeBlockVertical*40,
+            ),
+
+            Image.asset(
+              'assets/images/loginpic.png',
+              fit: BoxFit.cover,
+              width: SizeConfig.safeBlockHorizontal * 40,
+              height: SizeConfig.safeBlockVertical*20,
+            ),
+            SizedBox(height: SizeConfig.safeBlockVertical * 2),
+            Text(
+              "Welcome Back!",
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'AudioWide',
+                fontSize: SizeConfig.safeBlockHorizontal * 8,
+              ),
+            ),
+            SizedBox(height: SizeConfig.safeBlockVertical * 1),
+            Text(
+              "Login to Continue...",
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'AudioWide',
+                fontSize: SizeConfig.safeBlockHorizontal * 6,
+              ),
+            ),
+            SizedBox(height: SizeConfig.safeBlockVertical * 3),
+            // Email TextField
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.safeBlockHorizontal * 5),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 2,
+                    color: Colors.transparent,
+                  ),
+                  borderRadius: BorderRadius.circular(
+                      SizeConfig.safeBlockHorizontal * 10),
+                  gradient: LinearGradient(
+                    colors: [Color(0xFFFF6AB7), Color(0xFF6AE4FF)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
                 ),
-
-                SizedBox(height: 80),
-
-                // Form widget to enable validation
-                Form(
-                  key: _formKey, // Assign the form key here
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(
+                        SizeConfig.safeBlockHorizontal * 10),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.safeBlockHorizontal * 3),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Enter your email",
+                      hintStyle: TextStyle(color: Colors.white70),
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.email, color: Colors.white),
                     ),
-                    elevation: 4,
-                    margin: EdgeInsets.zero,
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          // Email Field
-                          TextFormField(
-                            initialValue: _viewModel.email,
-                            validator: _viewModel.validateEmail,
-                            onChanged: (value) => _viewModel.setEmail(value),
-                            decoration: InputDecoration(
-                              hintText: "Email",
-                              prefixIcon: Icon(Icons.email),
-                              filled: true,
-                              fillColor: Color(0xFFF1F6F9),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 16),
-
-                          // Password Field
-                          TextFormField(
-                            initialValue: _viewModel.password,
-                            validator: _viewModel.validatePassword,
-                            obscureText: _obscuretext,
-                            onChanged: (value) => _viewModel.setPassword(value),
-                            decoration: InputDecoration(
-                              hintText: "Password",
-                              prefixIcon: Icon(Icons.lock),
-                              suffixIcon: IconButton(onPressed: obscure, icon: _obscuretext==true?Icon(Icons.visibility_off):Icon(Icons.visibility)),
-                              filled: true,
-                              fillColor: Color(0xFFF1F6F9),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 16),
-
-                          // Login Button
-                          _viewModel.isLoading
-                              ? CircularProgressIndicator()
-                              : SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  final result = await _viewModel.submit();
-                                  if (result["success"]) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(
-                                      SnackBar(
-                                          content: Text(
-                                              result["message"])),
-                                    );
-                                  }
-                                  
-                                   else {
-                                    setState(() {});
-                                  }
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xFF0A2647),
-                                padding:
-                                EdgeInsets.symmetric(vertical: 14),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                              ),
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 8),
-
-                          // Error Message
-                          if (_viewModel.errorMessage.isNotEmpty)
-                            Text(
-                              _viewModel.errorMessage,
-                              style: TextStyle(color: Colors.red),
-                            ),
-
-                          // Forgot Password
-                          TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              "Forgot Password?",
-                              style: TextStyle(
-                                color: Color(0xFF144272),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-
-                          // Sign Up
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, RoutesName.signup);
-                            },
-                            child: Text(
-                              "Don't have an account? Sign Up",
-                              style: TextStyle(
-                                color: Color(0xFF144272),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: SizeConfig.safeBlockVertical * 2),
+            // Password TextField
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.safeBlockHorizontal * 5),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 2,
+                    color: Colors.transparent,
+                  ),
+                  borderRadius: BorderRadius.circular(
+                      SizeConfig.safeBlockHorizontal * 10),
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF6AE4FF), Color(0xFFFF6AB7)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(
+                        SizeConfig.safeBlockHorizontal * 10),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.safeBlockHorizontal * 3),
+                  child: TextFormField(
+                    obscureText: _obscuretext,
+                    decoration: InputDecoration(
+                      hintText: "Enter your password",
+                      hintStyle: const TextStyle(color: Colors.white70),
+                      border: InputBorder.none,
+                      prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                      suffixIcon: IconButton(
+                        onPressed: _toggleObscureText,
+                        icon: Icon(
+                          _obscuretext
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
+            SizedBox(height: SizeConfig.safeBlockVertical * 3),
+            // Login Button
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, RoutesName.home);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Login successfully"),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+
+              },
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      SizeConfig.safeBlockHorizontal * 2),
+                ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.safeBlockHorizontal * 6,
+                  vertical: SizeConfig.safeBlockVertical * 1.5,
+                ),
+                backgroundColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+              ),
+              child: Ink(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFFFF6AB7), Color(0xFF6AE4FF)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                child: Container(
+                  alignment: Alignment.center,
+                  height: SizeConfig.safeBlockVertical * 5,
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: SizeConfig.safeBlockHorizontal * 5,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            TextButton(onPressed: (){}, child: const Text('Forgot password',style: TextStyle(color:Colors.blue),)),
+            Text.rich(
+              TextSpan(text:"Don't have an account...?",style:const TextStyle(color:Colors.white),
+              children:[
+              TextSpan(text:'Register Now',style: const TextStyle(color:Colors.blue,),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    // Handle navigation to the registration page
+                    Navigator.pushNamed(context, RoutesName.signup);
+                  },
+              )
+              ]),
+            )
+          ],
         ),
       ),
     );

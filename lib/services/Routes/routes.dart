@@ -13,7 +13,7 @@ class Routes{
       case RoutesName.login:
         return MaterialPageRoute(builder: (BuildContext context)=>LoginPage());
       case RoutesName.signup:
-        return MaterialPageRoute(builder: (BuildContext context)=> SignUpPage());
+        return MaterialPageRoute(builder: (BuildContext context)=> SignupPage());
       case RoutesName.splash:
         return MaterialPageRoute(builder: (BuildContext context)=>SplashScreen());
       case RoutesName.home:
