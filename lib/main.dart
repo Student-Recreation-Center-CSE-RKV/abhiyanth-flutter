@@ -1,13 +1,16 @@
 import 'package:abhiyanth/services/Routes/routes.dart';
 import 'package:abhiyanth/services/Routes/routesname.dart';
-import 'package:abhiyanth/services/size_config.dart';
-import 'package:abhiyanth/views/login_view.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:abhiyanth/views/home_page.dart';
-import 'package:abhiyanth/views/login_view.dart';
-import 'package:abhiyanth/views/splash_screen.dart';
-void main() {
-  runApp(const MyApp());
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:abhiyanth/locator.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
+  setUpLocator();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

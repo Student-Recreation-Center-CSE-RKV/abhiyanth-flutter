@@ -14,12 +14,12 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-          body: Center(
-            child: const Text(
-              "Profile Page",
-              style: TextStyle(color: Colors.white, fontFamily: "Audiowide"),
-            ),
-          ),
-        );
+      body: Center(
+        child: const Text(
+          "Profile Page",
+          style: TextStyle(color: Colors.white, fontFamily: "Audiowide"),
+        ),
+      ),
+    );
   }
 }
