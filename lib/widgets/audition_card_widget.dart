@@ -21,7 +21,7 @@ class AuditionCard extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.transparent, // Dark background color for the card
+        color: Colors.transparent,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color:
@@ -50,41 +50,41 @@ class AuditionCard extends StatelessWidget {
                   title,
                   style: const TextStyle(
                     color: Colors.lightBlueAccent,
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     fontFamily: "Audiowide",
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 6),
                 Text(
-                  date,
+                  "Date: $date",
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 14,
+                    fontSize: 10,
                     fontFamily: "Audiowide",
                   ),
                 ),
                 Text(
-                  time,
-                  style: TextStyle(
+                  "Time: $time",
+                  style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 14,
+                    fontSize: 10,
                     fontFamily: "Audiowide",
                   ),
                 ),
                 Text(
-                  venue,
-                  style: TextStyle(
+                  "Venue: $venue",
+                  style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 14,
+                    fontSize: 10,
                     fontFamily: "Audiowide",
                   ),
                 ),
                 Text(
-                  description,
-                  style: TextStyle(
+                  "Description: $description",
+                  style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 14,
+                    fontSize: 10,
                     fontFamily: "Audiowide",
                   ),
                 ),

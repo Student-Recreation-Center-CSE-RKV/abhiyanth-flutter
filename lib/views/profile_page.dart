@@ -1,4 +1,3 @@
-import 'package:abhiyanth/utilities/gradient_background.dart';
 import 'package:flutter/material.dart';
 
 

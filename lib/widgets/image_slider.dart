@@ -31,7 +31,7 @@ class ImageSliderWidget extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
-                    child: Image.asset(
+                    child: Image.network(
                       item['image']!,
                       width: double.infinity,
                       height: double.infinity,
