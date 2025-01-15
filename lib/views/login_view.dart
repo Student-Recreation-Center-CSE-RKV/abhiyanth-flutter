@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                     width: SizeConfig.safeBlockHorizontal * 30,
                     height: SizeConfig.blockSizeVertical * 18,
                   ),
-                  SizedBox(height: SizeConfig.blockSizeVertical * 4),
+                  SizedBox(height: SizeConfig.blockSizeVertical * 2),
                   Text(
                     "Abhiyanth 2k25",
                     style: TextStyle(
@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                       fontSize: SizeConfig.blockSizeVertical * 3,
                     ),
                   ),
-                  SizedBox(height: SizeConfig.safeBlockVertical * 20),
+                  SizedBox(height: SizeConfig.safeBlockVertical * 15),
                   // Welcome Text
                   Text(
                     "Welcome Back!",

@@ -6,12 +6,12 @@ class BorderGradient extends StatelessWidget {
   final Widget child;
 
   const BorderGradient({
-    Key? key,
+    super.key,
     required this.child,
     this.gradientColors = const [Color(0xFFFF6AB7), Color(0xFF6AE4FF)],
     required this. borderRadius,
     required double borderWidth,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class BorderGradient extends StatelessWidget {
         borderRadius: borderRadius,
       ),
       child: Container(
-        margin: EdgeInsets.all(2.0),
+        margin: const EdgeInsets.all(2.0),
         decoration: BoxDecoration(
           color: Colors.black,
           borderRadius: borderRadius,

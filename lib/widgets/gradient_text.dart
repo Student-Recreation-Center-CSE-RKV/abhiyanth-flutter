@@ -23,7 +23,7 @@ class GradientText extends StatelessWidget {
         ).createShader(bounds);
       },
       blendMode: BlendMode.srcIn,
-      child: Text(text, style: TextStyle(fontSize: size)),
+      child: Text(text, style: TextStyle(fontSize: size, fontFamily: "Audiowide")),
     );
   }
 }
