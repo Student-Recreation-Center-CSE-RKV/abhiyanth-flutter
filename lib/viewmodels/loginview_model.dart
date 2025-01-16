@@ -1,3 +1,4 @@
+import 'package:abhiyanth/services/custom_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../services/Routes/routesname.dart';
@@ -27,9 +28,7 @@ class LoginViewModel extends ChangeNotifier {
   // Login function using Firebase Auth
   Future<void> login(BuildContext context) async {
     if (_email == null || _password == null || _email!.isEmpty || _password!.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please enter both email and password")),
-      );
+      CustomSnackBar.show(context, "Please enter both email and password");
       return;
     }
 
@@ -45,12 +44,10 @@ class LoginViewModel extends ChangeNotifier {
       );
 
       // Show success message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Login successful")),
-      );
+    CustomSnackBar.show(context, "Login successful");
 
       // Navigate to the home screen
-      Navigator.pushReplacementNamed(context, RoutesName.home);
+      Navigator.pushNamedAndRemoveUntil(context, RoutesName.home,(route) => false, );
 
       // Stop loading state
       _isLoading = false;
@@ -80,9 +77,7 @@ class LoginViewModel extends ChangeNotifier {
       }
 
       // Show error message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(errorMessage)),
-      );
+     CustomSnackBar.show(context,errorMessage);
 
       // Stop loading state
       _isLoading = false;
@@ -91,12 +86,8 @@ class LoginViewModel extends ChangeNotifier {
     } catch (e) {
       // General error catch
       print("General error: $e");
+      CustomSnackBar.show(context,"An unexpected error occurred. Please try again.");
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("An unexpected error occurred. Please try again.")),
-      );
-
-      // Stop loading state
       _isLoading = false;
       notifyListeners();
     }
