@@ -1,4 +1,4 @@
-import 'package:abhiyanth/utilities/gradient_background.dart'; // Ensure this file exists and is correctly implemented // Ensure this file exists and contains the BorderGradient widget.
+import 'package:abhiyanth/utilities/gradient_background.dart'; 
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:abhiyanth/widgets/gradient_border.dart';
