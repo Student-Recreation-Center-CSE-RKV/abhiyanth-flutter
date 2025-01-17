@@ -35,9 +35,14 @@ dependencies:
   provider: ^6.1.2
   firebase_auth: ^5.3.4
   flutter_dotenv: ^5.0.2
+<<<<<<< HEAD
+  flutter_riverpod: ^2.0.0
+  google_sign_in: ^6.2.2
+=======
   get_it: ^7.7.0
   intl: ^0.19.0
   flutter_upi_india: ^0.0.6
+>>>>>>> 713204fa0e9bcce76270574d8b39574138dc5838
 
 
   # The following adds the Cupertino Icons font to your application.

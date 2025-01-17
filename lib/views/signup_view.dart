@@ -1,17 +1,33 @@
-import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:provider/provider.dart';
+import '../services/custom_snackbar.dart';
+import '../services/user_service.dart';
 import '../viewmodels/signupview_model.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
+  @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+
+  bool _obscuretext = true;
+
+  void _toggleObscureText() {
+    setState(() {
+      _obscuretext = !_obscuretext;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Initialize SizeConfig
+
     SizeConfig.init(context);
 
     return ChangeNotifierProvider(
@@ -26,15 +42,8 @@ class SignupPage extends StatelessWidget {
                   SizedBox(height: SizeConfig.safeBlockVertical * 0.5),
                   Image.asset(
                     'assets/images/Abhiyanthlogo2.png',
-                    width: SizeConfig.safeBlockHorizontal * 40,
-                    height: SizeConfig.safeBlockVertical * 40,
-                  ),
-                  SizedBox(height: SizeConfig.safeBlockVertical * 0.1),
-                  Image.asset(
-                    'assets/images/loginpic.png',
-                    fit: BoxFit.cover,
                     width: SizeConfig.safeBlockHorizontal * 50,
-                    height: SizeConfig.safeBlockVertical * 25,
+                    height: SizeConfig.safeBlockVertical * 50,
                   ),
                   SizedBox(height: SizeConfig.safeBlockVertical * 5),
                   // Email TextField
@@ -106,12 +115,14 @@ class SignupPage extends StatelessWidget {
                             horizontal: SizeConfig.safeBlockHorizontal * 3),
                         child: TextFormField(
                           controller: _passwordController,
-                          obscureText: viewModel.isLoading,
+
+                          obscureText: _obscuretext,
                           decoration: InputDecoration(
                             hintText: "Enter your password",
                             hintStyle: const TextStyle(color: Colors.white70),
                             border: InputBorder.none,
                             prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                            suffixIcon: IconButton(onPressed: _toggleObscureText, icon: Icon(_obscuretext?Icons.visibility:Icons.visibility_off),)
                           ),
                           style: const TextStyle(color: Colors.white),
                         ),
@@ -130,9 +141,7 @@ class SignupPage extends StatelessWidget {
                       if (email.isNotEmpty && password.isNotEmpty) {
                         viewModel.signup(email, password, context);
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Please fill all fields')),
-                        );
+                       CustomSnackBar.show(context, 'Please fill all fields');
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -172,6 +181,67 @@ class SignupPage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(height: SizeConfig.safeBlockVertical * 2),
+                  // Continue with Google Button
+                  SizedBox(
+                    width: SizeConfig.safeBlockHorizontal * 80,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        final userService = UserService();
+
+                        final user = await userService.signInWithGoogle();
+
+                        if (user != null) {
+                          print('User signed in with Google: ${user.displayName}');
+                          Navigator.pushNamedAndRemoveUntil(context, RoutesName.home,(route) => false);
+                        } else {
+                          CustomSnackBar.show(context, 'Google Sign-In failed');                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.safeBlockHorizontal * 3,
+                          vertical: SizeConfig.safeBlockVertical * 1,
+                        ),
+                        backgroundColor: Colors.white,
+                        shadowColor: Colors.transparent,
+                      ),
+                      child: Ink(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: SizeConfig.safeBlockVertical * 5,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/Googlelogo.png',
+                                width: SizeConfig.safeBlockHorizontal * 8,
+                                height: SizeConfig.safeBlockVertical * 8,
+                              ),
+                              SizedBox(width: SizeConfig.safeBlockHorizontal * 2),
+                              Text(
+                                "Continue with Google",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 4.5,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: SizeConfig.safeBlockVertical * 2),
+                  // Login Link
                   Text.rich(
                     TextSpan(
                       text: "Already have an account...?",
@@ -182,6 +252,7 @@ class SignupPage extends StatelessWidget {
                           style: const TextStyle(color: Colors.blue),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
+
                               Navigator.pushNamed(context, RoutesName.login);
                             },
                         ),
@@ -197,4 +268,3 @@ class SignupPage extends StatelessWidget {
     );
   }
 }
-

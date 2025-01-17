@@ -3,6 +3,7 @@ import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:abhiyanth/services/size_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,21 +13,42 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
+  late final AnimationController _controller;
+
   @override
   void initState() {
     super.initState();
 
-    Timer(const Duration(seconds: 4), () {
-     Navigator.pushNamed(context, RoutesName.login);
-    });
+    _controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    )..repeat();
+
+
+    Timer(const Duration(seconds: 4), _checkUserStatus);
   }
 
+  void _checkUserStatus() {
+    final User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      Navigator.pushReplacementNamed(context, RoutesName.home);
+    } else {
+      Navigator.pushReplacementNamed(context, RoutesName.login);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose(); // Dispose of the animation controller
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
 
     return Scaffold(
-      backgroundColor:Colors.white,
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -46,12 +68,12 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
               ),
             ),
             SizedBox(height: SizeConfig.safeBlockVertical! * 2),
-
+            // Loading Spinner
             SpinKitSquareCircle(
-      color: Colors.blue,
-          size: 50.0,
-          controller: AnimationController(duration: const Duration(seconds: 5), vsync: this),
-    ),
+              color: Colors.blue,
+              size: 50.0,
+              controller: _controller,
+            ),
           ],
         ),
       ),

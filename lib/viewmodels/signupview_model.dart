@@ -1,4 +1,5 @@
 import 'package:abhiyanth/services/Routes/routesname.dart';
+import 'package:abhiyanth/services/custom_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -13,24 +14,21 @@ class SignupViewModel extends ChangeNotifier {
       _isLoading = true;
       notifyListeners();
 
-      // Create user with email and password using Firebase
       final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      // Check if user was created successfully
       if (userCredential.user != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("SignUp successful")),
-        );
+        CustomSnackBar.show(context, "SignUp successful");
 
-        // Navigate to the home screen after successful signup
-        Navigator.pushReplacementNamed(context, RoutesName.home);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Signup failed. Please try again.")),
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RoutesName.home,
+              (route) => false,
         );
+      } else {
+        CustomSnackBar.show(context, "Signup failed. Please try again.");
       }
 
       _isLoading = false;
@@ -49,20 +47,14 @@ class SignupViewModel extends ChangeNotifier {
         errorMessage = "The email address is invalid.";
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(errorMessage)),
-      );
+      CustomSnackBar.show(context, errorMessage);
     } catch (e) {
-      // Catch any other errors
       _isLoading = false;
       notifyListeners();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Signup failed. Please try again.')),
-      );
+      CustomSnackBar.show(context, 'Signup failed. Please try again.');
     }
   }
 
-  // Optionally, a function to clear the form if needed
   void clear() {
     _isLoading = false;
     notifyListeners();
