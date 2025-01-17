@@ -43,7 +43,6 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     _controller.dispose(); // Dispose of the animation controller
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);

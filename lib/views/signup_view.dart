@@ -7,9 +7,23 @@ import '../services/custom_snackbar.dart';
 import '../services/user_service.dart';
 import '../viewmodels/signupview_model.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
+  @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+
+  bool _obscuretext = true;
+
+  void _toggleObscureText() {
+    setState(() {
+      _obscuretext = !_obscuretext;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,12 +115,14 @@ class SignupPage extends StatelessWidget {
                             horizontal: SizeConfig.safeBlockHorizontal * 3),
                         child: TextFormField(
                           controller: _passwordController,
-                          obscureText: viewModel.isLoading,
+
+                          obscureText: _obscuretext,
                           decoration: InputDecoration(
                             hintText: "Enter your password",
                             hintStyle: const TextStyle(color: Colors.white70),
                             border: InputBorder.none,
                             prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                            suffixIcon: IconButton(onPressed: _toggleObscureText, icon: Icon(_obscuretext?Icons.visibility:Icons.visibility_off),)
                           ),
                           style: const TextStyle(color: Colors.white),
                         ),
@@ -177,7 +193,7 @@ class SignupPage extends StatelessWidget {
 
                         if (user != null) {
                           print('User signed in with Google: ${user.displayName}');
-                          Navigator.pushReplacementNamed(context, RoutesName.home);
+                          Navigator.pushNamedAndRemoveUntil(context, RoutesName.home,(route) => false);
                         } else {
                           CustomSnackBar.show(context, 'Google Sign-In failed');                        }
                       },
@@ -204,7 +220,7 @@ class SignupPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.asset(
-                                'assets/images/googlelogo.png',
+                                'assets/images/Googlelogo.png',
                                 width: SizeConfig.safeBlockHorizontal * 8,
                                 height: SizeConfig.safeBlockVertical * 8,
                               ),

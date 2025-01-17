@@ -10,15 +10,13 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  // Define a list of branches for the dropdown
   final List<String> branches = ['CSE', 'ECE', 'EEE', 'Mechanical', 'Civil'];
 
-  // Track selected branch
   String selectedBranch = 'CSE';
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig.init(context); // Initialize screen dimensions
+    SizeConfig.init(context);
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -53,8 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   CircleAvatar(
                     radius: SizeConfig.blockSizeVertical * 10,
-                    backgroundImage: NetworkImage(
-                        "https://via.placeholder.com/150"),
+                    backgroundColor: Colors.purple,
                   ),
                   Positioned(
                     bottom: 5,
@@ -142,8 +139,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 onPressed: () {
-                  // Logic to save changes
-                  print("Selected Branch: $selectedBranch");
+
                 },
                 child: const Text(
                   "Save Changes",
