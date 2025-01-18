@@ -29,6 +29,33 @@ class UserService {
     }
   }
 
+  Future<User?> signupWithEmailAndPassword(String email, String password) async {
+    try {
+      final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      throw e; // Let the caller handle specific FirebaseAuth exceptions
+    } catch (e) {
+      throw Exception("Signup failed. Please try again.");
+    }
+  }
+  Future<User?> signInWithEmailAndPassword(String email, String password) async {
+    try {
+      final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      throw e; // Let the caller handle specific FirebaseAuth exceptions
+    } catch (e) {
+      throw Exception("Signup failed. Please try again.");
+    }
+  }
+
   // Function to handle user sign out
   Future<void> signOut() async {
     await _googleSignIn.signOut();

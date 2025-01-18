@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 import 'package:abhiyanth/widgets/gradient_border.dart';
-=======
->>>>>>> 713204fa0e9bcce76270574d8b39574138dc5838
 import 'package:flutter/material.dart';
 import '../services/size_config.dart';
 
@@ -23,7 +20,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-<<<<<<< HEAD
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -193,14 +189,5 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ],
     );
-=======
-      body: Center(
-        child: const Text(
-          "Profile Page",
-          style: TextStyle(color: Colors.white, fontFamily: "Audiowide"),
-        ),
-      ),
-    );
->>>>>>> 713204fa0e9bcce76270574d8b39574138dc5838
   }
 }

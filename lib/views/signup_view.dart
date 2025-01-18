@@ -4,7 +4,6 @@ import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:provider/provider.dart';
 import '../services/custom_snackbar.dart';
-import '../services/user_service.dart';
 import '../viewmodels/signupview_model.dart';
 
 class SignupPage extends StatefulWidget {
@@ -13,9 +12,6 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  final TextEditingController _emailController = TextEditingController();
-
-  final TextEditingController _passwordController = TextEditingController();
 
   bool _obscuretext = true;
 
@@ -37,6 +33,7 @@ class _SignupPageState extends State<SignupPage> {
         body: SingleChildScrollView(
           child: Consumer<SignupViewModel>(
             builder: (context, viewModel, child) {
+              viewModel.context=context;
               return Column(
                 children: [
                   SizedBox(height: SizeConfig.safeBlockVertical * 0.5),
@@ -45,8 +42,7 @@ class _SignupPageState extends State<SignupPage> {
                     width: SizeConfig.safeBlockHorizontal * 50,
                     height: SizeConfig.safeBlockVertical * 50,
                   ),
-                  SizedBox(height: SizeConfig.safeBlockVertical * 5),
-                  // Email TextField
+                  SizedBox(height: SizeConfig.safeBlockVertical * 1),
                   Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: SizeConfig.safeBlockHorizontal * 5),
@@ -58,7 +54,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         borderRadius: BorderRadius.circular(
                             SizeConfig.safeBlockHorizontal * 10),
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                           colors: [Color(0xFFFF6AB7), Color(0xFF6AE4FF)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -73,7 +69,7 @@ class _SignupPageState extends State<SignupPage> {
                         padding: EdgeInsets.symmetric(
                             horizontal: SizeConfig.safeBlockHorizontal * 3),
                         child: TextFormField(
-                          controller: _emailController,
+                          controller: viewModel.emailController,
                           keyboardType: TextInputType.emailAddress,
                           decoration: const InputDecoration(
                             hintText: "Enter your email",
@@ -99,7 +95,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         borderRadius: BorderRadius.circular(
                             SizeConfig.safeBlockHorizontal * 10),
-                        gradient: LinearGradient(
+                        gradient:const LinearGradient(
                           colors: [Color(0xFF6AE4FF), Color(0xFFFF6AB7)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -114,7 +110,7 @@ class _SignupPageState extends State<SignupPage> {
                         padding: EdgeInsets.symmetric(
                             horizontal: SizeConfig.safeBlockHorizontal * 3),
                         child: TextFormField(
-                          controller: _passwordController,
+                          controller: viewModel.passwordController,
 
                           obscureText: _obscuretext,
                           decoration: InputDecoration(
@@ -135,11 +131,11 @@ class _SignupPageState extends State<SignupPage> {
                     onPressed: viewModel.isLoading
                         ? null
                         : () {
-                      final email = _emailController.text.trim();
-                      final password = _passwordController.text.trim();
+                      final email = viewModel.emailController.text.trim();
+                      final password = viewModel.passwordController.text.trim();
 
                       if (email.isNotEmpty && password.isNotEmpty) {
-                        viewModel.signup(email, password, context);
+                        viewModel.signup();
                       } else {
                        CustomSnackBar.show(context, 'Please fill all fields');
                       }
@@ -186,16 +182,8 @@ class _SignupPageState extends State<SignupPage> {
                   SizedBox(
                     width: SizeConfig.safeBlockHorizontal * 80,
                     child: ElevatedButton(
-                      onPressed: () async {
-                        final userService = UserService();
-
-                        final user = await userService.signInWithGoogle();
-
-                        if (user != null) {
-                          print('User signed in with Google: ${user.displayName}');
-                          Navigator.pushNamedAndRemoveUntil(context, RoutesName.home,(route) => false);
-                        } else {
-                          CustomSnackBar.show(context, 'Google Sign-In failed');                        }
+                      onPressed: ()  {
+                        viewModel.signupGoogle();
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(

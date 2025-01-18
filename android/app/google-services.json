@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "677897623427-qrs03lhq8a6o015g6govo0fhiqnj748k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.abhiyan",
+            "certificate_hash": "1141bef8ff8014b950f6554a62094f5f761240bc"
+          }
+        },
+        {
           "client_id": "677897623427-mesekp86beqrjrtp44l24d02blmgev6t.apps.googleusercontent.com",
           "client_type": 3
         }

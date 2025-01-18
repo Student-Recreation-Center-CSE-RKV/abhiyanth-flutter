@@ -27,8 +27,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
     Timer(const Duration(seconds: 4), _checkUserStatus);
   }
-
   void _checkUserStatus() {
+  Navigator.pushReplacementNamed(context, RoutesName.login);
     final User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {

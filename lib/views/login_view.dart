@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         create: (context) => LoginViewModel(),
         child: Consumer<LoginViewModel>(
           builder: (context, viewModel, child) {
-<<<<<<< HEAD
+            viewModel.context=context;
             return SingleChildScrollView(  // Wrap content in SingleChildScrollView
               child: Container(
                 height: MediaQuery.of(context).size.height,
@@ -53,36 +53,6 @@ class _LoginPageState extends State<LoginPage> {
                         fontFamily: "AudioWide",
                         fontSize: SizeConfig.blockSizeVertical * 3,
                       ),
-=======
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(height: SizeConfig.blockSizeVertical * 6),
-                  // Logo Image
-                  Image.asset(
-                    'assets/images/Abhiyanthlogo2.png',
-                    fit: BoxFit.cover,
-                    width: SizeConfig.safeBlockHorizontal * 30,
-                    height: SizeConfig.blockSizeVertical * 18,
-                  ),
-                  SizedBox(height: SizeConfig.blockSizeVertical * 2),
-                  Text(
-                    "Abhiyanth 2k25",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: "AudioWide",
-                      fontSize: SizeConfig.blockSizeVertical * 3,
-                    ),
-                  ),
-                  SizedBox(height: SizeConfig.safeBlockVertical * 15),
-                  // Welcome Text
-                  Text(
-                    "Welcome Back!",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'AudioWide',
-                      fontSize: SizeConfig.safeBlockHorizontal * 8,
->>>>>>> 713204fa0e9bcce76270574d8b39574138dc5838
                     ),
                     SizedBox(height: SizeConfig.safeBlockVertical * 20),
                     Text(
@@ -135,9 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                             horizontal: SizeConfig.safeBlockHorizontal * 3,
                           ),
                           child: TextFormField(
-                            onChanged: (value) {
-                              viewModel.setEmail(value);
-                            },
+                            controller: viewModel.emailController,
                             decoration: const InputDecoration(
                               hintText: "Enter your email",
                               hintStyle: TextStyle(color: Colors.white70),
@@ -185,9 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           child: TextFormField(
                             obscureText: _obscuretext,
-                            onChanged: (value) {
-                              viewModel.setPassword(value);
-                            },
+                              controller: viewModel.passwordController,
                             decoration: InputDecoration(
                               hintText: "Enter your password",
                               hintStyle: const TextStyle(color: Colors.white70),
@@ -214,7 +180,6 @@ class _LoginPageState extends State<LoginPage> {
                     ElevatedButton(
                       onPressed: () {
                         viewModel.login(context);
-                        CustomSnackBar.show(context, "Logging in...");
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
