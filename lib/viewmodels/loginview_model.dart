@@ -1,47 +1,33 @@
 import 'package:abhiyanth/services/custom_snackbar.dart';
+import 'package:abhiyanth/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
 import '../services/Routes/routesname.dart';
 
-class LoginViewModel extends ChangeNotifier {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  String? _email;
-  String? _password;
+class LoginViewModel extends BaseViewModel {
+  final UserService userService=UserService();
+  BuildContext?context;
+  TextEditingController emailController=TextEditingController();
+  TextEditingController passwordController=TextEditingController();
   bool _isLoading = false;
 
-  String get email => _email ?? '';
-  String get password => _password ?? '';
   bool get isLoading => _isLoading;
 
-  // Set email and password
-  void setEmail(String email) {
-    _email = email;
-    notifyListeners();
-  }
-
-  void setPassword(String password) {
-    _password = password;
-    notifyListeners();
-  }
 
   // Login function using Firebase Auth
   Future<void> login(BuildContext context) async {
-    if (_email == null || _password == null || _email!.isEmpty || _password!.isEmpty) {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
       CustomSnackBar.show(context, "Please enter both email and password");
       return;
     }
 
     try {
-      // Start loading state
       _isLoading = true;
       notifyListeners();
 
       // Attempt to sign in with Firebase Authentication
-      final userCredential = await _auth.signInWithEmailAndPassword(
-        email: _email!,
-        password: _password!,
-      );
+      await userService.signInWithEmailAndPassword(emailController.text,passwordController.text);
 
       // Show success message
     CustomSnackBar.show(context, "Login successful");
