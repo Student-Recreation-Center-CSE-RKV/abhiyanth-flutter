@@ -1,42 +1,59 @@
 import 'package:abhiyanth/services/Routes/routesname.dart';
+import 'package:abhiyanth/services/custom_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:abhiyanth/services/user_service.dart';
+import 'package:stacked/stacked.dart';
+class SignupViewModel extends BaseViewModel{
 
-class SignupViewModel extends ChangeNotifier {
   bool _isLoading = false;
+
   bool get isLoading => _isLoading;
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final UserService _userService=UserService();
+  TextEditingController emailController=TextEditingController();
+  TextEditingController passwordController=TextEditingController();
+  BuildContext? context;
 
-  Future<void> signup(String email, String password, BuildContext context) async {
+  Future <void> signupGoogle()async{
+    try{
+      _isLoading=true;
+      notifyListeners();
+      final user = await _userService.signInWithGoogle();
+      if (user != null) {
+        Navigator.pushNamedAndRemoveUntil(context!, RoutesName.home,(route) => false);
+      }
+    }
+    catch(e)
+    {
+      CustomSnackBar.show(context!, 'Google Sign-In failed');
+    }
+    finally{
+      _isLoading=false;
+      notifyListeners();
+    }
+  }
+  Future<void> signup() async {
     try {
       _isLoading = true;
       notifyListeners();
 
-      // Create user with email and password using Firebase
-      final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      final user = await _userService.signupWithEmailAndPassword(emailController.text, passwordController.text);
 
-      // Check if user was created successfully
-      if (userCredential.user != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("SignUp successful")),
+      if (user != null) {
+        CustomSnackBar.show(context!, "SignUp successful");
+
+        Navigator.pushNamedAndRemoveUntil(
+          context!,
+          RoutesName.home,
+              (route) => false,
         );
-
-        // Navigate to the home screen after successful signup
-        Navigator.pushReplacementNamed(context, RoutesName.home);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Signup failed. Please try again.")),
-        );
+        CustomSnackBar.show(context!, "Signup failed. Please try again.");
       }
 
-      _isLoading = false;
-      notifyListeners();
+
     } on FirebaseAuthException catch (e) {
-      // Handle specific Firebase errors
       _isLoading = false;
       notifyListeners();
 
@@ -48,23 +65,19 @@ class SignupViewModel extends ChangeNotifier {
       } else if (e.code == 'invalid-email') {
         errorMessage = "The email address is invalid.";
       }
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(errorMessage)),
-      );
+      CustomSnackBar.show(context!, errorMessage);
     } catch (e) {
-      // Catch any other errors
+      CustomSnackBar.show(context!, 'Signup failed. Please try again.');
+    }
+    finally{
       _isLoading = false;
       notifyListeners();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Signup failed. Please try again.')),
-      );
     }
   }
 
-  // Optionally, a function to clear the form if needed
   void clear() {
     _isLoading = false;
     notifyListeners();
   }
 }
+

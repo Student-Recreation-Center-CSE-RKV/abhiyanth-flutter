@@ -1,3 +1,4 @@
+import 'package:abhiyanth/services/custom_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
@@ -60,21 +61,15 @@ class ForgotPasswordPage extends StatelessWidget {
                onPressed: () async {
                                String email = _emailcontroller.text;
                                if (email.isEmpty) {
-                                 ScaffoldMessenger.of(context).showSnackBar(
-                                   SnackBar(content: Text("Please enter an email address")),
-                                 );
+                                CustomSnackBar.show(context, "Please enter an email address");
                                  return;
                                }
 
                                try {
                                  await auth.sendPasswordResetEmail(email: email);
-                                 ScaffoldMessenger.of(context).showSnackBar(
-                                   SnackBar(content: Text("Password reset email sent")),
-                                 );
+                                CustomSnackBar.show(context, "Password reset email sent");
                                } catch (e) {
-                                 ScaffoldMessenger.of(context).showSnackBar(
-                                   SnackBar(content: Text("Error: ${e.toString()}")),
-                                 );
+                                 CustomSnackBar.show(context, "Error: ${e.toString()}");
                                }
                              },
     child: Text("Reset",style: TextStyle(color: Colors.white,fontSize: SizeConfig.safeBlockHorizontal*3),),

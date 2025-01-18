@@ -1,11 +1,14 @@
 buildscript {
     repositories {
-        google()        // Google's Maven repository
-        mavenCentral()  // Central Maven repository
-        maven { url 'https://maven.aliyun.com/repository/public' } // Aliyun Maven repository
+        google()
+        mavenCentral()
+        maven { url 'https://maven.aliyun.com/repository/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.0' // Updated AGP version
+        classpath 'com.android.tools.build:gradle:8.0.2'
+        classpath 'com.google.gms:google-services:4.4.0'
+
+
     }
 }
 

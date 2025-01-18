@@ -12,7 +12,28 @@
           "package_name": "com.example.abhiyan"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "677897623427-3j3eug935ccjvqetk9kr96i0lbgn4a4o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.abhiyan",
+            "certificate_hash": "c72a1624816569eabae3226bdd0c2ca931b2b5bb"
+          }
+        },
+        {
+          "client_id": "677897623427-qrs03lhq8a6o015g6govo0fhiqnj748k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.abhiyan",
+            "certificate_hash": "1141bef8ff8014b950f6554a62094f5f761240bc"
+          }
+        },
+        {
+          "client_id": "677897623427-mesekp86beqrjrtp44l24d02blmgev6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA_q93nHODOUD9Q4eIxWHxwxgYXHZ9Xzi4"
@@ -20,7 +41,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "677897623427-mesekp86beqrjrtp44l24d02blmgev6t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "677897623427-4eiofvq1vhiecnnpc2hma87r175nuphb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.abhiyanth"
+              }
+            }
+          ]
         }
       }
     },
@@ -31,7 +64,20 @@
           "package_name": "com.example.abhiyanth"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "677897623427-3u0j0hck3e37ck0d9o0k3bjhi7dcfdi7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.abhiyanth",
+            "certificate_hash": "c72a1624816569eabae3226bdd0c2ca931b2b5bb"
+          }
+        },
+        {
+          "client_id": "677897623427-mesekp86beqrjrtp44l24d02blmgev6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA_q93nHODOUD9Q4eIxWHxwxgYXHZ9Xzi4"
@@ -39,7 +85,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "677897623427-mesekp86beqrjrtp44l24d02blmgev6t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "677897623427-4eiofvq1vhiecnnpc2hma87r175nuphb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.abhiyanth"
+              }
+            }
+          ]
         }
       }
     }
