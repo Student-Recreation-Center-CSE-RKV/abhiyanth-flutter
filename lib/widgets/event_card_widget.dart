@@ -1,147 +1,93 @@
 import 'package:flutter/material.dart';
-import 'package:abhiyanth/services/size_config.dart';
 
-class EventCard extends StatelessWidget {
-  final String date;
+class AuditionCard extends StatelessWidget {
   final String title;
-  final String location;
-  final String imageUrl;
+  final String date;
+  final String time;
+  final String venue;
+  final String description;
 
-  const EventCard({
-    super.key,
-    required this.date,
+  const AuditionCard({super.key, 
     required this.title,
-    required this.location,
-    required this.imageUrl,
+    required this.date,
+    required this.time,
+    required this.venue,
+    required this.description,
   });
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig.init(context);
-
     return Container(
-      height: SizeConfig.blockSizeVertical * 21,
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(SizeConfig.blockSizeHorizontal * 4),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: SizeConfig.blockSizeHorizontal * 2,
-            offset: Offset(0, SizeConfig.blockSizeVertical * 0.5),
-          ),
-        ],
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color:
+              Colors.pinkAccent.withOpacity(0.6), // Border with gradient effect
+          width: 2,
+        ),
       ),
-      child: Stack(
+      child: Row(
         children: [
-          ClipRRect(
-            borderRadius:
-                BorderRadius.circular(SizeConfig.blockSizeHorizontal * 3),
-            child: Image.network(
-              imageUrl,
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity,
-            ),
-          ),
+          // Image Placeholder
           Container(
+            width: 100,
+            height: 100,
             decoration: BoxDecoration(
-              borderRadius:
-                  BorderRadius.circular(SizeConfig.blockSizeHorizontal * 3),
-              gradient: LinearGradient(
-                colors: [
-                  Colors.black.withOpacity(0.9),
-                  Colors.transparent,
-                ],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
+              color: Colors.grey[400], // Light gray placeholder
+              borderRadius: BorderRadius.circular(12),
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius:
-                  BorderRadius.circular(SizeConfig.blockSizeHorizontal * 3),
-              gradient: LinearGradient(
-                colors: [
-                  Colors.black.withOpacity(0.6),
-                  Colors.black.withOpacity(0.2),
-                ],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(SizeConfig.blockSizeHorizontal * 3),
+          const SizedBox(width: 16), // Spacing between image and text
+          // Text Content
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  date,
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontFamily: "Audiowide",
-                    fontSize: SizeConfig.blockSizeHorizontal * 3.5,
-                  ),
-                ),
-                SizedBox(height: SizeConfig.blockSizeVertical * 1),
-                Text(
                   title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: SizeConfig.blockSizeHorizontal * 5.5,
+                  style: const TextStyle(
+                    color: Colors.lightBlueAccent,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     fontFamily: "Audiowide",
                   ),
                 ),
-                SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                const SizedBox(height: 6),
                 Text(
-                  location,
-                  style: TextStyle(
-                    color: Colors.white54,
+                  "Date: $date",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
                     fontFamily: "Audiowide",
-                    fontSize: SizeConfig.blockSizeHorizontal * 3.5,
                   ),
                 ),
-                SizedBox(height: SizeConfig.blockSizeVertical * 1),
-                TextButton(
-                  onPressed: () {
-                    // Add your action here
-                  },
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: const Color(0xFFFF3366),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          SizeConfig.blockSizeHorizontal * 2.5),
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      vertical: SizeConfig.blockSizeVertical * 0.7,
-                      horizontal: SizeConfig.blockSizeHorizontal * 1.75,
-                    ),
+                Text(
+                  "Time: $time",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontFamily: "Audiowide",
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize
-                        .min, // Ensures the row takes only as much space as needed
-                    children: [
-                      Text(
-                        "Register Now",
-                        style: TextStyle(
-                          fontSize: SizeConfig.blockSizeHorizontal * 4.5,
-                        ),
-                      ),
-                      SizedBox(
-                          width: SizeConfig.blockSizeHorizontal *
-                              1), // Optional spacing between text and icon
-                      Icon(
-                        Icons.arrow_outward_outlined,
-                        size: SizeConfig.blockSizeHorizontal *5, // Adjust icon size if needed
-                        color: Colors.white,
-                      ),
-                    ],
+                ),
+                Text(
+                  "Venue: $venue",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontFamily: "Audiowide",
                   ),
-                )
+                ),
+                Text(
+                  "Description: $description",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontFamily: "Audiowide",
+                  ),
+                ),
               ],
             ),
           ),
@@ -149,4 +95,5 @@ class EventCard extends StatelessWidget {
       ),
     );
   }
+  
 }

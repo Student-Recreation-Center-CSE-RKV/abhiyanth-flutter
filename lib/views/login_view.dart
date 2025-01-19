@@ -88,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(
                             SizeConfig.safeBlockHorizontal * 10,
                           ),
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [Color(0xFFFF6AB7), Color(0xFF6AE4FF)],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                             controller: viewModel.emailController,
                             decoration: const InputDecoration(
                               hintText: "Enter your email",
-                              hintStyle: TextStyle(color: Colors.white70),
+                              hintStyle: TextStyle(color: Colors.white70, fontFamily: "Audiowide",),
                               border: InputBorder.none,
                               prefixIcon: Icon(Icons.email, color: Colors.white),
                             ),
@@ -156,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                               controller: viewModel.passwordController,
                             decoration: InputDecoration(
                               hintText: "Enter your password",
-                              hintStyle: const TextStyle(color: Colors.white70),
+                              hintStyle: const TextStyle(color: Colors.white70,fontFamily: "Audiowide",),
                               border: InputBorder.none,
                               prefixIcon: const Icon(Icons.lock, color: Colors.white),
                               suffixIcon: IconButton(
@@ -217,6 +217,7 @@ class _LoginPageState extends State<LoginPage> {
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: SizeConfig.safeBlockHorizontal * 5,
+                              fontFamily: "Audiowide",
                             ),
                           ),
                         ),
@@ -230,18 +231,18 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       child: const Text(
                         'Forgot password',
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(color: Colors.blue, fontFamily: "Audiowide",),
                       ),
                     ),
                     // Register Now Link
                     Text.rich(
                       TextSpan(
                         text: "Don't have an account...?",
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white, fontFamily: "Audiowide",),
                         children: [
                           TextSpan(
                             text: 'Register Now',
-                            style: const TextStyle(color: Colors.blue),
+                            style: const TextStyle(color: Colors.blue , fontFamily: "Audiowide",),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 Navigator.pushNamed(context, RoutesName.signup);

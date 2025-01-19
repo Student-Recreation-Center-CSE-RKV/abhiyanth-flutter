@@ -18,7 +18,7 @@ class LoginViewModel extends BaseViewModel {
   // Login function using Firebase Auth
   Future<void> login(BuildContext context) async {
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-      CustomSnackBar.show(context, "Please enter both email and password");
+      CustomSnackBar.show(context, "Please enter both email and password" , type: "warning");
       return;
     }
 
@@ -30,7 +30,7 @@ class LoginViewModel extends BaseViewModel {
       await userService.signInWithEmailAndPassword(emailController.text,passwordController.text);
 
       // Show success message
-    CustomSnackBar.show(context, "Login successful");
+      CustomSnackBar.show(context, "Login successful" , type: "success");
 
       // Navigate to the home screen
       Navigator.pushNamedAndRemoveUntil(context, RoutesName.home,(route) => false, );
@@ -63,7 +63,7 @@ class LoginViewModel extends BaseViewModel {
       }
 
       // Show error message
-     CustomSnackBar.show(context,errorMessage);
+     CustomSnackBar.show(context,errorMessage , type: "error");
 
       // Stop loading state
       _isLoading = false;
@@ -72,7 +72,7 @@ class LoginViewModel extends BaseViewModel {
     } catch (e) {
       // General error catch
       print("General error: $e");
-      CustomSnackBar.show(context,"An unexpected error occurred. Please try again.");
+      CustomSnackBar.show(context,"An unexpected error occurred. Please try again." , type: "error");
 
       _isLoading = false;
       notifyListeners();

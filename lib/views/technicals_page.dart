@@ -2,7 +2,7 @@ import 'package:abhiyanth/widgets/image_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
-import 'package:abhiyanth/widgets/audition_card_widget.dart';
+import 'package:abhiyanth/widgets/event_card_widget.dart';
 
 final List<Map<String, String>> upcomingTechnicalEvents = [
   {'image': 'https://i.pinimg.com/236x/72/b9/b4/72b9b4cacff627b4d6201bafbcc78d6a.jpg', 'text': 'Coding Contest'},
