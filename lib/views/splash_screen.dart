@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:abhiyanth/services/Routes/navigation_service.dart';
 import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -14,7 +15,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
   late final AnimationController _controller;
-
+  NavigationService navigationService=NavigationService();
   @override
   void initState() {
     super.initState();
@@ -32,9 +33,9 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     final User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-      Navigator.pushReplacementNamed(context, RoutesName.home);
+      navigationService.pushReplacementScreen(RoutesName.home);
     } else {
-      Navigator.pushReplacementNamed(context, RoutesName.login);
+      navigationService.pushReplacementScreen(RoutesName.login);
     }
   }
 

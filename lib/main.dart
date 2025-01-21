@@ -1,3 +1,4 @@
+import 'package:abhiyanth/services/Routes/navigation_service.dart';
 import 'package:abhiyanth/services/Routes/routes.dart';
 import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,9 +15,10 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
+   MyApp({super.key});
+   NavigationService navigationService=NavigationService();
+   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
+      navigatorKey:NavigationService.navigatorKey ,
       initialRoute:RoutesName.splash,
       onGenerateRoute:Routes.generateRoute,
     );

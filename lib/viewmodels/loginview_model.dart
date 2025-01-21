@@ -1,3 +1,4 @@
+import 'package:abhiyanth/services/Routes/navigation_service.dart';
 import 'package:abhiyanth/services/custom_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import '../services/Routes/routesname.dart';
 
 class LoginViewModel extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  NavigationService navigationservice =NavigationService();
 
   String? _email;
   String? _password;
@@ -48,7 +50,7 @@ class LoginViewModel extends ChangeNotifier {
 
       // Navigate to the home screen
       Navigator.pushNamedAndRemoveUntil(context, RoutesName.home,(route) => false, );
-
+      navigationservice.removeAllAndPush(RoutesName.home,RoutesName.login);
       // Stop loading state
       _isLoading = false;
       notifyListeners();

@@ -1,9 +1,8 @@
-<<<<<<< HEAD
+
 import 'package:abhiyanth/widgets/gradient_border.dart';
-=======
->>>>>>> 713204fa0e9bcce76270574d8b39574138dc5838
 import 'package:flutter/material.dart';
 import '../services/size_config.dart';
+import '../utilities/gradient_background.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -13,17 +12,16 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final List<String> branches = ['CSE', 'ECE', 'EEE', 'Mechanical', 'Civil'];
-
+  final List<String> branches = ['CSE', 'ECE', 'EEE', 'Mechanical', 'Civil','Chemical','MME'];
   String selectedBranch = 'CSE';
 
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
 
-    return Scaffold(
+    return  GradientBackground(
+    child:Scaffold(
       backgroundColor: Colors.transparent,
-<<<<<<< HEAD
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -158,6 +156,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
       ),
+    )
     );
   }
 
@@ -193,14 +192,5 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ],
     );
-=======
-      body: Center(
-        child: const Text(
-          "Profile Page",
-          style: TextStyle(color: Colors.white, fontFamily: "Audiowide"),
-        ),
-      ),
-    );
->>>>>>> 713204fa0e9bcce76270574d8b39574138dc5838
   }
 }

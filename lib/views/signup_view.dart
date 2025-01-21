@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:provider/provider.dart';
+import '../services/Routes/navigation_service.dart';
+import '../services/Routes/routes.dart';
 import '../services/custom_snackbar.dart';
 import '../services/user_service.dart';
 import '../viewmodels/signupview_model.dart';
@@ -18,6 +20,8 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool _obscuretext = true;
+
+  NavigationService navigationService=NavigationService();
 
   void _toggleObscureText() {
     setState(() {
@@ -193,7 +197,7 @@ class _SignupPageState extends State<SignupPage> {
 
                         if (user != null) {
                           print('User signed in with Google: ${user.displayName}');
-                          Navigator.pushNamedAndRemoveUntil(context, RoutesName.home,(route) => false);
+                         navigationService.removeAllAndPush(RoutesName.home,RoutesName.signup);
                         } else {
                           CustomSnackBar.show(context, 'Google Sign-In failed');                        }
                       },
@@ -253,7 +257,7 @@ class _SignupPageState extends State<SignupPage> {
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
 
-                              Navigator.pushNamed(context, RoutesName.login);
+                              navigationService.pushScreen(RoutesName.home);
                             },
                         ),
                       ],

@@ -1,7 +1,10 @@
-import 'package:abhiyanth/utilities/gradient_background.dart'; 
+import 'package:abhiyanth/utilities/gradient_background.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:abhiyanth/widgets/gradient_border.dart';
+
+import '../../services/Routes/navigation_service.dart';
+import '../../services/Routes/routesname.dart';
 
 class DepartmentsPage extends StatefulWidget {
   const DepartmentsPage({super.key});
@@ -11,6 +14,7 @@ class DepartmentsPage extends StatefulWidget {
 }
 
 class _DepartmentsPageState extends State<DepartmentsPage> {
+  NavigationService navigationService=NavigationService();
   final List<Map<String, String>> departments = [
     {"code": "CSE", "name": "Aadhya"},
     {"code": "ECE", "name": "Technothon"},
@@ -20,6 +24,34 @@ class _DepartmentsPageState extends State<DepartmentsPage> {
     {"code": "CE", "name": "Enrich"},
     {"code": "EEE", "name": "Ecnovation"},
   ];
+  void navigateToPage(String page) {
+    // Perform navigation based on the page name
+    switch (page) {
+      case 'CSE':
+        navigationService.pushScreen(RoutesName.cse);
+        break;
+      case 'ECE':
+        navigationService.pushScreen(RoutesName.ece);
+        break;
+      case 'ME':
+        navigationService.pushScreen(RoutesName.mech);
+        break;
+      case 'Civil':
+        navigationService.pushScreen(RoutesName.civil);
+        break;
+      case 'MME':
+        navigationService.pushScreen(RoutesName.mme);
+        break;
+      case 'CE':
+        navigationService.pushScreen(RoutesName.chemical);
+        break;
+      case 'EEE':
+        navigationService.pushScreen(RoutesName.eee);
+        break;
+      default:
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +130,7 @@ class _DepartmentsPageState extends State<DepartmentsPage> {
                           ),
                           trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white),
                           onTap: () {
-                            // Handle department item click here
+                            navigateToPage(departments[index]["code"]!);
                           },
                         ),
                       ),
