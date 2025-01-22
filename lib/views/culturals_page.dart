@@ -19,7 +19,6 @@ final List<Map<String, String>> ongoingCulturals = [
 
 class CulturalsPage extends StatelessWidget {
   const CulturalsPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context); // Initialize SizeConfig for responsive sizing

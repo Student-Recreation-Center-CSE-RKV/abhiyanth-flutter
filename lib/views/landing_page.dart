@@ -1,3 +1,5 @@
+import 'package:abhiyanth/services/Routes/navigation_service.dart';
+import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/widgets/meet_the_team_widget.dart';
 import 'package:abhiyanth/widgets/image_slider.dart';
@@ -35,6 +37,7 @@ class _LandingPageState extends State<LandingPage> {
     SizeConfig.init(context); // Initialize SizeConfig
 
     // Dynamic sizes using SizeConfig
+    NavigationService navigationService=NavigationService();
     double avatarRadius = SizeConfig.safeBlockHorizontal * 10;
     double spacing = SizeConfig.safeBlockVertical * 2;
     double textFontSize = SizeConfig.safeBlockHorizontal * 3;
@@ -43,34 +46,19 @@ class _LandingPageState extends State<LandingPage> {
       // Perform navigation based on the page name
       switch (page) {
         case 'Workshops':
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const WorkshopsPage()),
-          );
+         navigationService.pushScreen(RoutesName.workshop);
           break;
         case 'Culturals':
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const CulturalsPage()),
-          );
+         navigationService.pushScreen(RoutesName.culturals);
           break;
         case 'Auditions':
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AuditionsPage()),
-          );
+          navigationService.pushScreen(RoutesName.auditions);
           break;
         case 'Stalls':
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const StallsPage()),
-          );
+         navigationService.pushScreen(RoutesName.stalls);
           break;
         case 'Technical':
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const TechnicalsPage()),
-          );
+          navigationService.pushScreen(RoutesName.technical);
           break;
         default:
           break;

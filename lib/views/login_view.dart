@@ -1,3 +1,4 @@
+import 'package:abhiyanth/services/Routes/navigation_service.dart';
 import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +13,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool _obscuretext = true;
+  bool _obscureText = true;
+  NavigationService navigationService=NavigationService();
 
   void _toggleObscureText() {
     setState(() {
-      _obscuretext = !_obscuretext;
+      _obscureText = !_obscureText;
     });
   }
 
@@ -30,8 +32,7 @@ class _LoginPageState extends State<LoginPage> {
         create: (context) => LoginViewModel(),
         child: Consumer<LoginViewModel>(
           builder: (context, viewModel, child) {
-            viewModel.context=context;
-            return SingleChildScrollView(  // Wrap content in SingleChildScrollView
+            return SingleChildScrollView(
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
@@ -46,6 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: SizeConfig.blockSizeVertical * 18,
                     ),
                     SizedBox(height: SizeConfig.blockSizeVertical * 2),
+                    // Title
                     Text(
                       "Abhiyanth 2k25",
                       style: TextStyle(
@@ -54,7 +56,8 @@ class _LoginPageState extends State<LoginPage> {
                         fontSize: SizeConfig.blockSizeVertical * 3,
                       ),
                     ),
-                    SizedBox(height: SizeConfig.safeBlockVertical * 20),
+                    SizedBox(height: SizeConfig.blockSizeVertical * 10),
+                    // Welcome Text
                     Text(
                       "Welcome Back!",
                       style: TextStyle(
@@ -64,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     SizedBox(height: SizeConfig.safeBlockVertical * 1),
-                    // Subtitle Text
+                    // Subtitle
                     Text(
                       "Login to Continue...",
                       style: TextStyle(
@@ -79,45 +82,10 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.symmetric(
                         horizontal: SizeConfig.safeBlockHorizontal * 5,
                       ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 2,
-                            color: Colors.transparent,
-                          ),
-                          borderRadius: BorderRadius.circular(
-                            SizeConfig.safeBlockHorizontal * 10,
-                          ),
-                          gradient: LinearGradient(
-                            colors: [Color(0xFFFF6AB7), Color(0xFF6AE4FF)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(
-                              SizeConfig.safeBlockHorizontal * 10,
-                            ),
-                          ),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: SizeConfig.safeBlockHorizontal * 3,
-                          ),
-                          child: TextFormField(
-                            controller: viewModel.emailController,
-                            decoration: const InputDecoration(
-                              hintText: "Enter your email",
-                              hintStyle: TextStyle(color: Colors.white70),
-                              border: InputBorder.none,
-                              prefixIcon: Icon(Icons.email, color: Colors.white),
-                            ),
-                            style: const TextStyle(
-                              color: Colors.white,
-                            ),
-                            maxLines: 1, // Ensure the text does not overflow
-                          ),
-                        ),
+                      child: _buildTextField(
+                        hintText: "Enter your email",
+                        icon: Icons.email,
+                        onChanged: viewModel.setEmail,
                       ),
                     ),
                     SizedBox(height: SizeConfig.safeBlockVertical * 2),
@@ -125,52 +93,19 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: SizeConfig.safeBlockHorizontal * 5,
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 2,
-                            color: Colors.transparent,
-                          ),
-                          borderRadius: BorderRadius.circular(
-                            SizeConfig.safeBlockHorizontal * 10,
-                          ),
-                          gradient: LinearGradient(
-                            colors: [Color(0xFF6AE4FF), Color(0xFFFF6AB7)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(
-                              SizeConfig.safeBlockHorizontal * 10,
-                            ),
-                          ),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: SizeConfig.safeBlockHorizontal * 3,
-                          ),
-                          child: TextFormField(
-                            obscureText: _obscuretext,
-                              controller: viewModel.passwordController,
-                            decoration: InputDecoration(
-                              hintText: "Enter your password",
-                              hintStyle: const TextStyle(color: Colors.white70),
-                              border: InputBorder.none,
-                              prefixIcon: const Icon(Icons.lock, color: Colors.white),
-                              suffixIcon: IconButton(
-                                onPressed: _toggleObscureText,
-                                icon: Icon(
-                                  _obscuretext
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                            style: const TextStyle(color: Colors.white),
-                            maxLines: 1, // Ensure the text does not overflow
+                      )      ,
+                      child: _buildTextField(
+                        hintText: "Enter your password",
+                        icon: Icons.lock,
+                        obscureText: _obscureText,
+                        onChanged: viewModel.setPassword,
+                        suffixIcon: IconButton(
+                          onPressed: _toggleObscureText,
+                          icon: Icon(
+                            _obscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -180,12 +115,11 @@ class _LoginPageState extends State<LoginPage> {
                     ElevatedButton(
                       onPressed: () {
                         viewModel.login(context);
+                        CustomSnackBar.show(context, "Logging in...");
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            SizeConfig.safeBlockHorizontal * 2,
-                          ),
+                          borderRadius: BorderRadius.circular(20),
                         ),
                         padding: EdgeInsets.symmetric(
                           horizontal: SizeConfig.safeBlockHorizontal * 6,
@@ -209,31 +143,33 @@ class _LoginPageState extends State<LoginPage> {
                           child: viewModel.isLoading
                               ? CircularProgressIndicator(
                             valueColor: AlwaysStoppedAnimation<Color>(
-                                Colors.white),
+                              Colors.white,
+                            ),
                           )
                               : Text(
                             "Login",
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: SizeConfig.safeBlockHorizontal * 5,
+                              fontSize:
+                              SizeConfig.safeBlockHorizontal * 5,
                             ),
                           ),
                         ),
                       ),
                     ),
                     SizedBox(height: SizeConfig.safeBlockVertical * 1),
-                    // Forgot Password Link
+                    // Forgot Password
                     TextButton(
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, RoutesName.forgotpass);
+                        navigationService.pushScreen(RoutesName.forgotpass);
                       },
                       child: const Text(
                         'Forgot password',
                         style: TextStyle(color: Colors.blue),
                       ),
                     ),
-                    // Register Now Link
+                    // Register Now
                     Text.rich(
                       TextSpan(
                         text: "Don't have an account...?",
@@ -244,18 +180,56 @@ class _LoginPageState extends State<LoginPage> {
                             style: const TextStyle(color: Colors.blue),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                Navigator.pushNamed(context, RoutesName.signup);
+                              navigationService.pushScreen(RoutesName.signup);
                               },
                           ),
                         ],
                       ),
                     ),
-                    Spacer(),
                   ],
                 ),
               ),
             );
           },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required String hintText,
+    required IconData icon,
+    required ValueChanged<String> onChanged,
+    bool obscureText = false,
+    Widget? suffixIcon,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(width: 2, color: Colors.transparent),
+        borderRadius: BorderRadius.circular(20),
+        gradient: LinearGradient(
+          colors: [Color(0xFF6AE4FF), Color(0xFFFF6AB7)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: TextFormField(
+          obscureText: obscureText,
+          onChanged: onChanged,
+          decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: const TextStyle(color: Colors.white70),
+            border: InputBorder.none,
+            prefixIcon: Icon(icon, color: Colors.white),
+            suffixIcon: suffixIcon,
+          ),
+          style: const TextStyle(color: Colors.white),
         ),
       ),
     );

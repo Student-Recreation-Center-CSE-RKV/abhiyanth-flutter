@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
 import 'package:abhiyanth/widgets/gradient_icon.dart';
 import 'package:abhiyanth/views/landing_page.dart';
-import 'package:abhiyanth/views/departments_page.dart';
+import 'package:abhiyanth/views/departments/departments_page.dart';
 import 'package:abhiyanth/views/event_page.dart';
 import 'package:abhiyanth/views/profile_page.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';

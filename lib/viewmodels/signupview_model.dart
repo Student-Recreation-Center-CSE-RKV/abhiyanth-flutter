@@ -33,7 +33,7 @@ class SignupViewModel extends BaseViewModel{
       notifyListeners();
     }
   }
-  Future<void> signup() async {
+  Future<void> signup(String email, String password, BuildContext context,) async {
     try {
       _isLoading = true;
       notifyListeners();
