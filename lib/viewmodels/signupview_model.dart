@@ -26,7 +26,7 @@ class SignupViewModel extends BaseViewModel{
     }
     catch(e)
     {
-      CustomSnackBar.show(context!, 'Google Sign-In failed');
+      CustomSnackBar.show(context!, 'Google Sign-In failed' , type: "error");
     }
     finally{
       _isLoading=false;
@@ -41,7 +41,7 @@ class SignupViewModel extends BaseViewModel{
       final user = await _userService.signupWithEmailAndPassword(emailController.text, passwordController.text);
 
       if (user != null) {
-        CustomSnackBar.show(context!, "SignUp successful");
+        CustomSnackBar.show(context!, "SignUp successful" , type : "success");
 
         Navigator.pushNamedAndRemoveUntil(
           context!,
@@ -49,7 +49,7 @@ class SignupViewModel extends BaseViewModel{
               (route) => false,
         );
       } else {
-        CustomSnackBar.show(context!, "Signup failed. Please try again.");
+        CustomSnackBar.show(context!, "Signup failed. Please try again." ,type: "error");
       }
 
 
@@ -65,9 +65,9 @@ class SignupViewModel extends BaseViewModel{
       } else if (e.code == 'invalid-email') {
         errorMessage = "The email address is invalid.";
       }
-      CustomSnackBar.show(context!, errorMessage);
+      CustomSnackBar.show(context!, errorMessage, type: "error");
     } catch (e) {
-      CustomSnackBar.show(context!, 'Signup failed. Please try again.');
+      CustomSnackBar.show(context!, 'Signup failed. Please try again.' , type: "error");
     }
     finally{
       _isLoading = false;

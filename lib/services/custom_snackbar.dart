@@ -2,24 +2,33 @@ import 'package:flutter/material.dart';
 
 class CustomSnackBar {
   static void show(BuildContext context, String message, {String type = "success"}) {
-    // Determine text color based on the type of message
+    // Determine text color and icon based on the type of message
     Color textColor;
+    IconData icon;
     switch (type) {
       case "error":
         textColor = Colors.red;
+        icon = Icons.error;
         break;
       case "warning":
         textColor = Colors.orange;
+        icon = Icons.warning;
         break;
       case "success":
       default:
         textColor = Colors.green;
+        icon = Icons.check_circle;
         break;
     }
 
     final snackBar = SnackBar(
       content: Row(
         children: [
+          Icon(
+            icon,
+            color: textColor,
+          ),
+          const SizedBox(width: 8), // Spacing between icon and message
           Expanded(
             child: Text(
               message,
