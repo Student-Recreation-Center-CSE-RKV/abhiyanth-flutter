@@ -13,7 +13,7 @@ void main() async {
   setUpLocator();
   await Firebase.initializeApp();
   runApp(
-    const ProviderScope(
+    ProviderScope(
       child: MyApp(),
     ),
   );
