@@ -1,93 +1,110 @@
-
-import 'package:abhiyanth/widgets/event_card_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:abhiyanth/widgets/audition_card_widget.dart';
-import 'package:abhiyanth/widgets/gradient_border.dart';
 import 'package:abhiyanth/services/size_config.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../viewmodels/event_state_provider.dart';
+import '../widgets/main_event_card_widget.dart';
+import '../widgets/gradient_border.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-class EventPage extends StatefulWidget {
+class EventPage extends ConsumerStatefulWidget {
   const EventPage({super.key});
 
   @override
-  State<EventPage> createState() => _EventPageState();
+  ConsumerState<EventPage> createState() => _EventPageState();
 }
 
-class _EventPageState extends State<EventPage> {
+class _EventPageState extends ConsumerState<EventPage> {
+  void initstate() {
+    super.initState();
+    debugPrint("super.initstate");
+
+    ref.read(eventProvider.notifier).fetchEvents();
+    debugPrint("ref");
+  }
+
   @override
   Widget build(BuildContext context) {
+    // SizeConfig().init(context); // Initialize SizeConfig
+    // super.initState();
+    final eventState = ref.watch(eventProvider);
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Padding(
-        padding: const EdgeInsets.only(bottom: 16.0,left: 16.0,right: 16.0),
+        padding: EdgeInsets.only(
+          bottom: SizeConfig.safeBlockVertical * 2.0,
+          left: SizeConfig.safeBlockHorizontal * 4.0,
+          right: SizeConfig.safeBlockHorizontal * 4.0,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Flexible(
-              child: ListView(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 5),
-                    child: BorderGradient(
-                      borderWidth: 6.0,
-                      gradientColors: const [
-                        Color(0xFFFF6AB7),
-                        Color(0xFF6AE4FF)
-                      ],
-                      borderRadius: BorderRadius.circular(
-                          SizeConfig.safeBlockHorizontal * 5),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: SizeConfig.safeBlockHorizontal * 20),
-                        child: Text(
-                          "Events",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: "Audiowide",
-                            fontSize: SizeConfig.safeBlockHorizontal * 5,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
+            Padding(
+              padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 4.0),
+              child: BorderGradient(
+                borderWidth: SizeConfig.safeBlockHorizontal * 1.5,
+                gradientColors: const [Color(0xFFFF6AB7), Color(0xFF6AE4FF)],
+                borderRadius: BorderRadius.circular(
+                  SizeConfig.safeBlockHorizontal * 4.0,
+                ),
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.safeBlockHorizontal * 25.0,
+                  ),
+                  child: const Text(
+                    "Events",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "Audiowide",
+                      fontSize: 20.0, // Use a fixed font size for titles
                     ),
+                    textAlign: TextAlign.center,
                   ),
-                  const EventCard(
-                    date: "28-02-25",
-                    title: "Anime",
-                    location: "at s122",
-                    imageUrl:
-                        "https://i.pinimg.com/originals/5f/47/3e/5f473e7e1460acc093943bbf44889e39.gif",
-                  ),
-                  const SizedBox(height: 16.0),
-                  const EventCard(
-                    date: "28-02-25",
-                    title: "Flashmob",
-                    location: "at YSR Statue",
-                    imageUrl:
-                        "https://i.pinimg.com/originals/6c/12/cd/6c12cde612e399ca90b07afa11ac3af8.gif",
-                  ),
-                  const SizedBox(height: 16.0),
-                  const EventCard(
-                    date: "28-02-25",
-                    title: "Hackathon",
-                    location: "at Computer Center",
-                    imageUrl:
-                        "https://i.pinimg.com/originals/f7/81/2e/f7812e1249081221bb80abb048698308.gif",
-                  ),
-                  const SizedBox(height: 16.0),
-                  const EventCard(
-                    date: "28-02-25",
-                    title: "Cultural Night",
-                    location: "at Stage",
-                    imageUrl:
-                        "https://i.pinimg.com/originals/5a/56/0d/5a560dde2f98223f1967e05f8077b30f.gif",
-                  ),
-                ],
+                ),
               ),
             ),
-            
+            Expanded(
+              child: eventState.when(
+                data: (events) => ListView.builder(
+                  itemCount: events.length,
+                  itemBuilder: (context, index) {
+                    final event = events[index];
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: SizeConfig.safeBlockVertical * 1.0,
+                      ),
+                      child: EventCard(
+                        date: event['date'] ?? 'N/A',
+                        title: event['title'] ?? 'No Title',
+                        location: event['venue'] ?? 'No Location',
+                        imageUrl: event['image'] ?? '',
+                      ),
+                    );
+                  },
+                ),
+                loading: () => Center(
+                  child: LoadingAnimationWidget.inkDrop(
+                    color: Colors.white,
+                    size: SizeConfig.safeBlockHorizontal * 10.0,
+                  ),
+                ),
+                error: (error, stack) => Center(
+                  child: Text(
+                    "Error loading events: $error",
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          debugPrint("FloatingActionButton pressed: Fetching events.");
+          ref.read(eventProvider.notifier).fetchEvents(); // Trigger data fetch
+        },
+        child: const Icon(Icons.refresh),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:abhiyanth/views/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
 import 'package:abhiyanth/widgets/gradient_icon.dart';
@@ -8,7 +9,7 @@ import 'package:abhiyanth/views/profile_page.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -73,6 +74,7 @@ class _HomePageState extends State<HomePage> {
             EventPage(),
             DepartmentsPage(),
             ProfilePage(),
+            MapPage(),
           ],
         ),
         bottomNavigationBar: Container(
@@ -111,6 +113,10 @@ class _HomePageState extends State<HomePage> {
               ),
               GradientIcon(
                 icon: Icons.person,
+                size: 30,
+              ),
+              GradientIcon(
+                icon: Icons.map,
                 size: 30,
               ),
             ],

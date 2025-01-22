@@ -1,8 +1,10 @@
+import 'package:abhiyanth/widgets/event_card_widget.dart';
 import 'package:abhiyanth/widgets/image_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
-import 'package:abhiyanth/widgets/audition_card_widget.dart';
+import '../viewmodels/culturals_provider.dart';
 
 final List<Map<String, String>> ongoingCulturals = [
   {
@@ -17,11 +19,29 @@ final List<Map<String, String>> ongoingCulturals = [
   },
 ];
 
-class CulturalsPage extends StatelessWidget {
+class CulturalsPage extends ConsumerStatefulWidget {
   const CulturalsPage({super.key});
   @override
+  ConsumerState<CulturalsPage> createState() => _CulturalsPageState();
+}
+
+class _CulturalsPageState extends ConsumerState<CulturalsPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    // Fetch ongoing culturals when the page is loaded
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(culturalsProvider.notifier).fetchOngoingCulturals();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    SizeConfig.init(context); // Initialize SizeConfig for responsive sizing
+    SizeConfig.init(context);
+
+    // Watch the ongoing culturals state
+    final ongoingCulturalsState = ref.watch(culturalsProvider);
 
     return GradientBackground(
       child: Scaffold(
@@ -38,10 +58,9 @@ class CulturalsPage extends StatelessWidget {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios),
             color: Colors.white,
-            iconSize:
-                SizeConfig.safeBlockHorizontal * 6, // Responsive icon size
+            iconSize: SizeConfig.safeBlockHorizontal * 6,
             onPressed: () {
-              Navigator.pop(context); // Navigate to previous page
+              Navigator.pop(context);
             },
           ),
           elevation: 0,
@@ -49,13 +68,11 @@ class CulturalsPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         body: Padding(
           padding: EdgeInsets.symmetric(
-              horizontal:
-                  SizeConfig.safeBlockHorizontal * 4), // Responsive padding
+              horizontal: SizeConfig.safeBlockHorizontal * 4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: SizeConfig.safeBlockVertical * 2),
-
               const Text(
                 "Ongoing Culturals",
                 style: TextStyle(
@@ -65,9 +82,20 @@ class CulturalsPage extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              ImageSliderWidget(items: ongoingCulturals),
-
-              // Title Text
+              // Display the Image Slider based on state
+              ongoingCulturalsState.when(
+                data: (items) => ImageSliderWidget(items: items),
+                loading: () => const Center(
+                  child: CircularProgressIndicator(color: Colors.white),
+                ),
+                error: (error, _) => Center(
+                  child: Text(
+                    "Error loading ongoing culturals: $error",
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
               const Text(
                 "Upcoming Culturals",
                 style: TextStyle(
@@ -78,8 +106,6 @@ class CulturalsPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-
-              // Audition Card Widget
               const AuditionCard(
                 title: "Singing",
                 date: "1st Jan 2025",

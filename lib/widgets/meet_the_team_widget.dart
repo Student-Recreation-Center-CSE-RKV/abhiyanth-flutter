@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class MeetTheTeamWidget extends StatelessWidget {
 
@@ -77,13 +77,13 @@ class MeetTheTeamWidget extends StatelessWidget {
             // Button
             ElevatedButton(
               onPressed: () async {
-                const upiUrl =
-                    'https://abhiyanthrkv.in/ourTeam/';
-                if (await canLaunchUrl(Uri.parse(upiUrl))) {
-                  await launchUrl(Uri.parse(upiUrl));
-                } else {
-                  throw 'Could not launch $upiUrl';
-                }
+                // const upiUrl =
+                //     'https://abhiyanthrkv.in/ourTeam/';
+                // if (await canLaunchUrl(Uri.parse(upiUrl))) {
+                //   await launchUrl(Uri.parse(upiUrl));
+                // } else {
+                //   throw 'Could not launch $upiUrl';
+                // }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
