@@ -8,7 +8,7 @@ class StallsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig.init(context); // Initialize SizeConfig for responsive sizing
+    SizeConfig.init(context);
 
     return GradientBackground(
       child: Scaffold(
