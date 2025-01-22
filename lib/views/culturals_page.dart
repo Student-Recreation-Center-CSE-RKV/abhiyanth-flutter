@@ -21,7 +21,6 @@ final List<Map<String, String>> ongoingCulturals = [
 
 class CulturalsPage extends ConsumerStatefulWidget {
   const CulturalsPage({super.key});
-
   @override
   ConsumerState<CulturalsPage> createState() => _CulturalsPageState();
 }

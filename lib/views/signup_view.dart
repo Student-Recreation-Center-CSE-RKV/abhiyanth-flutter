@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:provider/provider.dart';
+import '../services/Routes/navigation_service.dart';
+import '../services/Routes/routes.dart';
 import '../services/custom_snackbar.dart';
+import '../services/user_service.dart';
 import '../viewmodels/signupview_model.dart';
 
 class SignupPage extends StatefulWidget {
@@ -12,8 +15,13 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  final TextEditingController _emailController = TextEditingController();
+
+  final TextEditingController _passwordController = TextEditingController();
 
   bool _obscuretext = true;
+
+  NavigationService navigationService=NavigationService();
 
   void _toggleObscureText() {
     setState(() {
@@ -33,7 +41,6 @@ class _SignupPageState extends State<SignupPage> {
         body: SingleChildScrollView(
           child: Consumer<SignupViewModel>(
             builder: (context, viewModel, child) {
-              viewModel.context=context;
               return Column(
                 children: [
                   SizedBox(height: SizeConfig.safeBlockVertical * 0.5),
@@ -42,7 +49,8 @@ class _SignupPageState extends State<SignupPage> {
                     width: SizeConfig.safeBlockHorizontal * 50,
                     height: SizeConfig.safeBlockVertical * 50,
                   ),
-                  SizedBox(height: SizeConfig.safeBlockVertical * 1),
+                  SizedBox(height: SizeConfig.safeBlockVertical * 5),
+                  // Email TextField
                   Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: SizeConfig.safeBlockHorizontal * 5),
@@ -54,7 +62,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         borderRadius: BorderRadius.circular(
                             SizeConfig.safeBlockHorizontal * 10),
-                        gradient: const LinearGradient(
+                        gradient: LinearGradient(
                           colors: [Color(0xFFFF6AB7), Color(0xFF6AE4FF)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -69,7 +77,7 @@ class _SignupPageState extends State<SignupPage> {
                         padding: EdgeInsets.symmetric(
                             horizontal: SizeConfig.safeBlockHorizontal * 3),
                         child: TextFormField(
-                          controller: viewModel.emailController,
+                          controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           decoration: const InputDecoration(
                             hintText: "Enter your email",
@@ -95,7 +103,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         borderRadius: BorderRadius.circular(
                             SizeConfig.safeBlockHorizontal * 10),
-                        gradient:const LinearGradient(
+                        gradient: LinearGradient(
                           colors: [Color(0xFF6AE4FF), Color(0xFFFF6AB7)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -110,7 +118,7 @@ class _SignupPageState extends State<SignupPage> {
                         padding: EdgeInsets.symmetric(
                             horizontal: SizeConfig.safeBlockHorizontal * 3),
                         child: TextFormField(
-                          controller: viewModel.passwordController,
+                          controller: _passwordController,
 
                           obscureText: _obscuretext,
                           decoration: InputDecoration(
@@ -131,11 +139,11 @@ class _SignupPageState extends State<SignupPage> {
                     onPressed: viewModel.isLoading
                         ? null
                         : () {
-                      final email = viewModel.emailController.text.trim();
-                      final password = viewModel.passwordController.text.trim();
+                      final email = _emailController.text.trim();
+                      final password = _passwordController.text.trim();
 
                       if (email.isNotEmpty && password.isNotEmpty) {
-                        viewModel.signup();
+                        viewModel.signup(email, password, context);
                       } else {
                        CustomSnackBar.show(context, 'Please fill all fields');
                       }
@@ -182,8 +190,16 @@ class _SignupPageState extends State<SignupPage> {
                   SizedBox(
                     width: SizeConfig.safeBlockHorizontal * 80,
                     child: ElevatedButton(
-                      onPressed: ()  {
-                        viewModel.signupGoogle();
+                      onPressed: () async {
+                        final userService = UserService();
+
+                        final user = await userService.signInWithGoogle();
+
+                        if (user != null) {
+                          print('User signed in with Google: ${user.displayName}');
+                         navigationService.removeAllAndPush(RoutesName.home,RoutesName.signup);
+                        } else {
+                          CustomSnackBar.show(context, 'Google Sign-In failed');                        }
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -241,7 +257,7 @@ class _SignupPageState extends State<SignupPage> {
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
 
-                              Navigator.pushNamed(context, RoutesName.login);
+                              navigationService.pushScreen(RoutesName.home);
                             },
                         ),
                       ],
