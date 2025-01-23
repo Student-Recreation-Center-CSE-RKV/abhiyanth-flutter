@@ -1,4 +1,4 @@
-import 'package:abhiyanth/viewmodels/Auditions_provider.dart';
+import 'package:abhiyanth/viewmodels/auditions_provider.dart';
 import 'package:abhiyanth/widgets/image_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/services/size_config.dart';
