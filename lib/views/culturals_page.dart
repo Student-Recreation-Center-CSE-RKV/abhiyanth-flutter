@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
-import '../viewmodels/culturals_provider.dart';
+import '../providers/culturals_provider.dart';
 
 final List<Map<String, String>> ongoingCulturals = [
   {

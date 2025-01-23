@@ -11,7 +11,7 @@ class EventDetailPage extends StatelessWidget {
     return GradientBackground(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(event['title'] ?? 'Event Details'),
+          title: Text(event['title'] ?? 'Event Details', style: const TextStyle(fontFamily: "Audiowide",color: Colors.white)),
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),

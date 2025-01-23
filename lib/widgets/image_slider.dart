@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class ImageSliderWidget extends StatelessWidget {
-  final List<Map<String, String>> items;
+  final List<Map<String, dynamic>> items;
 
   const ImageSliderWidget({super.key, required this.items});
 
