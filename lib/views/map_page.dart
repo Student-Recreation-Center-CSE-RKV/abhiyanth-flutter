@@ -9,7 +9,7 @@ class MapPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: const LocationMap(
-        location: LatLng(14.73774453990044, 79.0534587906741),
+        location: LatLng(14.3350428,78.5377724),
       ),
     );
   }
