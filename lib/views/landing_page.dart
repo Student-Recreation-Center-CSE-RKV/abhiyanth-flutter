@@ -8,7 +8,7 @@ import 'auditions_page.dart';
 import 'culturals_page.dart';
 import 'stalls_page.dart';
 import 'workshops_page.dart';
-import 'technicals_page.dart';
+// import 'technicals_page.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -18,11 +18,11 @@ class LandingPage extends StatefulWidget {
 }
 
 final List<Map<String, String>> items = [
-  {"title": "Workshops", "image": "https://i.pinimg.com/736x/14/4d/f7/144df7aa7380e378ec3edc6cc819d9d8.jpg", "page": 'workshops'},
+  // {"title": "Workshops", "image": "https://i.pinimg.com/736x/14/4d/f7/144df7aa7380e378ec3edc6cc819d9d8.jpg", "page": 'workshops'},
   {"title": "Culturals", "image": "https://i.pinimg.com/originals/28/0a/a8/280aa85f2f5a8a8d145b6477d69afeed.gif", "page": 'culturals'},
   {"title": "Auditions", "image": "https://i.pinimg.com/736x/90/b2/26/90b22654bdd3b47ee3cfea2ac729ed00.jpg", "page": 'auditions'},
   {"title": "Stalls", "image": "https://i.pinimg.com/736x/06/5f/97/065f97bf7a68e9f3e4923450624d122c.jpg", "page": 'stalls'},
-  {"title": "Technical", "image": "https://i.pinimg.com/236x/28/e0/ee/28e0ee60a69aed737f9c258a5b23b9ab.jpg", "page": 'technical'},
+  // {"title": "Technical", "image": "https://i.pinimg.com/236x/28/e0/ee/28e0ee60a69aed737f9c258a5b23b9ab.jpg", "page": 'technical'},
 ];
 
 final List<Map<String, String>> sliderItems = [

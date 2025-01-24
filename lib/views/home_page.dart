@@ -1,3 +1,4 @@
+import 'package:abhiyanth/views/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
 import 'package:abhiyanth/widgets/gradient_icon.dart';
@@ -6,9 +7,9 @@ import 'package:abhiyanth/views/departments/departments_page.dart';
 import 'package:abhiyanth/views/event_page.dart';
 import 'package:abhiyanth/views/profile_page.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-
+import 'package:abhiyanth/locator.dart';
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -17,6 +18,12 @@ class _HomePageState extends State<HomePage> {
   int _currentPage = 0;
   final PageController _pageController = PageController(initialPage: 0);
 
+  @override
+  void initState()
+  {
+    super.initState();
+    notificationServices.firebaseInit(context);
+  }
   @override
   void dispose() {
     _pageController.dispose();
@@ -73,6 +80,7 @@ class _HomePageState extends State<HomePage> {
             EventPage(),
             DepartmentsPage(),
             ProfilePage(),
+            MapPage(),
           ],
         ),
         bottomNavigationBar: Container(
@@ -111,6 +119,10 @@ class _HomePageState extends State<HomePage> {
               ),
               GradientIcon(
                 icon: Icons.person,
+                size: 30,
+              ),
+              GradientIcon(
+                icon: Icons.map,
                 size: 30,
               ),
             ],

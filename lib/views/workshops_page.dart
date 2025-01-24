@@ -2,7 +2,7 @@ import 'package:abhiyanth/widgets/image_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
-import 'package:abhiyanth/widgets/audition_card_widget.dart';
+import 'package:abhiyanth/widgets/event_card_widget.dart';
 
 final List<Map<String, String>> upcomingWorkshops = [
   {'image': 'https://i.pinimg.com/236x/eb/f7/ca/ebf7caf098ab81fb68328c116f6ab6e6.jpg', 'text': 'Drones'},

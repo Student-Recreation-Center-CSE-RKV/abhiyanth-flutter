@@ -1,12 +1,16 @@
+import 'package:abhiyanth/locator.dart';
 import 'package:abhiyanth/services/Routes/navigation_service.dart';
 import 'package:abhiyanth/services/custom_snackbar.dart';
+import 'package:abhiyanth/services/db_services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../services/Routes/routesname.dart';
+import 'package:abhiyanth/locator.dart';
 
 class LoginViewModel extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  NavigationService navigationservice =NavigationService();
+  NavigationService navigationservice = NavigationService();
 
   String? _email;
   String? _password;
@@ -29,14 +33,21 @@ class LoginViewModel extends ChangeNotifier {
 
   // Login function using Firebase Auth
   Future<void> login(BuildContext context) async {
-    if (_email == null || _password == null || _email!.isEmpty || _password!.isEmpty) {
-      CustomSnackBar.show(context, "Please enter both email and password");
+    if (_email == null ||
+        _password == null ||
+        _email!.isEmpty ||
+        _password!.isEmpty) {
+      CustomSnackBar.show(context, "Please enter both email and password",
+          type: "warning");
       return;
     }
 
     try {
       // Start loading state
       _isLoading = true;
+
+      CustomSnackBar.show(context, "Logging in...");
+
       notifyListeners();
 
       // Attempt to sign in with Firebase Authentication
@@ -44,16 +55,25 @@ class LoginViewModel extends ChangeNotifier {
         email: _email!,
         password: _password!,
       );
+      final FCM_Token = await DBService.FCM_Tokens.doc("Tokens");
+      final String token = await notificationServices.getToken();
+      FCM_Token.update({
+        "Token": FieldValue.arrayUnion([token])
+      });
 
       // Show success message
-    CustomSnackBar.show(context, "Login successful");
+      CustomSnackBar.show(context, "Login successful", type: "success");
 
       // Navigate to the home screen
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        RoutesName.home,
+        (route) => false,
+      );
       navigationservice.removeAllAndPush(RoutesName.home,RoutesName.login);
       // Stop loading state
       _isLoading = false;
       notifyListeners();
-
     } on FirebaseAuthException catch (e) {
       // Detailed error handling for FirebaseAuthException
       String errorMessage = "An error occurred. Please try again.";
@@ -71,23 +91,25 @@ class LoginViewModel extends ChangeNotifier {
           errorMessage = "The email address is invalid.";
           break;
         case 'network-request-failed':
-          errorMessage = "Network error. Please check your internet connection.";
+          errorMessage =
+              "Network error. Please check your internet connection.";
           break;
         default:
           errorMessage = "Error: ${e.message}";
       }
 
       // Show error message
-     CustomSnackBar.show(context,errorMessage);
+      CustomSnackBar.show(context, errorMessage, type: "error");
 
       // Stop loading state
       _isLoading = false;
       notifyListeners();
-
     } catch (e) {
       // General error catch
       print("General error: $e");
-      CustomSnackBar.show(context,"An unexpected error occurred. Please try again.");
+      CustomSnackBar.show(
+          context, "An unexpected error occurred. Please try again.",
+          type: "error");
 
       _isLoading = false;
       notifyListeners();

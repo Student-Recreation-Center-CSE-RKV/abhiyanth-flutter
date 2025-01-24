@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
-import 'package:abhiyanth/widgets/audition_card_widget.dart';
+import 'package:abhiyanth/widgets/event_card_widget.dart';
 
 class StallsPage extends StatelessWidget {
   const StallsPage({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../services/size_config.dart';
 import '../../utilities/gradient_background.dart';
-import '../../widgets/audition_card_widget.dart';
+import '../../widgets/event_card_widget.dart';
 import '../../widgets/gradient_border.dart';
 import '../../widgets/image_slider.dart';
 class ECE extends StatefulWidget{

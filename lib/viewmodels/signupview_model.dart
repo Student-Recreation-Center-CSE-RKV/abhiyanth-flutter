@@ -1,9 +1,13 @@
 import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/services/custom_snackbar.dart';
+import 'package:abhiyanth/services/db_services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/services/user_service.dart';
 import 'package:stacked/stacked.dart';
+
+import '../locator.dart';
 class SignupViewModel extends BaseViewModel{
 
   bool _isLoading = false;
@@ -21,12 +25,17 @@ class SignupViewModel extends BaseViewModel{
       notifyListeners();
       final user = await _userService.signInWithGoogle();
       if (user != null) {
+        final FCM_Token = await DBService.FCM_Tokens.doc("Tokens");
+        final String token = await notificationServices.getToken();
+        FCM_Token.update({
+          "Token": FieldValue.arrayUnion([token])
+        });
         Navigator.pushNamedAndRemoveUntil(context!, RoutesName.home,(route) => false);
       }
     }
     catch(e)
     {
-      CustomSnackBar.show(context!, 'Google Sign-In failed');
+      CustomSnackBar.show(context!, 'Google Sign-In failed' , type: "error");
     }
     finally{
       _isLoading=false;
@@ -41,7 +50,7 @@ class SignupViewModel extends BaseViewModel{
       final user = await _userService.signupWithEmailAndPassword(emailController.text, passwordController.text);
 
       if (user != null) {
-        CustomSnackBar.show(context!, "SignUp successful");
+        CustomSnackBar.show(context!, "SignUp successful" , type : "success");
 
         Navigator.pushNamedAndRemoveUntil(
           context!,
@@ -49,7 +58,7 @@ class SignupViewModel extends BaseViewModel{
               (route) => false,
         );
       } else {
-        CustomSnackBar.show(context!, "Signup failed. Please try again.");
+        CustomSnackBar.show(context!, "Signup failed. Please try again." ,type: "error");
       }
 
 
@@ -65,9 +74,9 @@ class SignupViewModel extends BaseViewModel{
       } else if (e.code == 'invalid-email') {
         errorMessage = "The email address is invalid.";
       }
-      CustomSnackBar.show(context!, errorMessage);
+      CustomSnackBar.show(context!, errorMessage, type: "error");
     } catch (e) {
-      CustomSnackBar.show(context!, 'Signup failed. Please try again.');
+      CustomSnackBar.show(context!, 'Signup failed. Please try again.' , type: "error");
     }
     finally{
       _isLoading = false;

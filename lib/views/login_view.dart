@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Consumer<LoginViewModel>(
           builder: (context, viewModel, child) {
             return SingleChildScrollView(
-              child: Container(
+              child: SizedBox(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: Column(
@@ -115,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                     ElevatedButton(
                       onPressed: () {
                         viewModel.login(context);
-                        CustomSnackBar.show(context, "Logging in...");
+                        // CustomSnackBar.show(context, "Logging in...");
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -166,18 +166,18 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       child: const Text(
                         'Forgot password',
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(color: Colors.blue, fontFamily: "Audiowide",),
                       ),
                     ),
                     // Register Now
                     Text.rich(
                       TextSpan(
                         text: "Don't have an account...?",
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white, fontFamily: "Audiowide",),
                         children: [
                           TextSpan(
                             text: 'Register Now',
-                            style: const TextStyle(color: Colors.blue),
+                            style: const TextStyle(color: Colors.blue , fontFamily: "Audiowide",),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                               navigationService.pushScreen(RoutesName.signup);
