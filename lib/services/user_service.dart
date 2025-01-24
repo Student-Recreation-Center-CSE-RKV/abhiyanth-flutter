@@ -1,4 +1,5 @@
 import 'package:abhiyanth/locator.dart';
+import 'package:abhiyanth/models/user_model.dart';
 import 'package:abhiyanth/services/db_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,7 +25,19 @@ class UserService {
       );
 
       final UserCredential userCredential = await _auth.signInWithCredential(credential);
-
+      await userService.createNewUser(
+        UserModel(
+            uid: userCredential.user!.uid,
+            name: userCredential.user!.displayName,
+            email:userCredential.user!.email,
+            mobile:"",
+            branch: "",
+            batch: "",
+            id: "",
+            role: "student",
+            createdAt:DateTime.now()
+        ),
+      );
       return userCredential.user;
     } catch (e) {
       print('Error during Google sign-in: $e');
@@ -34,14 +47,29 @@ class UserService {
 
   Future<User?> signupWithEmailAndPassword(String email, String password) async {
     try {
+
       final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      await userService.createNewUser(
+        UserModel(
+            uid: userCredential.user!.uid,
+            name: userCredential.user!.displayName,
+            email:userCredential.user!.email,
+            mobile:"",
+            branch: "",
+            batch: "",
+            id: "",
+            role: "student",
+            createdAt:DateTime.now()
+        ),
+      );
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
-      throw e; // Let the caller handle specific FirebaseAuth exceptions
+      throw e;
     } catch (e) {
+      print(e);
       throw Exception("Signup failed. Please try again.");
     }
   }
@@ -68,5 +96,10 @@ class UserService {
     });
     await _googleSignIn.signOut();
     await _auth.signOut();
+  }
+
+  Future<void> createNewUser(UserModel user) async {
+    await DBService.users.doc(user.uid).set(user.toJson());
+    return;
   }
 }

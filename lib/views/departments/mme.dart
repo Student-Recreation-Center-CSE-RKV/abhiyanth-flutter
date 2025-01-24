@@ -69,10 +69,13 @@ class _MMEState extends State<MME> {
             const SizedBox(height: 16), // Space between title and card
 
             // Audition Card Widget
-            EventCard(
+            AuditionCard (
               title: "Build your 3D anime Character",
               date: "1st March 2025",
-              location: '', imageUrl: '',
+              time: '',
+              venue: '',
+              description: '',
+              image: '',
             ),
           ],
         ),

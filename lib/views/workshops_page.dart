@@ -67,11 +67,13 @@ class WorkshopsPage extends StatelessWidget {
 
               // Audition Card Widget
 
-               EventCard(
+              AuditionCard (
                 title: "Build your 3D anime Character",
                 date: "1st March 2025",
-                location: '',
-                 imageUrl: '',
+                time: '',
+                venue: '',
+                description: '',
+                 image: '',
               ),
             ],
           ),

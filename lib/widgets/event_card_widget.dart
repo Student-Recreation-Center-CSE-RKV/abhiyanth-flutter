@@ -1,117 +1,128 @@
 import 'package:flutter/material.dart';
-import '../views/register_page.dart';
-import '../services/size_config.dart';
 
-class EventCard extends StatelessWidget {
-  final String date;
+class AuditionCard extends StatelessWidget {
   final String title;
-  final String location;
-  final String imageUrl;
+  final String date;
+  final String time;
+  final String venue;
+  final String description;
+  final String image;
 
-  EventCard({
+  const AuditionCard({
     super.key,
-    required this.date,
     required this.title,
-    required this.location,
-    required this.imageUrl,
+    required this.date,
+    required this.time,
+    required this.venue,
+    required this.description,
+    this.image =
+        "https://i.pinimg.com/236x/42/dc/0c/42dc0c3f341a3b336b2ae285f5c873de.jpg",
   });
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig.init(context);
-
     return Container(
-      height: SizeConfig.blockSizeVertical * 21,
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(SizeConfig.blockSizeHorizontal * 4),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: SizeConfig.blockSizeHorizontal * 2,
-            offset: Offset(0, SizeConfig.blockSizeVertical * 0.5),
-          ),
-        ],
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color:
+              Colors.pinkAccent.withOpacity(0.6), // Border with gradient effect
+          width: 2,
+        ),
       ),
-      child: Stack(
+      child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(SizeConfig.blockSizeHorizontal * 3),
-            child: Image.network(
-              imageUrl,
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity,
-            ),
-          ),
+          // Image Placeholder
           Container(
+            width: 100,
+            height: 100,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(SizeConfig.blockSizeHorizontal * 3),
-              gradient: LinearGradient(
-                colors: [
-                  Colors.black.withOpacity(0.6),
-                  Colors.transparent,
-                ],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.network(
+                image, // Replace image with your local variable containing the URL
+                width: 100,
+                height: 100,
+                fit: BoxFit
+                    .cover, // Ensures the image fits within the dimensions
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              (loadingProgress.expectedTotalBytes ?? 1)
+                          : null,
+                    ),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    width: 100,
+                    height: 100,
+                    color:
+                        Colors.grey[400], // Fallback color in case of an error
+                    child: Icon(
+                      Icons.broken_image,
+                      color: Colors.white,
+                    ),
+                  );
+                },
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.all(SizeConfig.blockSizeHorizontal * 3),
+
+          const SizedBox(width: 16), // Spacing between image and text
+          // Text Content
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  date,
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontFamily: "Audiowide",
-                    fontSize: SizeConfig.blockSizeHorizontal * 3.5,
-                  ),
-                ),
-                SizedBox(height: SizeConfig.blockSizeVertical * 1),
-                Text(
                   title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: SizeConfig.blockSizeHorizontal * 5.5,
+                  style: const TextStyle(
+                    color: Colors.lightBlueAccent,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     fontFamily: "Audiowide",
                   ),
                 ),
-                SizedBox(height: SizeConfig.blockSizeVertical * 1),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RegisterPage(eventTitle: title),
-                      ),
-                    );
-                  },
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: const Color(0xFFFF3366),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(SizeConfig.blockSizeHorizontal * 2.5),
-                    ),
+                const SizedBox(height: 6),
+                Text(
+                  "Date: $date",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontFamily: "Audiowide",
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "Register Now",
-                        style: TextStyle(
-                          fontSize: SizeConfig.blockSizeHorizontal * 4.5,
-                        ),
-                      ),
-                      SizedBox(width: SizeConfig.blockSizeHorizontal * 1),
-                      Icon(
-                        Icons.arrow_outward_outlined,
-                        size: SizeConfig.blockSizeHorizontal * 5,
-                      ),
-                    ],
+                ),
+                Text(
+                  "Time: $time",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontFamily: "Audiowide",
+                  ),
+                ),
+                Text(
+                  "Venue: $venue",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontFamily: "Audiowide",
+                  ),
+                ),
+                Text(
+                  "Description: $description",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontFamily: "Audiowide",
                   ),
                 ),
               ],

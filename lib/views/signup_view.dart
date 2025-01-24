@@ -15,9 +15,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  final TextEditingController _emailController = TextEditingController();
 
-  final TextEditingController _passwordController = TextEditingController();
 
   bool _obscuretext = true;
 
@@ -77,7 +75,7 @@ class _SignupPageState extends State<SignupPage> {
                         padding: EdgeInsets.symmetric(
                             horizontal: SizeConfig.safeBlockHorizontal * 3),
                         child: TextFormField(
-                          controller: _emailController,
+                          controller: viewModel.emailController,
                           keyboardType: TextInputType.emailAddress,
                           decoration: const InputDecoration(
                             hintText: "Enter your email",
@@ -118,7 +116,7 @@ class _SignupPageState extends State<SignupPage> {
                         padding: EdgeInsets.symmetric(
                             horizontal: SizeConfig.safeBlockHorizontal * 3),
                         child: TextFormField(
-                          controller: _passwordController,
+                          controller: viewModel.passwordController,
 
                           obscureText: _obscuretext,
                           decoration: InputDecoration(
@@ -139,8 +137,8 @@ class _SignupPageState extends State<SignupPage> {
                     onPressed: viewModel.isLoading
                         ? null
                         : () {
-                      final email = _emailController.text.trim();
-                      final password = _passwordController.text.trim();
+                      final email = viewModel.emailController.text.trim();
+                      final password = viewModel.passwordController.text.trim();
 
                       if (email.isNotEmpty && password.isNotEmpty) {
                         viewModel.signup(email, password, context);
@@ -256,7 +254,6 @@ class _SignupPageState extends State<SignupPage> {
                           style: const TextStyle(color: Colors.blue),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-
                               navigationService.pushScreen(RoutesName.login);
                             },
                         ),
