@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <application
-        android:label="abhiyanth"
+        android:label="Abhiyanth RKV"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
 
