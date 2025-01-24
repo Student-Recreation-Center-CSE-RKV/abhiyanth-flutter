@@ -7,7 +7,7 @@ import 'package:abhiyanth/views/departments/departments_page.dart';
 import 'package:abhiyanth/views/event_page.dart';
 import 'package:abhiyanth/views/profile_page.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-
+import 'package:abhiyanth/locator.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
   @override
@@ -18,6 +18,12 @@ class _HomePageState extends State<HomePage> {
   int _currentPage = 0;
   final PageController _pageController = PageController(initialPage: 0);
 
+  @override
+  void initState()
+  {
+    super.initState();
+    notificationServices.firebaseInit(context);
+  }
   @override
   void dispose() {
     _pageController.dispose();

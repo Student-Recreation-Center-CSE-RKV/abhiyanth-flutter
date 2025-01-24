@@ -7,5 +7,5 @@ final notificationServices=locator<NotificationServices>();
 setUpLocator()
 {
   locator.registerSingleton(SizeConfig());
-  locator.registerLazySingleton(()=>NotificationServices());
+  locator.registerSingleton(NotificationServices());
 }

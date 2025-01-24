@@ -1,3 +1,6 @@
+import 'package:abhiyanth/locator.dart';
+import 'package:abhiyanth/services/db_services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -58,6 +61,11 @@ class UserService {
 
   // Function to handle user sign out
   Future<void> signOut() async {
+    final FCM_Token = await DBService.FCM_Tokens.doc("Tokens");
+    final String token = await notificationServices.getToken();
+    FCM_Token.update({
+      "Token": FieldValue.arrayRemove([token])
+    });
     await _googleSignIn.signOut();
     await _auth.signOut();
   }
