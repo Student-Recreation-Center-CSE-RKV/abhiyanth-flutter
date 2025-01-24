@@ -49,7 +49,6 @@ class LoginViewModel extends ChangeNotifier {
     CustomSnackBar.show(context, "Login successful");
 
       // Navigate to the home screen
-      Navigator.pushNamedAndRemoveUntil(context, RoutesName.home,(route) => false, );
       navigationservice.removeAllAndPush(RoutesName.home,RoutesName.login);
       // Stop loading state
       _isLoading = false;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:abhiyanth/services/size_config.dart';
+import '../views/register_page.dart';
+import '../services/size_config.dart';
 
 class EventCard extends StatelessWidget {
   final String date;
@@ -7,7 +8,7 @@ class EventCard extends StatelessWidget {
   final String location;
   final String imageUrl;
 
-  const EventCard({
+  EventCard({
     super.key,
     required this.date,
     required this.title,
@@ -34,8 +35,7 @@ class EventCard extends StatelessWidget {
       child: Stack(
         children: [
           ClipRRect(
-            borderRadius:
-                BorderRadius.circular(SizeConfig.blockSizeHorizontal * 3),
+            borderRadius: BorderRadius.circular(SizeConfig.blockSizeHorizontal * 3),
             child: Image.network(
               imageUrl,
               fit: BoxFit.cover,
@@ -45,26 +45,11 @@ class EventCard extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-              borderRadius:
-                  BorderRadius.circular(SizeConfig.blockSizeHorizontal * 3),
-              gradient: LinearGradient(
-                colors: [
-                  Colors.black.withOpacity(0.9),
-                  Colors.transparent,
-                ],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius:
-                  BorderRadius.circular(SizeConfig.blockSizeHorizontal * 3),
+              borderRadius: BorderRadius.circular(SizeConfig.blockSizeHorizontal * 3),
               gradient: LinearGradient(
                 colors: [
                   Colors.black.withOpacity(0.6),
-                  Colors.black.withOpacity(0.2),
+                  Colors.transparent,
                 ],
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
@@ -95,35 +80,25 @@ class EventCard extends StatelessWidget {
                     fontFamily: "Audiowide",
                   ),
                 ),
-                SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
-                Text(
-                  location,
-                  style: TextStyle(
-                    color: Colors.white54,
-                    fontFamily: "Audiowide",
-                    fontSize: SizeConfig.blockSizeHorizontal * 3.5,
-                  ),
-                ),
                 SizedBox(height: SizeConfig.blockSizeVertical * 1),
                 TextButton(
                   onPressed: () {
-                    // Add your action here
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegisterPage(eventTitle: title),
+                      ),
+                    );
                   },
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: const Color(0xFFFF3366),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          SizeConfig.blockSizeHorizontal * 2.5),
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      vertical: SizeConfig.blockSizeVertical * 0.7,
-                      horizontal: SizeConfig.blockSizeHorizontal * 1.75,
+                      borderRadius: BorderRadius.circular(SizeConfig.blockSizeHorizontal * 2.5),
                     ),
                   ),
                   child: Row(
-                    mainAxisSize: MainAxisSize
-                        .min, // Ensures the row takes only as much space as needed
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         "Register Now",
@@ -131,17 +106,14 @@ class EventCard extends StatelessWidget {
                           fontSize: SizeConfig.blockSizeHorizontal * 4.5,
                         ),
                       ),
-                      SizedBox(
-                          width: SizeConfig.blockSizeHorizontal *
-                              1), // Optional spacing between text and icon
+                      SizedBox(width: SizeConfig.blockSizeHorizontal * 1),
                       Icon(
                         Icons.arrow_outward_outlined,
-                        size: SizeConfig.blockSizeHorizontal *5, // Adjust icon size if needed
-                        color: Colors.white,
+                        size: SizeConfig.blockSizeHorizontal * 5,
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),

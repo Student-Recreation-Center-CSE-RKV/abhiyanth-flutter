@@ -257,7 +257,7 @@ class _SignupPageState extends State<SignupPage> {
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
 
-                              navigationService.pushScreen(RoutesName.home);
+                              navigationService.pushScreen(RoutesName.login);
                             },
                         ),
                       ],

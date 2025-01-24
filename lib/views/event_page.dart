@@ -1,7 +1,6 @@
 
 import 'package:abhiyanth/widgets/event_card_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:abhiyanth/widgets/audition_card_widget.dart';
 import 'package:abhiyanth/widgets/gradient_border.dart';
 import 'package:abhiyanth/services/size_config.dart';
 
@@ -51,7 +50,7 @@ class _EventPageState extends State<EventPage> {
                       ),
                     ),
                   ),
-                  const EventCard(
+                   EventCard(
                     date: "28-02-25",
                     title: "Anime",
                     location: "at s122",
@@ -59,7 +58,7 @@ class _EventPageState extends State<EventPage> {
                         "https://i.pinimg.com/originals/5f/47/3e/5f473e7e1460acc093943bbf44889e39.gif",
                   ),
                   const SizedBox(height: 16.0),
-                  const EventCard(
+                   EventCard(
                     date: "28-02-25",
                     title: "Flashmob",
                     location: "at YSR Statue",
@@ -67,7 +66,7 @@ class _EventPageState extends State<EventPage> {
                         "https://i.pinimg.com/originals/6c/12/cd/6c12cde612e399ca90b07afa11ac3af8.gif",
                   ),
                   const SizedBox(height: 16.0),
-                  const EventCard(
+                   EventCard(
                     date: "28-02-25",
                     title: "Hackathon",
                     location: "at Computer Center",
@@ -75,7 +74,7 @@ class _EventPageState extends State<EventPage> {
                         "https://i.pinimg.com/originals/f7/81/2e/f7812e1249081221bb80abb048698308.gif",
                   ),
                   const SizedBox(height: 16.0),
-                  const EventCard(
+                   EventCard(
                     date: "28-02-25",
                     title: "Cultural Night",
                     location: "at Stage",
