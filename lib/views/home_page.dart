@@ -9,6 +9,7 @@ import 'package:abhiyanth/views/event_page.dart';
 import 'package:abhiyanth/views/profile_page.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:abhiyanth/locator.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
   @override
