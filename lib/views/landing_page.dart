@@ -1,13 +1,10 @@
 import 'package:abhiyanth/services/Routes/navigation_service.dart';
 import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/widgets/coming_soon.dart';
-import 'package:abhiyanth/widgets/powered_by_src.dart';
 import 'package:flutter/material.dart';
-import 'package:abhiyanth/widgets/meet_the_team_widget.dart';
 import 'package:abhiyanth/widgets/image_slider.dart';
 import 'package:abhiyanth/services/size_config.dart';
-
-// import 'technicals_page.dart';
+import 'package:abhiyanth/services/home_carousal.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -16,80 +13,87 @@ class LandingPage extends StatefulWidget {
   State<LandingPage> createState() => _LandingPageState();
 }
 
-final List<Map<String, String>> items = [
-  // {"title": "Workshops", "image": "https://i.pinimg.com/736x/14/4d/f7/144df7aa7380e378ec3edc6cc819d9d8.jpg", "page": 'workshops'},
-  {
-    "title": "Culturals",
-    "image":
-        "https://i.pinimg.com/originals/28/0a/a8/280aa85f2f5a8a8d145b6477d69afeed.gif",
-    "page": 'culturals'
-  },
-  {
-    "title": "Auditions",
-    "image":
-        "https://i.pinimg.com/736x/90/b2/26/90b22654bdd3b47ee3cfea2ac729ed00.jpg",
-    "page": 'auditions'
-  },
-  {
-    "title": "Stalls",
-    "image":
-        "https://i.pinimg.com/736x/06/5f/97/065f97bf7a68e9f3e4923450624d122c.jpg",
-    "page": 'stalls'
-  },
-  // {"title": "Technical", "image": "https://i.pinimg.com/236x/28/e0/ee/28e0ee60a69aed737f9c258a5b23b9ab.jpg", "page": 'technical'},
-];
-
-final List<Map<String, String>> sliderItems = [
-  {
-    'image':
-        'https://i.pinimg.com/originals/2d/02/f5/2d02f519b70b86ef83f307260886d611.gif',
-    'text': 'New Year'
-  },
-  {
-    'image':
-        'https://i.pinimg.com/736x/cc/3a/58/cc3a582a151ae4b62e4739977687601c.jpg',
-    'text': 'Bhai'
-  },
-  {
-    'image':
-        'https://i.pinimg.com/originals/ba/9c/97/ba9c974edabed08eaf383adee8c100a1.gif',
-    'text': 'Unnamed'
-  },
-];
-
 class _LandingPageState extends State<LandingPage> {
+  final EventService eventService = EventService(); // Event service instance
+  List<Map<String, String>> items = [];
+  List<Map<String, String>> sliderItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDynamicData(); // Fetch dynamic data on initialization
+  }
+
+  Future<void> fetchDynamicData() async {
+    try {
+      // Fetch events for the slider
+      final events = await eventService.getEvents();
+      setState(() {
+        sliderItems = events.map((event) {
+          return {
+            'image': event['image'] ?? '',
+            'text': event['title'] ?? '',
+          };
+        }).toList();
+      });
+
+      // Set hardcoded items (can also fetch dynamically if needed)
+      setState(() {
+        items = [
+          {
+            "title": "Culturals",
+            "image":
+                "https://i.pinimg.com/originals/28/0a/a8/280aa85f2f5a8a8d145b6477d69afeed.gif",
+            "page": 'culturals'
+          },
+          {
+            "title": "Auditions",
+            "image":
+                "https://i.pinimg.com/736x/90/b2/26/90b22654bdd3b47ee3cfea2ac729ed00.jpg",
+            "page": 'auditions'
+          },
+          {
+            "title": "Stalls",
+            "image":
+                "https://i.pinimg.com/736x/06/5f/97/065f97bf7a68e9f3e4923450624d122c.jpg",
+            "page": 'stalls'
+          },
+        ];
+      });
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
+
+  void navigateToPage(String page) {
+    NavigationService navigationService = NavigationService();
+    switch (page) {
+      case 'Workshops':
+        navigationService.pushScreen(RoutesName.workshop);
+        break;
+      case 'Culturals':
+        navigationService.pushScreen(RoutesName.culturals);
+        break;
+      case 'Auditions':
+        navigationService.pushScreen(RoutesName.auditions);
+        break;
+      case 'Stalls':
+        navigationService.pushScreen(RoutesName.stalls);
+        break;
+      case 'Technical':
+        navigationService.pushScreen(RoutesName.technical);
+        break;
+      default:
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context); // Initialize SizeConfig
-
-    // Dynamic sizes using SizeConfig
-    NavigationService navigationService = NavigationService();
     double avatarRadius = SizeConfig.safeBlockHorizontal * 10;
     double spacing = SizeConfig.safeBlockVertical * 2;
     double textFontSize = SizeConfig.safeBlockHorizontal * 3;
-
-    void navigateToPage(String page) {
-      // Perform navigation based on the page name
-      switch (page) {
-        case 'Workshops':
-          navigationService.pushScreen(RoutesName.workshop);
-          break;
-        case 'Culturals':
-          navigationService.pushScreen(RoutesName.culturals);
-          break;
-        case 'Auditions':
-          navigationService.pushScreen(RoutesName.auditions);
-          break;
-        case 'Stalls':
-          navigationService.pushScreen(RoutesName.stalls);
-          break;
-        case 'Technical':
-          navigationService.pushScreen(RoutesName.technical);
-          break;
-        default:
-          break;
-      }
-    }
 
     return Scaffold(
       backgroundColor: Colors.transparent, // Background color
@@ -97,9 +101,10 @@ class _LandingPageState extends State<LandingPage> {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            // Dashboard header
-
-            ImageSliderWidget(items: sliderItems),
+            // Image Slider
+            sliderItems.isEmpty
+                ? Center(child: CircularProgressIndicator())
+                : ImageSliderWidget(items: sliderItems),
             const SizedBox(height: 20),
             // Circular buttons
             GridView.builder(
@@ -143,7 +148,7 @@ class _LandingPageState extends State<LandingPage> {
               },
             ),
             const SizedBox(height: 120),
-            // const MeetTheTeamWidget(),
+            // Coming Soon Widget
             ComingSoonWidget(
               text: "More interesting things to come...",
               backgroundColor: Colors.transparent,

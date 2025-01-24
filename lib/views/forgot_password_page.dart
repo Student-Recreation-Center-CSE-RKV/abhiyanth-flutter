@@ -1,4 +1,3 @@
-import 'package:abhiyanth/locator.dart';
 import 'package:abhiyanth/services/custom_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,8 @@ import '../services/size_config.dart';
 class ForgotPasswordPage extends StatelessWidget {
   final TextEditingController _emailcontroller = TextEditingController();
   final auth = FirebaseAuth.instance;
+
+  ForgotPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -131,6 +132,9 @@ class ForgotPasswordPage extends StatelessWidget {
                       CustomSnackBar.show(context, "Error: ${e.toString()}");
                     }
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                  ),
                   child: Text(
                     "Reset",
                     style: TextStyle(
@@ -138,9 +142,6 @@ class ForgotPasswordPage extends StatelessWidget {
                       fontSize: SizeConfig.safeBlockHorizontal * 5,
                       fontFamily: "Audiowide",
                     ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
                   ),
                 ),
               ),

@@ -1,5 +1,4 @@
 import 'package:abhiyanth/services/Routes/routesname.dart';
-import 'package:abhiyanth/views/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
 import 'package:abhiyanth/widgets/gradient_icon.dart';
@@ -85,7 +84,7 @@ class _HomePageState extends State<HomePage> {
             EventPage(),
             DepartmentsPage(),
             ProfilePage(),
-            MapPage(),
+            // MapPage(),
           ],
         ),
         bottomNavigationBar: Container(
@@ -127,10 +126,10 @@ class _HomePageState extends State<HomePage> {
                 icon: Icons.person,
                 size: 30,
               ),
-              GradientIcon(
-                icon: Icons.map,
-                size: 30,
-              ),
+              // GradientIcon(
+              //   icon: Icons.map,
+              //   size: 30,
+              // ),
             ],
             onTap: _onBottomNavTapped,
           ),

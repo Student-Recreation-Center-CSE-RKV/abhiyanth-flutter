@@ -1,9 +1,7 @@
 import 'package:abhiyanth/locator.dart';
 import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/services/payment_service.dart';
-import 'package:abhiyanth/widgets/map_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
 
 PaymentService paymentService = PaymentService();
 

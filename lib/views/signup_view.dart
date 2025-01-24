@@ -122,7 +122,7 @@ class _SignupPageState extends State<SignupPage> {
                             hintStyle: const TextStyle(color: Colors.white70 , fontFamily: "Audiowide" ),
                             border: InputBorder.none,
                             prefixIcon: const Icon(Icons.lock, color: Colors.white),
-                            suffixIcon: IconButton(onPressed: _toggleObscureText, icon: Icon(_obscuretext?Icons.visibility:Icons.visibility_off),)
+                            suffixIcon: IconButton(onPressed: _toggleObscureText, icon: Icon(_obscuretext?Icons.visibility:Icons.visibility_off , color: Colors.white,),)
                           ),
                           style: const TextStyle(color: Colors.white, fontFamily: "Audiowide"),
                         ),

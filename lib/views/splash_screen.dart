@@ -61,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
             ),
             SizedBox(height: SizeConfig.safeBlockVertical* 2),
             Text(
-              "Welcome to Abhiyanth App",
+              "Welcome to Abhiyanth 2K25",
               style: TextStyle(
                 color: Colors.black,
                 fontSize: SizeConfig.safeBlockHorizontal* 6,

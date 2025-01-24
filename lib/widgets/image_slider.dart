@@ -51,6 +51,7 @@ class ImageSliderWidget extends StatelessWidget {
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
+                          fontFamily: "Audiowide",
                         ),
                         textAlign: TextAlign.center,
                       ),

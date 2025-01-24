@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../services/size_config.dart';
 import '../utilities/gradient_background.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:abhiyanth/services/custom_snackbar.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -74,17 +73,7 @@ class _ProfilePageState extends State<ProfilePage> {
     },SetOptions(merge: true));
     CustomSnackBar.show(context, 'Profile saved successfully!');
   }
-  // Future<void> getImage() async{
-  //   final ImagePicker picker=ImagePicker();
-  //   final XFile? pickedFile = await picker.pickImage(
-  //     source: ImageSource.gallery,
-  //     maxWidth: 800,
-  //     maxHeight: 800,
-  //     imageQuality: 80,
-  //   );
-  //
-  //
-  // }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
@@ -124,31 +113,31 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Stack(
-                  alignment: Alignment.bottomRight,
-                  children: [
-                    CircleAvatar(
-                      radius: SizeConfig.blockSizeVertical * 10,
-                      backgroundColor: Colors.purple,
-                    ),
-                    Positioned(
-                      bottom: 5,
-                      right: 5,
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.blue,
-                        ),
-                        padding: const EdgeInsets.all(5),
-                        child: const Icon(
-                          Icons.camera_alt,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                // Stack(
+                //   alignment: Alignment.bottomRight,
+                //   children: [
+                //     CircleAvatar(
+                //       radius: SizeConfig.blockSizeVertical * 10,
+                //       backgroundColor: Colors.purple,
+                //     ),
+                //     Positioned(
+                //       bottom: 5,
+                //       right: 5,
+                //       child: Container(
+                //         decoration: const BoxDecoration(
+                //           shape: BoxShape.circle,
+                //           color: Colors.blue,
+                //         ),
+                //         padding: const EdgeInsets.all(5),
+                //         child: const Icon(
+                //           Icons.camera_alt,
+                //           color: Colors.white,
+                //           size: 20,
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 const SizedBox(height: 20),
                 _buildTextField("Name", nameController),
                 const SizedBox(height: 15),

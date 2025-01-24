@@ -1,9 +1,7 @@
 import 'package:abhiyanth/utilities/gradient_background.dart';
 import 'package:abhiyanth/views/register_page.dart';
-import 'package:abhiyanth/widgets/map_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/services/size_config.dart';
-import 'package:latlong2/latlong.dart';
 
 class EventDetailPage extends StatelessWidget {
   final Map<String, dynamic> event;

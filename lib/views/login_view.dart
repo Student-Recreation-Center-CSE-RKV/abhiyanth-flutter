@@ -4,7 +4,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:provider/provider.dart';
-import '../services/custom_snackbar.dart';
 import '../viewmodels/loginview_model.dart';
 
 class LoginPage extends StatefulWidget {
@@ -225,12 +224,12 @@ class _LoginPageState extends State<LoginPage> {
           onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: const TextStyle(color: Colors.white70),
+            hintStyle: const TextStyle(color: Colors.white70 ,fontFamily: "Audiowide"),
             border: InputBorder.none,
             prefixIcon: Icon(icon, color: Colors.white),
             suffixIcon: suffixIcon,
           ),
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white , fontFamily: "Audiowide"),
         ),
       ),
     );
