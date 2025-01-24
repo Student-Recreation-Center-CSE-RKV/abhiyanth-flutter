@@ -1,3 +1,4 @@
+import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/views/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
@@ -7,7 +8,7 @@ import 'package:abhiyanth/views/departments/departments_page.dart';
 import 'package:abhiyanth/views/event_page.dart';
 import 'package:abhiyanth/views/profile_page.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-
+import 'package:abhiyanth/locator.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
   @override
@@ -18,6 +19,12 @@ class _HomePageState extends State<HomePage> {
   int _currentPage = 0;
   final PageController _pageController = PageController(initialPage: 0);
 
+  @override
+  void initState()
+  {
+    super.initState();
+    notificationServices.firebaseInit(context);
+  }
   @override
   void dispose() {
     _pageController.dispose();
@@ -55,14 +62,17 @@ class _HomePageState extends State<HomePage> {
             "Abhiyanth 2K25",
             style: TextStyle(color: Colors.white, fontFamily: "Audiowide"),
           ),
-          // actions: [
-          //   IconButton(
-          //       onPressed: () {},
-          //       icon: Icon(
-          //         Icons.notifications,
-          //         color: Colors.white,
-          //       ))
-          // ],
+          actions: [
+            IconButton(
+                onPressed: () {
+                  userService.signOut();
+                  Navigator.pushNamedAndRemoveUntil(context, RoutesName.signup,(route) => false);
+                },
+                icon: Icon(
+                  Icons.notifications,
+                  color: Colors.white,
+                ))
+          ],
           centerTitle: true,
           elevation: 0,
         ),

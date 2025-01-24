@@ -1,18 +1,18 @@
+import 'package:abhiyanth/models/user_model.dart';
 import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/services/custom_snackbar.dart';
+import 'package:abhiyanth/services/db_services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:abhiyanth/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:abhiyanth/locator.dart';
-import 'package:abhiyanth/models/user_model.dart';
 class SignupViewModel extends BaseViewModel{
 
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
 
-  final UserService _userService=UserService();
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
   BuildContext? context;
@@ -21,21 +21,14 @@ class SignupViewModel extends BaseViewModel{
     try{
       _isLoading=true;
       notifyListeners();
-      final user = await _userService.signInWithGoogle();
+      final user = await userService.signInWithGoogle();
       if (user != null) {
-         await userService.createNewUser(
-        UserModel(
-          uid: user.uid,
-          name:user.displayName,
-          email:user.email,
-          mobile: user.phoneNumber,
-          role: "student",
-          id: "",
-          batch: "",
-          branch: "",
-        )
-      );
-        Navigator.pushNamedAndRemoveUntil(context!, RoutesName.home,(route) => false);
+        final FCM_Token = await DBService.FCM_Tokens.doc("Tokens");
+        final String token = await notificationServices.getToken();
+        FCM_Token.update({
+          "Token": FieldValue.arrayUnion([token])
+        });
+        Navigator.pushNamedAndRemoveUntil(context!, RoutesName.login,(route) => false);
       }
     }
     catch(e)
@@ -52,14 +45,15 @@ class SignupViewModel extends BaseViewModel{
       _isLoading = true;
       notifyListeners();
 
-      final user = await _userService.signupWithEmailAndPassword(emailController.text, passwordController.text);
+      final user = await userService.signupWithEmailAndPassword(emailController.text, passwordController.text);
 
       if (user != null) {
+
         CustomSnackBar.show(context!, "SignUp successful" , type : "success");
 
         Navigator.pushNamedAndRemoveUntil(
           context!,
-          RoutesName.home,
+          RoutesName.login,
               (route) => false,
         );
       } else {

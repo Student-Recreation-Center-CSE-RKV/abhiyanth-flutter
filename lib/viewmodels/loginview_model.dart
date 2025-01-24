@@ -1,5 +1,8 @@
+import 'package:abhiyanth/locator.dart';
 import 'package:abhiyanth/services/Routes/navigation_service.dart';
 import 'package:abhiyanth/services/custom_snackbar.dart';
+import 'package:abhiyanth/services/db_services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../services/Routes/routesname.dart';
@@ -52,6 +55,11 @@ class LoginViewModel extends ChangeNotifier {
         email: _email!,
         password: _password!,
       );
+      final FCM_Token = await DBService.FCM_Tokens.doc("Tokens");
+      final String token = await notificationServices.getToken();
+      FCM_Token.update({
+        "Token": FieldValue.arrayUnion([token])
+      });
 
       // Show success message
       CustomSnackBar.show(context, "Login successful", type: "success");

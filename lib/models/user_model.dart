@@ -3,56 +3,59 @@ class UserModel {
   final String? uid;
   final String? name;
   final String? role;
-  final String? batch;
   final String? branch;
-  final String? mobile;
+  final String? batch;
   final String? id;
+  final String? mobile;
   final DateTime? createdAt;
 
   UserModel({
     this.email,
     this.name,
     this.role,
-    this.createdAt,
-    this.batch,
     this.branch,
+    this.batch,
     this.id,
+    this.uid,
     this.mobile,
-    this.uid
+    this.createdAt,
   });
 
-  // From JSON method
+  /// Factory constructor to create a `UserModel` from a JSON map
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      email: json['email'] as String,
+      email: json['email'] as String?,
       name: json['name'] ?? 'user',
       role: json['role'] ?? 'student',
-      id: json['id']??"",
-      batch: json['batch']??"",
-      branch: json['branch']??"",
-      mobile: json['mobile']??"",
-      createdAt: json['createdAt']??DateTime.now(),
-      uid: json['uid']
+      branch: json['branch'] ?? 'branch',
+      batch: json['batch'] ?? 'batch',
+      id: json['id'] ?? 'id',
+      uid: json['uid'] ?? 'uid',
+      mobile: json['mobile'] ?? 'mobile',
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'])
+          : DateTime.now(),
     );
   }
 
-  // To JSON method
+  /// Method to convert the `UserModel` to a JSON map
   Map<String, dynamic> toJson() {
     return {
       'email': email,
       'name': name,
-      'role':role,
-      'batch':batch,
-      'branch':branch,
-      'mobile':mobile,
-      'id':id,
-      'uid':uid,
-      'createdAt':createdAt,
+      'role': role,
+      'branch': branch,
+      'batch': batch,
+      'id': id,
+      'uid': uid,
+      'mobile': mobile,
+      'createdAt': createdAt?.toIso8601String(),
     };
   }
 
   @override
   String toString() {
-    return 'UserModel( email: $email, name: $name, role: $role, createdAt: $createdAt,id: $id, batch: $batch, branch: $branch, mobile: $mobile, uid: $uid)';
+    return 'UserModel(email: $email, name: $name, role: $role, branch: $branch, batch: $batch, id: $id, uid: $uid, mobile: $mobile, createdAt: $createdAt)';
   }
+
 }
