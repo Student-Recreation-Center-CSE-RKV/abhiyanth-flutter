@@ -1,3 +1,4 @@
+import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/views/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
@@ -63,7 +64,10 @@ class _HomePageState extends State<HomePage> {
           ),
           actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  userService.signOut();
+                  Navigator.pushNamedAndRemoveUntil(context, RoutesName.signup,(route) => false);
+                },
                 icon: Icon(
                   Icons.notifications,
                   color: Colors.white,
