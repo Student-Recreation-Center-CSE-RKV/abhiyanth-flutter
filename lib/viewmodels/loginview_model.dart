@@ -70,7 +70,7 @@ class LoginViewModel extends ChangeNotifier {
         RoutesName.home,
         (route) => false,
       );
-      navigationservice.removeAllAndPush(RoutesName.home, RoutesName.login);
+      navigationservice.removeAllAndPush(RoutesName.home,RoutesName.login);
       // Stop loading state
       _isLoading = false;
       notifyListeners();
@@ -115,4 +115,5 @@ class LoginViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
 }
