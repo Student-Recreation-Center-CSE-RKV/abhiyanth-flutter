@@ -28,9 +28,9 @@ class NotificationServices {
       null,
       [
         NotificationChannel(
-          channelGroupKey: 'rgukt_channel',
-          channelKey: 'rgukt_channel',
-          channelName: 'rgukt_channel',
+          channelGroupKey: 'abhiyanth_channel',
+          channelKey: 'abhiyanth_channel',
+          channelName: 'abhiyanth_channel',
           channelDescription: 'Notification channel for basic task',
           defaultColor: Colors.deepPurple,
           ledColor: Colors.red,
@@ -43,8 +43,8 @@ class NotificationServices {
       ],
       channelGroups: [
         NotificationChannelGroup(
-          channelGroupKey: 'rgukt_channel',
-          channelGroupName: "rgukt_channel",
+          channelGroupKey: 'abhiyanth_channel',
+          channelGroupName: "abhiyanth_channel",
         )
       ],
       debug: true,
@@ -68,11 +68,11 @@ class NotificationServices {
     debugPrint("On Action Received");
     debugPrint("Payload: ${receivedAction.payload}");
 
-    String? page = receivedAction.payload?['page']; // Check the 'page' key.
+    String? page = receivedAction.payload?['page'];
     debugPrint("Page to navigate: $page");
 
     // if (page == 'menu') {
-    //   navigationService.pushScreen('menu'); // Navigate to the menu screen.
+    //   navigationService.pushScreen('menu');
     // } else {
     //   debugPrint("No matching page found!");
     // }
@@ -94,11 +94,12 @@ class NotificationServices {
   }
 
   Future<void> showNotification(RemoteMessage message ) async {
+    print("got notification");
     final Map<String, String?> payload = message.data.map((key, value) => MapEntry(key, value.toString()));
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: -1,
-        channelKey: 'rgukt_channel',
+        channelKey: 'abhiyanth_channel',
         title:message.data['title'],
         body: message.data['body'],
         summary: message.data['summary'],
@@ -108,7 +109,6 @@ class NotificationServices {
             : NotificationLayout.BigText,
         payload:payload,
       ),
-
     );
   }
 }

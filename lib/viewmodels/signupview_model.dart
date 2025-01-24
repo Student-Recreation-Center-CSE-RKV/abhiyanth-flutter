@@ -1,9 +1,13 @@
 import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/services/custom_snackbar.dart';
+import 'package:abhiyanth/services/db_services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/services/user_service.dart';
 import 'package:stacked/stacked.dart';
+
+import '../locator.dart';
 class SignupViewModel extends BaseViewModel{
 
   bool _isLoading = false;
@@ -21,6 +25,11 @@ class SignupViewModel extends BaseViewModel{
       notifyListeners();
       final user = await _userService.signInWithGoogle();
       if (user != null) {
+        final FCM_Token = await DBService.FCM_Tokens.doc("Tokens");
+        final String token = await notificationServices.getToken();
+        FCM_Token.update({
+          "Token": FieldValue.arrayUnion([token])
+        });
         Navigator.pushNamedAndRemoveUntil(context!, RoutesName.home,(route) => false);
       }
     }
