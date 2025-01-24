@@ -36,10 +36,12 @@ class _MMEState extends ConsumerState<MME> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          leading: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-            size: SizeConfig.safeBlockHorizontal * 5,
+          leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
           ),
           leadingWidth: 60,
           backgroundColor: Colors.transparent,
@@ -123,7 +125,8 @@ class _MMEState extends ConsumerState<MME> {
                   ...upcomingEvents.map(
                     (event) {
                       return AuditionCard(
-                        image : event['image'] ?? 'https://via.placeholder.com/150',
+                        image:
+                            event['image'] ?? 'https://via.placeholder.com/150',
                         title: event['title'] ?? 'No Title',
                         date: event['date'] ?? 'No Date',
                         time: event['time'] ?? 'No Time',

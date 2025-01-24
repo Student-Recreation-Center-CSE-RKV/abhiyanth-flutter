@@ -67,10 +67,10 @@ class _HomePageState extends State<HomePage> {
             IconButton(
                 onPressed: () {
                   userService.signOut();
-                  Navigator.pushNamedAndRemoveUntil(context, RoutesName.signup,(route) => false);
+                  Navigator.pushNamedAndRemoveUntil(context, RoutesName.login,(route) => false);
                 },
                 icon: Icon(
-                  Icons.notifications,
+                  Icons.logout,
                   color: Colors.white,
                 ))
           ],

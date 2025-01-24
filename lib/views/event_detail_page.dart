@@ -1,4 +1,5 @@
 import 'package:abhiyanth/utilities/gradient_background.dart';
+import 'package:abhiyanth/views/register_page.dart';
 import 'package:abhiyanth/widgets/map_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/services/size_config.dart';
@@ -98,7 +99,50 @@ class EventDetailPage extends StatelessWidget {
                 //       event['location'].longitude,
                 //     ),
                 //   ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegisterPage(eventTitle: event['title']),
+                      ),
+                    );
+                  },
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: const Color(0xFFFF3366),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          SizeConfig.blockSizeHorizontal * 2.5),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      vertical: SizeConfig.blockSizeVertical * 0.7,
+                      horizontal: SizeConfig.blockSizeHorizontal * 1.75,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize
+                        .min, // Ensures the row takes only as much space as needed
+                    children: [
+                      Text(
+                        "Register Now",
+                        style: TextStyle(
+                          fontSize: SizeConfig.blockSizeHorizontal * 4.5,
+                        ),
+                      ),
+                      SizedBox(
+                          width: SizeConfig.blockSizeHorizontal *
+                              1), // Optional spacing between text and icon
+                      Icon(
+                        Icons.arrow_outward_outlined,
+                        size: SizeConfig.blockSizeHorizontal *5, // Adjust icon size if needed
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                )
               ],
+
             ),
           ),
         ),

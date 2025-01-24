@@ -36,10 +36,12 @@ class _CSEState extends ConsumerState<CSE> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          leading: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-            size: SizeConfig.safeBlockHorizontal * 5,
+          leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
           ),
           leadingWidth: 60,
           backgroundColor: Colors.transparent,

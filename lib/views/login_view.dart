@@ -153,6 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                               fontWeight: FontWeight.bold,
                               fontSize:
                               SizeConfig.safeBlockHorizontal * 5,
+                              fontFamily: "Audiowide",
                             ),
                           ),
                         ),

@@ -1,4 +1,4 @@
-name: abhiyanth
+name: Abhiyanth
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -70,11 +70,19 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
+  flutter_launcher_icons: ^0.14.3
   flutter_lints: ^5.0.0
   riverpod_generator: ^2.6.4
   build_runner: ^2.4.14
   custom_lint: ^0.7.1
   riverpod_lint: ^2.6.4
+
+# Flutter launcher icon
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/abhiyanthlogo.jpg"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

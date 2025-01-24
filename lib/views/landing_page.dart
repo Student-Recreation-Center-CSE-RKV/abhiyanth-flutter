@@ -148,12 +148,6 @@ class _LandingPageState extends State<LandingPage> {
               text: "More interesting things to come...",
               backgroundColor: Colors.transparent,
             ),
-            PoweredBySrc(
-              logoAssetPath: "assets/images/src_logo.png",
-              text: "Powered by SRC-CSE",
-              textStyle:
-                  TextStyle(fontFamily: "Audiowide", color: Colors.white,fontSize: SizeConfig.safeBlockVertical*2),
-            ),
           ],
         ),
       ),
