@@ -53,12 +53,10 @@ class StallsPage extends StatelessWidget {
               const SizedBox(height: 16), // Space between title and card
 
               // Audition Card Widget
-              const AuditionCard(
-                title: "Chicken Day",
-                date: "27 Feb 2025",
-                time: "All day",
-                venue: "SAC",
-                description: "Eat to your fullest.",
+               EventCard(
+                title: "Build your 3D anime Character",
+                date: "1st March 2025",
+                location: '', imageUrl: '',
               ),
             ],
           ),

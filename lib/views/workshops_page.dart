@@ -66,12 +66,12 @@ class WorkshopsPage extends StatelessWidget {
               const SizedBox(height: 16), // Space between title and card
 
               // Audition Card Widget
-              const AuditionCard(
+
+               EventCard(
                 title: "Build your 3D anime Character",
                 date: "1st March 2025",
-                time: "12:00 AM",
-                venue: "CSE",
-                description: "Let your imagination run wild.",
+                location: '',
+                 imageUrl: '',
               ),
             ],
           ),

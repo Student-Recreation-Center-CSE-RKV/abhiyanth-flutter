@@ -106,12 +106,10 @@ class _CulturalsPageState extends ConsumerState<CulturalsPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              const AuditionCard(
-                title: "Singing",
-                date: "1st Jan 2025",
-                time: "5:00 PM",
-                venue: "Auditorium",
-                description: "Solo singing.",
+              EventCard(
+                title: "Build your 3D anime Character",
+                date: "1st March 2025",
+                location: '', imageUrl: '',
               ),
             ],
           ),

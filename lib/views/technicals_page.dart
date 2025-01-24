@@ -59,12 +59,10 @@ class TechnicalsPage extends StatelessWidget {
               const SizedBox(height: 16), // Space between title and card
 
               // Audition Card Widget
-              const AuditionCard(
-                title: "Debate",
-                date: "1st Jan 2025",
-                time: "5:00 PM",
-                venue: "AB2 S18",
-                description: "Let your words have no boundary.",
+              EventCard(
+                title: "Build your 3D anime Character",
+                date: "1st March 2025",
+                 location: '', imageUrl: '',
               ),
             ],
           ),
