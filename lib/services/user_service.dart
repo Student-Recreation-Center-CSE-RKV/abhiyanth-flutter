@@ -1,5 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:abhiyanth/services/db_services.dart';
+import 'package:abhiyanth/models/user_model.dart';
+import 'package:abhiyanth/services/Routes/routesname.dart';
+import 'package:abhiyanth/services/Routes/navigation_service.dart';
+import 'package:flutter/material.dart';
+
 
 class UserService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -60,5 +66,10 @@ class UserService {
   Future<void> signOut() async {
     await _googleSignIn.signOut();
     await _auth.signOut();
+  }
+
+   Future<void> createNewUser(UserModel user) async {
+    await DBService.users.doc(user.uid).set(user.toJson());
+    return;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:abhiyanth/views/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/services/size_config.dart';
 
@@ -107,7 +108,12 @@ class EventCard extends StatelessWidget {
                 SizedBox(height: SizeConfig.blockSizeVertical * 1),
                 TextButton(
                   onPressed: () {
-                    // Add your action here
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegisterPage(eventTitle: title),
+                      ),
+                    );
                   },
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.white,

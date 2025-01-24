@@ -44,25 +44,25 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          leading: Icon(
-            Icons.menu,
-            color: Colors.white,
-            size: 30,
-          ),
+          // leading: Icon(
+          //   Icons.menu,
+          //   color: Colors.white,
+          //   size: 30,
+          // ),
           leadingWidth: 60,
           backgroundColor: Colors.transparent,
           title: const Text(
             "Abhiyanth 2K25",
             style: TextStyle(color: Colors.white, fontFamily: "Audiowide"),
           ),
-          actions: [
-            IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.notifications,
-                  color: Colors.white,
-                ))
-          ],
+          // actions: [
+          //   IconButton(
+          //       onPressed: () {},
+          //       icon: Icon(
+          //         Icons.notifications,
+          //         color: Colors.white,
+          //       ))
+          // ],
           centerTitle: true,
           elevation: 0,
         ),
@@ -95,9 +95,10 @@ class _HomePageState extends State<HomePage> {
           child: CurvedNavigationBar(
             index: _currentPage,
             height: 55,
+            color: Colors.black,
             animationDuration: const Duration(milliseconds: 400),
             backgroundColor: Colors.transparent, // Make background transparent
-            buttonBackgroundColor: Colors.black,
+            buttonBackgroundColor: Colors.white,
             items: const <Widget>[
               GradientIcon(
                 icon: Icons.home,

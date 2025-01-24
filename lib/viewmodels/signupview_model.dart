@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/services/user_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:abhiyanth/locator.dart';
+import 'package:abhiyanth/models/user_model.dart';
 class SignupViewModel extends BaseViewModel{
 
   bool _isLoading = false;
@@ -21,6 +23,18 @@ class SignupViewModel extends BaseViewModel{
       notifyListeners();
       final user = await _userService.signInWithGoogle();
       if (user != null) {
+         await userService.createNewUser(
+        UserModel(
+          uid: user.uid,
+          name:user.displayName,
+          email:user.email,
+          mobile: user.phoneNumber,
+          role: "student",
+          id: "",
+          batch: "",
+          branch: "",
+        )
+      );
         Navigator.pushNamedAndRemoveUntil(context!, RoutesName.home,(route) => false);
       }
     }

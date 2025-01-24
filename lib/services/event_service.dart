@@ -1,40 +1,50 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:abhiyanth/constants/custom_theme.dart';
 
 class EventService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // Function to get events data from Firestore, sort by date
+  // Function to get central_events data from Firestore
   Future<List<Map<String, dynamic>>> getEvents() async {
     try {
-      // QuerySnapshot snapshot = await _firestore.collection('mobile_all_events').get();
+      // Fetch all documents from the 'central_events' collection
+      QuerySnapshot snapshot = await _firestore.collection('central_events').get();
 
-      // // Convert snapshot to a list of maps and sort by date
-      // List<Map<String, dynamic>> events = snapshot.docs.map((doc) {
-      //   var data = doc.data() as Map<String, dynamic>;
+      // Convert each document to a map and process the date fields
+      List<Map<String, dynamic>> events = snapshot.docs.map((doc) {
+        var data = doc.data() as Map<String, dynamic>;
 
-      //   // Check if the 'date' field is a Timestamp and convert it to a formatted string
-      //   if (data['date'] is Timestamp) {
-      //     Timestamp timestamp = data['date'];
-      //     DateTime dateTime = timestamp.toDate();
+        // Convert 'start_date' and 'end_date' to formatted strings
+        if (data['start_date'] != null && data['start_date'] is Timestamp) {
+          Timestamp startDate = data['start_date'];
+          data['start_date_formatted'] = DateFormat('dd-MM-yyyy hh:mm a').format(startDate.toDate());
+        }
 
-      //     // Format the date as a string
-      //     String formattedDate = DateFormat('dd-MM-yyyy').format(dateTime);
-      //     data['date'] = formattedDate;
+        if (data['end_date'] != null && data['end_date'] is Timestamp) {
+          Timestamp endDate = data['end_date'];
+          data['end_date_formatted'] = DateFormat('dd-MM-yyyy hh:mm a').format(endDate.toDate());
+        }
 
-      //     // Include a 'dateTime' field for sorting
-      //     data['dateTime'] = dateTime;
-      //   }
-      //   return data;
-      // }).toList();
+        // Convert 'deadline' to a formatted string
+        if (data['deadline'] != null && data['deadline'] is Timestamp) {
+          Timestamp deadline = data['deadline'];
+          data['deadline_formatted'] = DateFormat('dd-MM-yyyy hh:mm a').format(deadline.toDate());
+        }
 
-      // // Sort the events by the 'dateTime' field in descending order (latest first)
-      // events.sort((b,a) => (b['dateTime'] as DateTime).compareTo(a['dateTime'] as DateTime));
-      return eventsTest;
-      // return events;
+        // Include a sorting field for 'start_date'
+        if (data['start_date'] != null && data['start_date'] is Timestamp) {
+          data['startDateTime'] = (data['start_date'] as Timestamp).toDate();
+        }
+
+        return data;
+      }).toList();
+
+      // Sort events by 'startDateTime' in ascending order (earliest first)
+      events.sort((a, b) => (a['startDateTime'] as DateTime).compareTo(b['startDateTime'] as DateTime));
+
+      return events;
     } catch (e) {
-      print('Error fetching events: $e');
+      print('Error fetching central events: $e');
       return [];
     }
   }

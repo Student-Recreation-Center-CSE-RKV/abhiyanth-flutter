@@ -1,5 +1,8 @@
 import 'package:abhiyanth/utilities/gradient_background.dart';
+import 'package:abhiyanth/widgets/map_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:abhiyanth/services/size_config.dart';
+import 'package:latlong2/latlong.dart';
 
 class EventDetailPage extends StatelessWidget {
   final Map<String, dynamic> event;
@@ -11,65 +14,129 @@ class EventDetailPage extends StatelessWidget {
     return GradientBackground(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(event['title'] ?? 'Event Details', style: const TextStyle(fontFamily: "Audiowide",color: Colors.white)),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          title: Center(
+            child: Text(
+              event['title'] ?? 'Event Details',
+              style: TextStyle(
+                fontFamily: "Audiowide",
+                color: Colors.white,
+                fontSize: SizeConfig.blockSizeHorizontal * 5.5,
+              ),
+            ),
+          ),
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
         backgroundColor: Colors.transparent,
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              event['image'] != null
-                  ? Image.network(event['image'], fit: BoxFit.cover)
-                  : const SizedBox.shrink(),
-              const SizedBox(height: 16),
-              Text(
-                event['title'] ?? 'No Title',
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(SizeConfig.blockSizeHorizontal * 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (event['image'] != null)
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.width * 0.5,
+                    child: Image.network(
+                      event['image'],
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                SizedBox(height: SizeConfig.blockSizeVertical * 2),
+                Text(
+                  event['description'] ?? 'No Description',
+                  style: TextStyle(
+                    fontSize: SizeConfig.blockSizeHorizontal * 4.5,
+                    fontFamily: "Audiowide",
+                    color: Colors.white70,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                event['description'] ?? 'No Description',
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
+                SizedBox(height: SizeConfig.blockSizeVertical * 2),
+                Divider(height: 1,color: Colors.white60,),
+                SizedBox(height: SizeConfig.blockSizeVertical * 2),
+                Table(
+                  columnWidths: {
+                    0: FlexColumnWidth(1),
+                    1: FlexColumnWidth(2),
+                  },
+                  children: [
+                    _buildTableRow('Department:', event['department'] ?? 'N/A'),
+                    _buildTableRow(
+                        'Start Date :', event['start_date_formatted'] ?? 'N/A'),
+                    _buildTableRow(
+                        'End Date :', event['end_date_formatted'] ?? 'N/A'),
+                    _buildTableRow(
+                        'First Prize :', '₹${event['prize_money'] ?? 'N/A'}'),
+                    if (event['second_prize'] != null)
+                      _buildTableRow(
+                          'Second Prize :', '₹${event['second_prize']}'),
+                    _buildTableRow(
+                        'Entry Fee :', '₹${event['entry_fee'] ?? 'N/A'}'),
+                    _buildTableRow('Team Size:', event['team_size'] ?? 'N/A'),
+                    if (event['deadline_formatted'] != null)
+                      _buildTableRow(
+                          'Deadline :', event['deadline_formatted'] ?? 'N/A'),
+                    if (event['sponsors'] != null && event['sponsors'] is List)
+                      _buildTableRow(
+                          'Sponsors :', (event['sponsors'] as List).join(', ')),
+                    if (event['result'] != null && event['result'] is List)
+                      _buildTableRow(
+                          'Results :', (event['result'] as List).join(', ')),
+                  ],
                 ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'Department: ${event['department'] ?? 'N/A'}',
-                style: const TextStyle(color: Colors.white),
-              ),
-              Text(
-                'Start Date: ${event['start_date'] ?? 'N/A'}',
-                style: const TextStyle(color: Colors.white),
-              ),
-              Text(
-                'End Date: ${event['end_date'] ?? 'N/A'}',
-                style: const TextStyle(color: Colors.white),
-              ),
-              Text(
-                'Prize Money: ₹${event['prize_money'] ?? 'N/A'}',
-                style: const TextStyle(color: Colors.white),
-              ),
-              Text(
-                'Entry Fee: ₹${event['entry_fee'] ?? 'N/A'}',
-                style: const TextStyle(color: Colors.white),
-              ),
-              Text(
-                'Team Size: ${event['team_size'] ?? 'N/A'}',
-                style: const TextStyle(color: Colors.white),
-              ),
-            ],
+                // if (event['location'] != null)
+                //   LocationMap(
+                //     location: LatLng(
+                //       event['location'].latitude,
+                //       event['location'].longitude,
+                //     ),
+                //   ),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  TableRow _buildTableRow(String label, String value) {
+    return TableRow(
+      children: [
+        Padding(
+          padding:
+              EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 1),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: SizeConfig.blockSizeHorizontal * 4,
+                fontFamily: "Audiowide",
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding:
+              EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 1),
+          child: Text(
+            value,
+            style: TextStyle(
+              fontSize: SizeConfig.blockSizeHorizontal * 4,
+              fontFamily: "Audiowide",
+              color: Colors.white60,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

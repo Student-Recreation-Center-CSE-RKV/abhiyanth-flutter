@@ -93,10 +93,12 @@ class _EventPageState extends ConsumerState<EventPage> {
                         child: GestureDetector(
                           onTap: () => _navigateToEventDetail(context, event),
                           child: EventCard(
-                            date: event['start_date'] ?? 'N/A',
+                            date: event['start_date_formatted'] ?? 'N/A',
                             title: event['title'] ?? 'No Title',
                             location: event['department'] ?? 'No Department',
                             imageUrl: event['image'] ?? '',
+                            // prizeMoney: event['prize_money'] ?? 'No Prize',
+                            // entryFee: event['entry_fee'] ?? 'Free',
                           ),
                         ),
                       );

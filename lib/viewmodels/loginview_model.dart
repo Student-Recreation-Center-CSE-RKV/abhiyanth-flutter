@@ -3,6 +3,7 @@ import 'package:abhiyanth/services/custom_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../services/Routes/routesname.dart';
+import 'package:abhiyanth/locator.dart';
 
 class LoginViewModel extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
