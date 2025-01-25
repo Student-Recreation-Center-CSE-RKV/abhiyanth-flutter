@@ -14,14 +14,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "677897623427-3j3eug935ccjvqetk9kr96i0lbgn4a4o.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.abhiyan",
-            "certificate_hash": "c72a1624816569eabae3226bdd0c2ca931b2b5bb"
-          }
-        },
-        {
           "client_id": "677897623427-qrs03lhq8a6o015g6govo0fhiqnj748k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
