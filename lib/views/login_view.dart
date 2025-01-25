@@ -180,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                             style: const TextStyle(color: Colors.blue , fontFamily: "Audiowide",),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                              navigationService.pushScreen(RoutesName.signup);
+                              navigationService.popAndPushScreen(RoutesName.signup);
                               },
                           ),
                         ],

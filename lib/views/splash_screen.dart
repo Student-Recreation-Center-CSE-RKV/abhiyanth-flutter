@@ -64,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
               "Welcome to Abhiyanth 2K25",
               style: TextStyle(
                 color: Colors.black,
-                fontSize: SizeConfig.safeBlockHorizontal* 6,
+                fontSize: SizeConfig.safeBlockHorizontal* 4,
                 fontWeight: FontWeight.bold,
                 fontFamily : "Audiowide",
               ),

@@ -13,14 +13,22 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final List<String> branches = ['CSE', 'ECE', 'EEE', 'Mechanical', 'Civil', 'Chemical', 'MME'];
+  final List<String> branches = [
+    'CSE',
+    'ECE',
+    'EEE',
+    'Mechanical',
+    'Civil',
+    'Chemical',
+    'MME'
+  ];
   String selectedBranch = 'CSE';
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController batchController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
-  final TextEditingController idcontroller =TextEditingController();
+  final TextEditingController idcontroller = TextEditingController();
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late final String userId;
@@ -40,7 +48,7 @@ class _ProfilePageState extends State<ProfilePage> {
     });
     try {
       DocumentSnapshot<Map<String, dynamic>> snapshot =
-      await _firestore.collection('Users').doc(userId).get();
+          await _firestore.collection('Users').doc(userId).get();
 
       if (snapshot.exists) {
         Map<String, dynamic>? data = snapshot.data();
@@ -50,7 +58,9 @@ class _ProfilePageState extends State<ProfilePage> {
           emailController.text = data?['email'] ?? '';
           batchController.text = data?['batch'] ?? '';
           mobileController.text = data?['mobile'] ?? '';
-          selectedBranch = data?['branch'] ?? 'CSE';
+          String? branchFromDB = data?['branch'];
+          selectedBranch =
+              branches.contains(branchFromDB) ? branchFromDB! : branches.first;
         });
       }
     } catch (e) {
@@ -65,12 +75,12 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _saveProfileData() async {
     await _firestore.collection('Users').doc(userId).set({
       'name': nameController.text,
-      'id' : idcontroller.text,
+      'id': idcontroller.text,
       'email': emailController.text,
       'batch': batchController.text,
       'mobile': mobileController.text,
       'branch': selectedBranch,
-    },SetOptions(merge: true));
+    }, SetOptions(merge: true));
     CustomSnackBar.show(context, 'Profile saved successfully!');
   }
 
@@ -83,147 +93,151 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: Colors.transparent,
         body: isLoading
             ? Center(
-          child: CircularProgressIndicator(
-            color: Colors.blue,
-          ),
-        )
+                child: CircularProgressIndicator(
+                  color: Colors.blue,
+                ),
+              )
             : SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: SizeConfig.blockSizeHorizontal * 5),
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                BorderGradient(
-                  borderRadius: BorderRadius.circular(20.0),
-                  borderWidth: 3.0,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: SizeConfig.safeBlockVertical * 1.0,
-                      horizontal: SizeConfig.safeBlockHorizontal * 15,
-                    ),
-                    child: Text(
-                      "My Profile",
-                      style: TextStyle(
-                        fontSize: SizeConfig.safeBlockHorizontal * 5,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                // Stack(
-                //   alignment: Alignment.bottomRight,
-                //   children: [
-                //     CircleAvatar(
-                //       radius: SizeConfig.blockSizeVertical * 10,
-                //       backgroundColor: Colors.purple,
-                //     ),
-                //     Positioned(
-                //       bottom: 5,
-                //       right: 5,
-                //       child: Container(
-                //         decoration: const BoxDecoration(
-                //           shape: BoxShape.circle,
-                //           color: Colors.blue,
-                //         ),
-                //         padding: const EdgeInsets.all(5),
-                //         child: const Icon(
-                //           Icons.camera_alt,
-                //           color: Colors.white,
-                //           size: 20,
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                const SizedBox(height: 20),
-                _buildTextField("Name", nameController),
-                const SizedBox(height: 15),
-                _buildTextField("ID",idcontroller),
-                const SizedBox(height: 15),
-                _buildTextField("Email", emailController),
-                const SizedBox(height: 15),
-                _buildTextField("Batch", batchController),
-                const SizedBox(height: 15),
-
-                // Dropdown for Branch Selection
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Branch",
-                      style: TextStyle(
-                        fontSize: SizeConfig.safeBlockHorizontal * 4,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.blue, width: 1),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: DropdownButton<String>(
-                        value: selectedBranch,
-                        isExpanded: true,
-                        dropdownColor: Colors.black,
-                        icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
-                        underline: const SizedBox(),
-                        items: branches.map((String branch) {
-                          return DropdownMenuItem<String>(
-                            value: branch,
-                            child: Text(
-                              branch,
-                              style: const TextStyle(color: Colors.white),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.blockSizeHorizontal * 5),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      BorderGradient(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderWidth: 3.0,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: SizeConfig.safeBlockVertical * 1.0,
+                            horizontal: SizeConfig.safeBlockHorizontal * 15,
+                          ),
+                          child: Text(
+                            "My Profile",
+                            style: TextStyle(
+                              fontSize: SizeConfig.safeBlockHorizontal * 5,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: "Audiowide",
                             ),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedBranch = newValue!;
-                          });
-                        },
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                      const SizedBox(height: 20),
+                      // Stack(
+                      //   alignment: Alignment.bottomRight,
+                      //   children: [
+                      //     CircleAvatar(
+                      //       radius: SizeConfig.blockSizeVertical * 10,
+                      //       backgroundColor: Colors.purple,
+                      //     ),
+                      //     Positioned(
+                      //       bottom: 5,
+                      //       right: 5,
+                      //       child: Container(
+                      //         decoration: const BoxDecoration(
+                      //           shape: BoxShape.circle,
+                      //           color: Colors.blue,
+                      //         ),
+                      //         padding: const EdgeInsets.all(5),
+                      //         child: const Icon(
+                      //           Icons.camera_alt,
+                      //           color: Colors.white,
+                      //           size: 20,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      const SizedBox(height: 20),
+                      _buildTextField("Name", nameController),
+                      const SizedBox(height: 15),
+                      _buildTextField("ID", idcontroller),
+                      const SizedBox(height: 15),
+                      _buildTextField("Email", emailController),
+                      const SizedBox(height: 15),
+                      _buildTextField("Batch", batchController),
+                      const SizedBox(height: 15),
 
-                const SizedBox(height: 15),
-                _buildTextField("Mobile", mobileController),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      vertical: SizeConfig.blockSizeVertical * 1.0,
-                      horizontal: SizeConfig.blockSizeHorizontal * 10,
-                    ),
-                  ),
-                  onPressed: () async {
-                    await _saveProfileData();
-                    await _loadProfileData();
-                  },
-                  child: const Text(
-                    "Save Changes",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.white,
-                    ),
+                      // Dropdown for Branch Selection
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Branch",
+                            style: TextStyle(
+                              fontSize: SizeConfig.safeBlockHorizontal * 4,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: "Audiowide",
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.blue, width: 1),
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: DropdownButton<String>(
+                              value: selectedBranch,
+                              isExpanded: true,
+                              dropdownColor: Colors.black,
+                              icon: const Icon(Icons.arrow_drop_down,
+                                  color: Colors.white),
+                              underline: const SizedBox(),
+                              items: branches.map((String branch) {
+                                return DropdownMenuItem<String>(
+                                  value: branch,
+                                  child: Text(
+                                    branch,
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  selectedBranch = newValue!;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 15),
+                      _buildTextField("Mobile", mobileController),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            vertical: SizeConfig.blockSizeVertical * 1.0,
+                            horizontal: SizeConfig.blockSizeHorizontal * 10,
+                          ),
+                        ),
+                        onPressed: () async {
+                          await _saveProfileData();
+                          await _loadProfileData();
+                        },
+                        child: const Text(
+                          "Save Changes",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.white,
+                            fontFamily: "Audiowide",
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 30),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }
@@ -238,6 +252,7 @@ class _ProfilePageState extends State<ProfilePage> {
             fontSize: SizeConfig.safeBlockHorizontal * 4,
             fontWeight: FontWeight.bold,
             color: Colors.white,
+            fontFamily: "Audiowide",
           ),
         ),
         const SizedBox(height: 5),
@@ -251,7 +266,7 @@ class _ProfilePageState extends State<ProfilePage> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: TextField(
               controller: controller,
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white, fontFamily: "Audiowide",),
               decoration: const InputDecoration(
                 border: InputBorder.none,
               ),

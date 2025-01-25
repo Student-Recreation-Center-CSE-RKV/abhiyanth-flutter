@@ -13,11 +13,9 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-
-
   bool _obscuretext = true;
 
-  NavigationService navigationService=NavigationService();
+  NavigationService navigationService = NavigationService();
 
   void _toggleObscureText() {
     setState(() {
@@ -27,7 +25,6 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-
     SizeConfig.init(context);
 
     return ChangeNotifierProvider(
@@ -45,7 +42,23 @@ class _SignupPageState extends State<SignupPage> {
                     width: SizeConfig.safeBlockHorizontal * 50,
                     height: SizeConfig.safeBlockVertical * 50,
                   ),
-                  SizedBox(height: SizeConfig.safeBlockVertical * 5),
+                  SizedBox(height: SizeConfig.safeBlockVertical * 2),
+                  Text(
+                    "Welcome to Abhiyanth 2k25",
+                    style: TextStyle(
+                        fontFamily: "Audiowide",
+                        color: Colors.white,
+                        fontSize: SizeConfig.safeBlockHorizontal * 5),
+                  ),
+                  SizedBox(height: SizeConfig.safeBlockVertical * 2),
+                  Text(
+                    "Register to continue",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: "Audiowide",
+                        fontSize: SizeConfig.safeBlockHorizontal * 4),
+                  ),
+                  SizedBox(height: SizeConfig.safeBlockVertical * 2),
                   // Email TextField
                   Padding(
                     padding: EdgeInsets.symmetric(
@@ -77,11 +90,13 @@ class _SignupPageState extends State<SignupPage> {
                           keyboardType: TextInputType.emailAddress,
                           decoration: const InputDecoration(
                             hintText: "Enter your email",
-                            hintStyle: TextStyle(color: Colors.white70 ,fontFamily: "Audiowide" ),
+                            hintStyle: TextStyle(
+                                color: Colors.white70, fontFamily: "Audiowide"),
                             border: InputBorder.none,
                             prefixIcon: Icon(Icons.email, color: Colors.white),
                           ),
-                          style: const TextStyle(color: Colors.white , fontFamily: "Audiowide" ),
+                          style: const TextStyle(
+                              color: Colors.white, fontFamily: "Audiowide"),
                         ),
                       ),
                     ),
@@ -115,16 +130,26 @@ class _SignupPageState extends State<SignupPage> {
                             horizontal: SizeConfig.safeBlockHorizontal * 3),
                         child: TextFormField(
                           controller: viewModel.passwordController,
-
                           obscureText: _obscuretext,
                           decoration: InputDecoration(
-                            hintText: "Enter your password",
-                            hintStyle: const TextStyle(color: Colors.white70 , fontFamily: "Audiowide" ),
-                            border: InputBorder.none,
-                            prefixIcon: const Icon(Icons.lock, color: Colors.white),
-                            suffixIcon: IconButton(onPressed: _toggleObscureText, icon: Icon(_obscuretext?Icons.visibility:Icons.visibility_off , color: Colors.white,),)
-                          ),
-                          style: const TextStyle(color: Colors.white, fontFamily: "Audiowide"),
+                              hintText: "Enter your password",
+                              hintStyle: const TextStyle(
+                                  color: Colors.white70,
+                                  fontFamily: "Audiowide"),
+                              border: InputBorder.none,
+                              prefixIcon:
+                                  const Icon(Icons.lock, color: Colors.white),
+                              suffixIcon: IconButton(
+                                onPressed: _toggleObscureText,
+                                icon: Icon(
+                                  _obscuretext
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Colors.white,
+                                ),
+                              )),
+                          style: const TextStyle(
+                              color: Colors.white, fontFamily: "Audiowide"),
                         ),
                       ),
                     ),
@@ -135,15 +160,18 @@ class _SignupPageState extends State<SignupPage> {
                     onPressed: viewModel.isLoading
                         ? null
                         : () {
-                      final email = viewModel.emailController.text.trim();
-                      final password = viewModel.passwordController.text.trim();
+                            final email = viewModel.emailController.text.trim();
+                            final password =
+                                viewModel.passwordController.text.trim();
 
-                      if (email.isNotEmpty && password.isNotEmpty) {
-                        viewModel.signup(email, password, context);
-                      } else {
-                       CustomSnackBar.show(context, 'Please fill all fields' , type: "warning");
-                      }
-                    },
+                            if (email.isNotEmpty && password.isNotEmpty) {
+                              viewModel.signup(email, password, context);
+                            } else {
+                              CustomSnackBar.show(
+                                  context, 'Please fill all fields',
+                                  type: "warning");
+                            }
+                          },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
@@ -169,16 +197,16 @@ class _SignupPageState extends State<SignupPage> {
                         alignment: Alignment.center,
                         height: SizeConfig.safeBlockVertical * 5,
                         child: viewModel.isLoading
-                            ? CircularProgressIndicator()
+                            ? CircularProgressIndicator(color: Colors.white,)
                             : Text(
-                          "SignUp",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: SizeConfig.safeBlockHorizontal * 5,
-                            fontFamily: "Audiowide",
-                          ),
-                        ),
+                                "SignUp",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 5,
+                                  fontFamily: "Audiowide",
+                                ),
+                              ),
                       ),
                     ),
                   ),
@@ -247,14 +275,18 @@ class _SignupPageState extends State<SignupPage> {
                   Text.rich(
                     TextSpan(
                       text: "Already have an account...?",
-                      style: const TextStyle(color: Colors.white , fontFamily: "Audiowide",),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontFamily: "Audiowide",
+                      ),
                       children: [
                         TextSpan(
                           text: 'Login',
-                          style: const TextStyle(color: Colors.blue , fontFamily: "Audiowide"),
+                          style: const TextStyle(
+                              color: Colors.blue, fontFamily: "Audiowide"),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              navigationService.pushScreen(RoutesName.login);
+                              navigationService.popAndPushScreen(RoutesName.login);
                             },
                         ),
                       ],
