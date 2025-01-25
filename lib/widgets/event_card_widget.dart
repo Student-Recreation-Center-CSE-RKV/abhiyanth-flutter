@@ -45,7 +45,7 @@ class AuditionCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.network(
-                image, // Replace image with your local variable containing the URL
+                image, // Replace `image` with your local variable containing the URL
                 width: 100,
                 height: 100,
                 fit: BoxFit

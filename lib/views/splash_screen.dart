@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'package:abhiyanth/services/Routes/navigation_service.dart';
 import 'package:abhiyanth/services/Routes/routesname.dart';
+import 'package:abhiyanth/widgets/powered_by_src.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:abhiyanth/services/notification_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -52,29 +51,27 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       backgroundColor: Colors.white,
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // App Logo
+            SizedBox(height: SizeConfig.safeBlockVertical* 30),
             Image.asset(
               'assets/images/abhiyanthlogo.jpg',
-              width: SizeConfig.safeBlockHorizontal! * 40,
+              width: SizeConfig.safeBlockHorizontal* 40,
             ),
-            SizedBox(height: SizeConfig.safeBlockVertical! * 2),
+            SizedBox(height: SizeConfig.safeBlockVertical* 2),
             Text(
-              "Welcome to Abhiyanth App",
+              "Welcome to Abhiyanth 2K25",
               style: TextStyle(
                 color: Colors.black,
-                fontSize: SizeConfig.safeBlockHorizontal! * 6,
+                fontSize: SizeConfig.safeBlockHorizontal* 4,
                 fontWeight: FontWeight.bold,
+                fontFamily : "Audiowide",
               ),
             ),
-            SizedBox(height: SizeConfig.safeBlockVertical! * 2),
+            SizedBox(height: SizeConfig.safeBlockVertical* 35),
             // Loading Spinner
-            SpinKitSquareCircle(
-              color: Colors.blue,
-              size: 50.0,
-              controller: _controller,
-            ),
+            PoweredBySrc(logoAssetPath: "assets/images/src_logo.png", text: "Powered by SRC-CSE")
           ],
         ),
       ),

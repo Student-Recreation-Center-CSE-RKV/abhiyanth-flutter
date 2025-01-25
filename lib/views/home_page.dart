@@ -1,5 +1,4 @@
 import 'package:abhiyanth/services/Routes/routesname.dart';
-import 'package:abhiyanth/views/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
 import 'package:abhiyanth/widgets/gradient_icon.dart';
@@ -9,6 +8,7 @@ import 'package:abhiyanth/views/event_page.dart';
 import 'package:abhiyanth/views/profile_page.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:abhiyanth/locator.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
   @override
@@ -51,11 +51,11 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          leading: Icon(
-            Icons.menu,
-            color: Colors.white,
-            size: 30,
-          ),
+          // leading: Icon(
+          //   Icons.menu,
+          //   color: Colors.white,
+          //   size: 30,
+          // ),
           leadingWidth: 60,
           backgroundColor: Colors.transparent,
           title: const Text(
@@ -66,10 +66,10 @@ class _HomePageState extends State<HomePage> {
             IconButton(
                 onPressed: () {
                   userService.signOut();
-                  Navigator.pushNamedAndRemoveUntil(context, RoutesName.signup,(route) => false);
+                  Navigator.pushNamedAndRemoveUntil(context, RoutesName.login,(route) => false);
                 },
                 icon: Icon(
-                  Icons.notifications,
+                  Icons.logout,
                   color: Colors.white,
                 ))
           ],
@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
             EventPage(),
             DepartmentsPage(),
             ProfilePage(),
-            MapPage(),
+            // MapPage(),
           ],
         ),
         bottomNavigationBar: Container(
@@ -105,9 +105,10 @@ class _HomePageState extends State<HomePage> {
           child: CurvedNavigationBar(
             index: _currentPage,
             height: 55,
+            color: Colors.black,
             animationDuration: const Duration(milliseconds: 400),
             backgroundColor: Colors.transparent, // Make background transparent
-            buttonBackgroundColor: Colors.black,
+            buttonBackgroundColor: Colors.white,
             items: const <Widget>[
               GradientIcon(
                 icon: Icons.home,
@@ -125,10 +126,10 @@ class _HomePageState extends State<HomePage> {
                 icon: Icons.person,
                 size: 30,
               ),
-              GradientIcon(
-                icon: Icons.map,
-                size: 30,
-              ),
+              // GradientIcon(
+              //   icon: Icons.map,
+              //   size: 30,
+              // ),
             ],
             onTap: _onBottomNavTapped,
           ),

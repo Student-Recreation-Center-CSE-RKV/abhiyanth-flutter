@@ -4,9 +4,7 @@ import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:provider/provider.dart';
 import '../services/Routes/navigation_service.dart';
-import '../services/Routes/routes.dart';
 import '../services/custom_snackbar.dart';
-import '../services/user_service.dart';
 import '../viewmodels/signupview_model.dart';
 
 class SignupPage extends StatefulWidget {
@@ -15,11 +13,9 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-
-
   bool _obscuretext = true;
 
-  NavigationService navigationService=NavigationService();
+  NavigationService navigationService = NavigationService();
 
   void _toggleObscureText() {
     setState(() {
@@ -29,7 +25,6 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-
     SizeConfig.init(context);
 
     return ChangeNotifierProvider(
@@ -47,7 +42,23 @@ class _SignupPageState extends State<SignupPage> {
                     width: SizeConfig.safeBlockHorizontal * 50,
                     height: SizeConfig.safeBlockVertical * 50,
                   ),
-                  SizedBox(height: SizeConfig.safeBlockVertical * 5),
+                  SizedBox(height: SizeConfig.safeBlockVertical * 2),
+                  Text(
+                    "Welcome to Abhiyanth 2k25",
+                    style: TextStyle(
+                        fontFamily: "Audiowide",
+                        color: Colors.white,
+                        fontSize: SizeConfig.safeBlockHorizontal * 5),
+                  ),
+                  SizedBox(height: SizeConfig.safeBlockVertical * 2),
+                  Text(
+                    "Register to continue",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: "Audiowide",
+                        fontSize: SizeConfig.safeBlockHorizontal * 4),
+                  ),
+                  SizedBox(height: SizeConfig.safeBlockVertical * 2),
                   // Email TextField
                   Padding(
                     padding: EdgeInsets.symmetric(
@@ -79,11 +90,13 @@ class _SignupPageState extends State<SignupPage> {
                           keyboardType: TextInputType.emailAddress,
                           decoration: const InputDecoration(
                             hintText: "Enter your email",
-                            hintStyle: TextStyle(color: Colors.white70),
+                            hintStyle: TextStyle(
+                                color: Colors.white70, fontFamily: "Audiowide"),
                             border: InputBorder.none,
                             prefixIcon: Icon(Icons.email, color: Colors.white),
                           ),
-                          style: const TextStyle(color: Colors.white),
+                          style: const TextStyle(
+                              color: Colors.white, fontFamily: "Audiowide"),
                         ),
                       ),
                     ),
@@ -117,16 +130,26 @@ class _SignupPageState extends State<SignupPage> {
                             horizontal: SizeConfig.safeBlockHorizontal * 3),
                         child: TextFormField(
                           controller: viewModel.passwordController,
-
                           obscureText: _obscuretext,
                           decoration: InputDecoration(
-                            hintText: "Enter your password",
-                            hintStyle: const TextStyle(color: Colors.white70),
-                            border: InputBorder.none,
-                            prefixIcon: const Icon(Icons.lock, color: Colors.white),
-                            suffixIcon: IconButton(onPressed: _toggleObscureText, icon: Icon(_obscuretext?Icons.visibility:Icons.visibility_off),)
-                          ),
-                          style: const TextStyle(color: Colors.white),
+                              hintText: "Enter your password",
+                              hintStyle: const TextStyle(
+                                  color: Colors.white70,
+                                  fontFamily: "Audiowide"),
+                              border: InputBorder.none,
+                              prefixIcon:
+                                  const Icon(Icons.lock, color: Colors.white),
+                              suffixIcon: IconButton(
+                                onPressed: _toggleObscureText,
+                                icon: Icon(
+                                  _obscuretext
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Colors.white,
+                                ),
+                              )),
+                          style: const TextStyle(
+                              color: Colors.white, fontFamily: "Audiowide"),
                         ),
                       ),
                     ),
@@ -137,15 +160,18 @@ class _SignupPageState extends State<SignupPage> {
                     onPressed: viewModel.isLoading
                         ? null
                         : () {
-                      final email = viewModel.emailController.text.trim();
-                      final password = viewModel.passwordController.text.trim();
+                            final email = viewModel.emailController.text.trim();
+                            final password =
+                                viewModel.passwordController.text.trim();
 
-                      if (email.isNotEmpty && password.isNotEmpty) {
-                        viewModel.signup(email, password, context);
-                      } else {
-                       CustomSnackBar.show(context, 'Please fill all fields');
-                      }
-                    },
+                            if (email.isNotEmpty && password.isNotEmpty) {
+                              viewModel.signup(email, password, context);
+                            } else {
+                              CustomSnackBar.show(
+                                  context, 'Please fill all fields',
+                                  type: "warning");
+                            }
+                          },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
@@ -171,90 +197,96 @@ class _SignupPageState extends State<SignupPage> {
                         alignment: Alignment.center,
                         height: SizeConfig.safeBlockVertical * 5,
                         child: viewModel.isLoading
-                            ? CircularProgressIndicator()
+                            ? CircularProgressIndicator(color: Colors.white,)
                             : Text(
-                          "SignUp",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: SizeConfig.safeBlockHorizontal * 5,
-                          ),
-                        ),
+                                "SignUp",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 5,
+                                  fontFamily: "Audiowide",
+                                ),
+                              ),
                       ),
                     ),
                   ),
                   SizedBox(height: SizeConfig.safeBlockVertical * 2),
                   // Continue with Google Button
-                  SizedBox(
-                    width: SizeConfig.safeBlockHorizontal * 80,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        final userService = UserService();
+                  // SizedBox(
+                  //   width: SizeConfig.safeBlockHorizontal * 80,
+                  //   child: ElevatedButton(
+                  //     onPressed: () async {
+                  //       final userService = UserService();
 
-                        final user = await userService.signInWithGoogle();
+                  //       final user = await userService.signInWithGoogle();
 
-                        if (user != null) {
-                          print('User signed in with Google: ${user.displayName}');
-                         navigationService.removeAllAndPush(RoutesName.home,RoutesName.signup);
-                        } else {
-                          CustomSnackBar.show(context, 'Google Sign-In failed');                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: SizeConfig.safeBlockHorizontal * 3,
-                          vertical: SizeConfig.safeBlockVertical * 1,
-                        ),
-                        backgroundColor: Colors.white,
-                        shadowColor: Colors.transparent,
-                      ),
-                      child: Ink(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(18.0),
-                        ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: SizeConfig.safeBlockVertical * 5,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/Googlelogo.png',
-                                width: SizeConfig.safeBlockHorizontal * 8,
-                                height: SizeConfig.safeBlockVertical * 8,
-                              ),
-                              SizedBox(width: SizeConfig.safeBlockHorizontal * 2),
-                              Text(
-                                "Continue with Google",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: SizeConfig.safeBlockHorizontal * 4.5,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  //       if (user != null) {
+                  //         print('User signed in with Google: ${user.displayName}');
+                  //        navigationService.removeAllAndPush(RoutesName.home,RoutesName.signup);
+                  //       } else {
+                  //         CustomSnackBar.show(context, 'Google Sign-In failed' , type: "error");                        }
+                  //     },
+                  //     style: ElevatedButton.styleFrom(
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(25.0),
+                  //       ),
+                  //       padding: EdgeInsets.symmetric(
+                  //         horizontal: SizeConfig.safeBlockHorizontal * 3,
+                  //         vertical: SizeConfig.safeBlockVertical * 1,
+                  //       ),
+                  //       backgroundColor: Colors.white,
+                  //       shadowColor: Colors.transparent,
+                  //     ),
+                  //     child: Ink(
+                  //       decoration: BoxDecoration(
+                  //         color: Colors.white,
+                  //         borderRadius: BorderRadius.circular(18.0),
+                  //       ),
+                  //       child: Container(
+                  //         alignment: Alignment.center,
+                  //         height: SizeConfig.safeBlockVertical * 5,
+                  //         child: Row(
+                  //           mainAxisAlignment: MainAxisAlignment.center,
+                  //           children: [
+                  //             Image.asset(
+                  //               'assets/images/Googlelogo.png',
+                  //               width: SizeConfig.safeBlockHorizontal * 8,
+                  //               height: SizeConfig.safeBlockVertical * 8,
+                  //             ),
+                  //             SizedBox(width: SizeConfig.safeBlockHorizontal * 2),
+                  //             Text(
+                  //               "Continue with Google",
+                  //               style: TextStyle(
+                  //                 color: Colors.black,
+                  //                 fontWeight: FontWeight.bold,
+                  //                 fontSize: SizeConfig.safeBlockHorizontal * 4.5,
+                  //                 fontFamily: "Audiowide",
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
 
                   SizedBox(height: SizeConfig.safeBlockVertical * 2),
                   // Login Link
                   Text.rich(
                     TextSpan(
                       text: "Already have an account...?",
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontFamily: "Audiowide",
+                      ),
                       children: [
                         TextSpan(
                           text: 'Login',
-                          style: const TextStyle(color: Colors.blue),
+                          style: const TextStyle(
+                              color: Colors.blue, fontFamily: "Audiowide"),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              navigationService.pushScreen(RoutesName.login);
+                              navigationService.popAndPushScreen(RoutesName.login);
                             },
                         ),
                       ],

@@ -1,7 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:abhiyanth/locator.dart';
 import 'package:flutter/material.dart';
 class NotificationServices {
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;

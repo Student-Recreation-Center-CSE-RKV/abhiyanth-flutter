@@ -5,6 +5,7 @@ import '../viewmodels/event_state_provider.dart';
 import '../widgets/main_event_card_widget.dart';
 import '../widgets/gradient_border.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import './event_detail_page.dart';
 
 class EventPage extends ConsumerStatefulWidget {
   const EventPage({super.key});
@@ -14,18 +15,32 @@ class EventPage extends ConsumerStatefulWidget {
 }
 
 class _EventPageState extends ConsumerState<EventPage> {
-  void initstate() {
+  @override
+  void initState() {
     super.initState();
-    debugPrint("super.initstate");
 
-    ref.read(eventProvider.notifier).fetchEvents();
-    debugPrint("ref");
+    // Delay the fetchEvents call until after the widget is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(eventProvider.notifier).fetchEvents();
+    });
+  }
+
+  Future<void> _refreshEvents() async {
+    debugPrint("Pull to refresh triggered.");
+    await ref.read(eventProvider.notifier).fetchEvents();
+  }
+
+  void _navigateToEventDetail(BuildContext context, Map<String, dynamic> event) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EventDetailPage(event: event),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // SizeConfig().init(context); // Initialize SizeConfig
-    // super.initState();
     final eventState = ref.watch(eventProvider);
 
     return Scaffold(
@@ -56,7 +71,7 @@ class _EventPageState extends ConsumerState<EventPage> {
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: "Audiowide",
-                      fontSize: 20.0, // Use a fixed font size for titles
+                      fontSize: 20.0,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -64,47 +79,48 @@ class _EventPageState extends ConsumerState<EventPage> {
               ),
             ),
             Expanded(
-              child: eventState.when(
-                data: (events) => ListView.builder(
-                  itemCount: events.length,
-                  itemBuilder: (context, index) {
-                    final event = events[index];
-                    return Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: SizeConfig.safeBlockVertical * 1.0,
-                      ),
-                      child: EventCard(
-                        date: event['date'] ?? 'N/A',
-                        title: event['title'] ?? 'No Title',
-                        location: event['venue'] ?? 'No Location',
-                        imageUrl: event['image'] ?? '',
-                      ),
-                    );
-                  },
-                ),
-                loading: () => Center(
-                  child: LoadingAnimationWidget.inkDrop(
-                    color: Colors.white,
-                    size: SizeConfig.safeBlockHorizontal * 10.0,
+              child: RefreshIndicator(
+                onRefresh: _refreshEvents,
+                child: eventState.when(
+                  data: (events) => ListView.builder(
+                    itemCount: events.length,
+                    itemBuilder: (context, index) {
+                      final event = events[index];
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: SizeConfig.safeBlockVertical * 1.0,
+                        ),
+                        child: GestureDetector(
+                          onTap: () => _navigateToEventDetail(context, event),
+                          child: EventCard(
+                            date: event['start_date_formatted'] ?? 'N/A',
+                            title: event['title'] ?? 'No Title',
+                            location: event['department'] ?? 'No Department',
+                            imageUrl: event['image'] ?? '',
+                            // prizeMoney: event['prize_money'] ?? 'No Prize',
+                            // entryFee: event['entry_fee'] ?? 'Free',
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                ),
-                error: (error, stack) => Center(
-                  child: Text(
-                    "Error loading events: $error",
-                    style: const TextStyle(color: Colors.red),
+                  loading: () => Center(
+                    child: LoadingAnimationWidget.inkDrop(
+                      color: Colors.white,
+                      size: SizeConfig.safeBlockHorizontal * 10.0,
+                    ),
+                  ),
+                  error: (error, stack) => Center(
+                    child: Text(
+                      "Error loading events: $error",
+                      style: const TextStyle(color: Colors.red),
+                    ),
                   ),
                 ),
               ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          debugPrint("FloatingActionButton pressed: Fetching events.");
-          ref.read(eventProvider.notifier).fetchEvents(); // Trigger data fetch
-        },
-        child: const Icon(Icons.refresh),
       ),
     );
   }

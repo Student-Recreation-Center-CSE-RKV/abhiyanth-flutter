@@ -47,15 +47,15 @@ class NavigationService {
     }
   }
 
-  void printNavigatorState() {
-    final navigatorState = navigatorKey.currentState;
-    if (navigatorState != null) {
-      print('Can pop: ${navigatorState.canPop()}');
-      print('Current Route: ${navigatorState.widget}');
-      print('Navigator Stack: ${navigatorState.widget}');
-      print(
-        'Route History: ${navigatorState.widget.pages.map((page) => page.toString()).toList()}',
-      );
-    }
-  }
+  // void printNavigatorState() {
+  //   final navigatorState = navigatorKey.currentState;
+  //   if (navigatorState != null) {
+  //     print('Can pop: ${navigatorState.canPop()}');
+  //     print('Current Route: ${navigatorState.widget}');
+  //     print('Navigator Stack: ${navigatorState.widget}');
+  //     print(
+  //       'Route History: ${navigatorState.widget.pages.map((page) => page.toString()).toList()}',
+  //     );
+  //   }
+  // }
 }

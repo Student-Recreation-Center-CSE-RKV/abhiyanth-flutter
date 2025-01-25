@@ -1,11 +1,11 @@
 class UserModel {
   final String? email;
+  final String? uid;
   final String? name;
   final String? role;
   final String? branch;
   final String? batch;
   final String? id;
-  final String? uid;
   final String? mobile;
   final DateTime? createdAt;
 

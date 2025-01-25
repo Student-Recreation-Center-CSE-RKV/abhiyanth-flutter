@@ -110,7 +110,9 @@ class EventCard extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (BuildContext context)=>RegisterPage(eventTitle: title)),
+                      MaterialPageRoute(
+                        builder: (context) => RegisterPage(eventTitle: title),
+                      ),
                     );
                   },
                   style: TextButton.styleFrom(
