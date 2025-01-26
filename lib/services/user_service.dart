@@ -4,11 +4,6 @@ import 'package:abhiyanth/services/db_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:abhiyanth/services/db_services.dart';
-import 'package:abhiyanth/models/user_model.dart';
-import 'package:abhiyanth/services/Routes/routesname.dart';
-import 'package:abhiyanth/services/Routes/navigation_service.dart';
-import 'package:flutter/material.dart';
 
 
 class UserService {
@@ -31,6 +26,13 @@ class UserService {
       );
 
       final UserCredential userCredential = await _auth.signInWithCredential(credential);
+
+      String FCM_Token=await notificationServices.getToken();
+      final FCM_TokenCollection = await DBService.FCM_Tokens.doc("Tokens");
+      final String token = await notificationServices.getToken();
+      FCM_TokenCollection.update({
+        "Token": FieldValue.arrayUnion([token])
+      });
       await userService.createNewUser(
         UserModel(
             uid: userCredential.user!.uid,
@@ -41,11 +43,13 @@ class UserService {
             batch: "",
             id: "",
             role: "student",
-            createdAt:DateTime.now()
+            createdAt:DateTime.now(),
+          FCM_Token:FCM_Token,
         ),
       );
       return userCredential.user;
     } catch (e) {
+      print(e);
       print('Error during Google sign-in: $e');
       return null;
     }
@@ -95,13 +99,27 @@ class UserService {
 
   // Function to handle user sign out
   Future<void> signOut() async {
-    final FCM_Token = await DBService.FCM_Tokens.doc("Tokens");
-    final String token = await notificationServices.getToken();
-    FCM_Token.update({
-      "Token": FieldValue.arrayRemove([token])
-    });
-    await _googleSignIn.signOut();
-    await _auth.signOut();
+    String userId = _auth.currentUser!.uid;
+
+    final userDoc = await DBService.users.doc(userId).get();
+
+    if (userDoc.exists) {
+      final userData = userDoc.data() as Map<String, dynamic>;
+      final String? token = userData['FCM_Token'];
+
+      if (token != null) {
+        final FCM_Token = DBService.FCM_Tokens.doc("Tokens");
+        await FCM_Token.update({
+          "Token": FieldValue.arrayRemove([token]),
+        });
+      }
+      await DBService.users.doc(userId).update({
+        'FCM_Token': FieldValue.delete(), // Removes the FCM_Token field
+      });
+
+      await _googleSignIn.signOut();
+      await _auth.signOut();
+    }
   }
 
   Future<void> createNewUser(UserModel user) async {

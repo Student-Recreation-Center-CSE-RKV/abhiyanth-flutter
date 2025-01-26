@@ -1,10 +1,7 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:provider/provider.dart';
 import '../services/Routes/navigation_service.dart';
-import '../services/custom_snackbar.dart';
 import '../viewmodels/signupview_model.dart';
 
 class SignupPage extends StatefulWidget {
@@ -13,15 +10,9 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  bool _obscuretext = true;
 
   NavigationService navigationService = NavigationService();
 
-  void _toggleObscureText() {
-    setState(() {
-      _obscuretext = !_obscuretext;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,259 +30,83 @@ class _SignupPageState extends State<SignupPage> {
                   SizedBox(height: SizeConfig.safeBlockVertical * 0.5),
                   Image.asset(
                     'assets/images/Abhiyanthlogo2.png',
-                    width: SizeConfig.safeBlockHorizontal * 50,
-                    height: SizeConfig.safeBlockVertical * 50,
+                    width: SizeConfig.safeBlockHorizontal * 45,
+                    height: SizeConfig.safeBlockVertical * 45,
                   ),
-                  SizedBox(height: SizeConfig.safeBlockVertical * 2),
                   Text(
-                    "Welcome to Abhiyanth 2k25",
+                    "Welcome to ",
                     style: TextStyle(
                         fontFamily: "Audiowide",
                         color: Colors.white,
-                        fontSize: SizeConfig.safeBlockHorizontal * 5),
+                        fontSize: SizeConfig.safeBlockHorizontal * 7),
                   ),
                   SizedBox(height: SizeConfig.safeBlockVertical * 2),
-                  Text(
-                    "Register to continue",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: "Audiowide",
-                        fontSize: SizeConfig.safeBlockHorizontal * 4),
+                  Center(
+                    child: Text(
+                      "Abhiyanth 2k25",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: "Audiowide",
+                          fontSize: SizeConfig.safeBlockHorizontal * 8),
+                    ),
                   ),
-                  SizedBox(height: SizeConfig.safeBlockVertical * 2),
-                  // Email TextField
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: SizeConfig.safeBlockHorizontal * 5),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 2,
-                          color: Colors.transparent,
-                        ),
-                        borderRadius: BorderRadius.circular(
-                            SizeConfig.safeBlockHorizontal * 10),
-                        gradient: LinearGradient(
-                          colors: [Color(0xFFFF6AB7), Color(0xFF6AE4FF)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(
-                              SizeConfig.safeBlockHorizontal * 10),
+                  SizedBox(height: SizeConfig.safeBlockVertical *6),
+                  SizedBox(
+                    width: SizeConfig.safeBlockHorizontal * 80,
+                    child: ElevatedButton(
+                      onPressed:viewModel.isGoogleLoading?(){}: () async {
+                        await viewModel.signupGoogle(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.0),
                         ),
                         padding: EdgeInsets.symmetric(
-                            horizontal: SizeConfig.safeBlockHorizontal * 3),
-                        child: TextFormField(
-                          controller: viewModel.emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: const InputDecoration(
-                            hintText: "Enter your email",
-                            hintStyle: TextStyle(
-                                color: Colors.white70, fontFamily: "Audiowide"),
-                            border: InputBorder.none,
-                            prefixIcon: Icon(Icons.email, color: Colors.white),
-                          ),
-                          style: const TextStyle(
-                              color: Colors.white, fontFamily: "Audiowide"),
+                          horizontal: SizeConfig.safeBlockHorizontal * 3,
+                          vertical: SizeConfig.safeBlockVertical * 1,
                         ),
+                        backgroundColor: Colors.white,
+                        shadowColor: Colors.transparent,
                       ),
-                    ),
-                  ),
-                  SizedBox(height: SizeConfig.safeBlockVertical * 2),
-                  // Password TextField
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: SizeConfig.safeBlockHorizontal * 5),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 2,
-                          color: Colors.transparent,
-                        ),
-                        borderRadius: BorderRadius.circular(
-                            SizeConfig.safeBlockHorizontal * 10),
-                        gradient: LinearGradient(
-                          colors: [Color(0xFF6AE4FF), Color(0xFFFF6AB7)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                      ),
-                      child: Container(
+                      child: Ink(
                         decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(
-                              SizeConfig.safeBlockHorizontal * 10),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(18.0),
                         ),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: SizeConfig.safeBlockHorizontal * 3),
-                        child: TextFormField(
-                          controller: viewModel.passwordController,
-                          obscureText: _obscuretext,
-                          decoration: InputDecoration(
-                              hintText: "Enter your password",
-                              hintStyle: const TextStyle(
-                                  color: Colors.white70,
-                                  fontFamily: "Audiowide"),
-                              border: InputBorder.none,
-                              prefixIcon:
-                                  const Icon(Icons.lock, color: Colors.white),
-                              suffixIcon: IconButton(
-                                onPressed: _toggleObscureText,
-                                icon: Icon(
-                                  _obscuretext
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: Colors.white,
-                                ),
-                              )),
-                          style: const TextStyle(
-                              color: Colors.white, fontFamily: "Audiowide"),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: SizeConfig.safeBlockVertical * 3),
-                  // SignUp Button
-                  ElevatedButton(
-                    onPressed: viewModel.isLoading
-                        ? null
-                        : () {
-                            final email = viewModel.emailController.text.trim();
-                            final password =
-                                viewModel.passwordController.text.trim();
-
-                            if (email.isNotEmpty && password.isNotEmpty) {
-                              viewModel.signup(email, password, context);
-                            } else {
-                              CustomSnackBar.show(
-                                  context, 'Please fill all fields',
-                                  type: "warning");
-                            }
-                          },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            SizeConfig.safeBlockHorizontal * 2),
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: SizeConfig.safeBlockHorizontal * 6,
-                        vertical: SizeConfig.safeBlockVertical * 1.5,
-                      ),
-                      backgroundColor: Colors.transparent,
-                      shadowColor: Colors.transparent,
-                    ),
-                    child: Ink(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Color(0xFFFF6AB7), Color(0xFF6AE4FF)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      ),
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: SizeConfig.safeBlockVertical * 5,
-                        child: viewModel.isLoading
-                            ? CircularProgressIndicator(color: Colors.white,)
-                            : Text(
-                                "SignUp",
+                        child:Container(
+                          alignment: Alignment.center,
+                          height: SizeConfig.safeBlockVertical * 5,
+                          child:viewModel.isGoogleLoading?
+                          SizedBox(
+                            height: 30,
+                              width: 30,
+                              child: CircularProgressIndicator(color: Colors.black,)
+                          ):Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/Googlelogo.png',
+                                width: SizeConfig.safeBlockHorizontal * 8,
+                                height: SizeConfig.safeBlockVertical * 8,
+                              ),
+                              SizedBox(width: SizeConfig.safeBlockHorizontal * 2),
+                              Text(
+                                "Continue with Google",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: SizeConfig.safeBlockHorizontal * 5,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 4.5,
                                   fontFamily: "Audiowide",
                                 ),
                               ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: SizeConfig.safeBlockVertical * 2),
-                  // Continue with Google Button
-                  // SizedBox(
-                  //   width: SizeConfig.safeBlockHorizontal * 80,
-                  //   child: ElevatedButton(
-                  //     onPressed: () async {
-                  //       final userService = UserService();
-
-                  //       final user = await userService.signInWithGoogle();
-
-                  //       if (user != null) {
-                  //         print('User signed in with Google: ${user.displayName}');
-                  //        navigationService.removeAllAndPush(RoutesName.home,RoutesName.signup);
-                  //       } else {
-                  //         CustomSnackBar.show(context, 'Google Sign-In failed' , type: "error");                        }
-                  //     },
-                  //     style: ElevatedButton.styleFrom(
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(25.0),
-                  //       ),
-                  //       padding: EdgeInsets.symmetric(
-                  //         horizontal: SizeConfig.safeBlockHorizontal * 3,
-                  //         vertical: SizeConfig.safeBlockVertical * 1,
-                  //       ),
-                  //       backgroundColor: Colors.white,
-                  //       shadowColor: Colors.transparent,
-                  //     ),
-                  //     child: Ink(
-                  //       decoration: BoxDecoration(
-                  //         color: Colors.white,
-                  //         borderRadius: BorderRadius.circular(18.0),
-                  //       ),
-                  //       child: Container(
-                  //         alignment: Alignment.center,
-                  //         height: SizeConfig.safeBlockVertical * 5,
-                  //         child: Row(
-                  //           mainAxisAlignment: MainAxisAlignment.center,
-                  //           children: [
-                  //             Image.asset(
-                  //               'assets/images/Googlelogo.png',
-                  //               width: SizeConfig.safeBlockHorizontal * 8,
-                  //               height: SizeConfig.safeBlockVertical * 8,
-                  //             ),
-                  //             SizedBox(width: SizeConfig.safeBlockHorizontal * 2),
-                  //             Text(
-                  //               "Continue with Google",
-                  //               style: TextStyle(
-                  //                 color: Colors.black,
-                  //                 fontWeight: FontWeight.bold,
-                  //                 fontSize: SizeConfig.safeBlockHorizontal * 4.5,
-                  //                 fontFamily: "Audiowide",
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-
-                  SizedBox(height: SizeConfig.safeBlockVertical * 2),
-                  // Login Link
-                  Text.rich(
-                    TextSpan(
-                      text: "Already have an account...?",
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontFamily: "Audiowide",
-                      ),
-                      children: [
-                        TextSpan(
-                          text: 'Login',
-                          style: const TextStyle(
-                              color: Colors.blue, fontFamily: "Audiowide"),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              navigationService.popAndPushScreen(RoutesName.login);
-                            },
+                            ],
+                          ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
+
+                  SizedBox(height: SizeConfig.safeBlockVertical * 2),
                 ],
               );
             },
