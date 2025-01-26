@@ -5,8 +5,6 @@ import 'package:abhiyanth/views/departments/chemical.dart';
 import 'package:abhiyanth/views/departments/civil.dart';
 import 'package:abhiyanth/views/departments/mechanical.dart';
 import 'package:abhiyanth/views/departments/mme.dart';
-import 'package:abhiyanth/views/forgot_password_page.dart';
-import 'package:abhiyanth/views/login_view.dart';
 import 'package:abhiyanth/views/signup_view.dart';
 import 'package:abhiyanth/views/splash_screen.dart';
 import 'package:abhiyanth/views/stalls_page.dart';
@@ -22,8 +20,6 @@ import '../../views/departments/eee.dart';
 class Routes{
   static Route<dynamic> generateRoute(RouteSettings settings){
     switch(settings.name){
-      case RoutesName.login:
-        return MaterialPageRoute(builder: (BuildContext context)=>LoginPage());
       case RoutesName.signup:
         return MaterialPageRoute(builder: (BuildContext context)=> SignupPage());
       case RoutesName.splash:
@@ -32,8 +28,6 @@ class Routes{
         return MaterialPageRoute(builder: (BuildContext context)=> HomePage());
       case RoutesName.aboutus:
         return MaterialPageRoute(builder: (BuildContext context)=> AboutUsPage());
-      case RoutesName.forgotpass:
-        return MaterialPageRoute(builder: (BuildContext context)=> ForgotPasswordPage());
       case RoutesName.technical:
         return MaterialPageRoute(builder: (BuildContext context)=> TechnicalsPage());
       case RoutesName.stalls:

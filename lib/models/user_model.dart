@@ -8,6 +8,7 @@ class UserModel {
   final String? id;
   final String? mobile;
   final DateTime? createdAt;
+  final String?FCM_Token;
 
   UserModel({
     this.email,
@@ -19,6 +20,7 @@ class UserModel {
     this.uid,
     this.mobile,
     this.createdAt,
+    this.FCM_Token,
   });
 
   /// Factory constructor to create a `UserModel` from a JSON map
@@ -35,6 +37,7 @@ class UserModel {
       createdAt: json['createdAt'] != null
           ? DateTime.parse(json['createdAt'])
           : DateTime.now(),
+      FCM_Token: json['FCM_Token']??'FCM_Token'
     );
   }
 
@@ -50,12 +53,13 @@ class UserModel {
       'uid': uid,
       'mobile': mobile,
       'createdAt': createdAt?.toIso8601String(),
+      'FCM_Token':FCM_Token,
     };
   }
 
   @override
   String toString() {
-    return 'UserModel(email: $email, name: $name, role: $role, branch: $branch, batch: $batch, id: $id, uid: $uid, mobile: $mobile, createdAt: $createdAt)';
+    return 'UserModel(email: $email, name: $name, role: $role, branch: $branch, batch: $batch, id: $id, uid: $uid, mobile: $mobile, createdAt: $createdAt,FCM_Token:$FCM_Token)';
   }
 
 }
