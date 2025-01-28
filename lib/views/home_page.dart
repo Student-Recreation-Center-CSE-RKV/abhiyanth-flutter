@@ -65,13 +65,12 @@ class _HomePageState extends State<HomePage> {
           actions: [
             IconButton(
                 onPressed: () {
-                  userService.signOut();
-                  Navigator.pushNamedAndRemoveUntil(context, RoutesName.signup,(route) => false);
+                  Navigator.pushNamed(context, RoutesName.notification);
                 },
                 icon: Icon(
-                  Icons.logout,
+                  Icons.notifications,
                   color: Colors.white,
-                ))
+                ),),
           ],
           centerTitle: true,
           elevation: 0,
