@@ -11,19 +11,7 @@ class NotificationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Parse the notification time
     final notificationTime = (notification['time'] as Timestamp).toDate();
-  print(DateTime.parse(notification['time']));
-    // Check if the time is a Firestore Timestamp
-    // if (notification['time') {
-    //   notificationTime = notification['time'].toDate(); // Convert to DateTime
-    // } else {
-    //   notificationTime = DateTime.now();
-    // }
-
-    // Format the notification time using timeago
-
-    // final timeAgo = timeago.format(notification['time']);
 
     return Card(
       margin: const EdgeInsets.symmetric(
