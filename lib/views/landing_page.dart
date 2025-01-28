@@ -150,8 +150,9 @@ class _LandingPageState extends State<LandingPage> {
             const SizedBox(height: 120),
             // Coming Soon Widget
             ComingSoonWidget(
-              text: "More interesting things to come...",
+              text: "Time remaining Abhiyanth 2K25",
               backgroundColor: Colors.transparent,
+              // targetDate: ,
             ),
           ],
         ),

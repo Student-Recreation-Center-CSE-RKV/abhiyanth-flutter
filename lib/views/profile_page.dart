@@ -2,6 +2,8 @@ import 'package:abhiyanth/widgets/gradient_border.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../locator.dart';
+import '../services/Routes/routesname.dart';
 import '../services/size_config.dart';
 import '../utilities/gradient_background.dart';
 import 'package:abhiyanth/services/custom_snackbar.dart';
@@ -209,29 +211,45 @@ class _ProfilePageState extends State<ProfilePage> {
                       const SizedBox(height: 15),
                       _buildTextField("Mobile", mobileController),
                       const SizedBox(height: 20),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                vertical: SizeConfig.blockSizeVertical * 1.0,
+                                horizontal: SizeConfig.blockSizeHorizontal * 10,
+                              ),
+                            ),
+                            onPressed: () async {
+                              await _saveProfileData();
+                              await _loadProfileData();
+                            },
+                            child: const Text(
+                              "Save Changes",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                                fontFamily: "Audiowide",
+                              ),
+                            ),
                           ),
-                          padding: EdgeInsets.symmetric(
-                            vertical: SizeConfig.blockSizeVertical * 1.0,
-                            horizontal: SizeConfig.blockSizeHorizontal * 10,
-                          ),
-                        ),
-                        onPressed: () async {
-                          await _saveProfileData();
-                          await _loadProfileData();
-                        },
-                        child: const Text(
-                          "Save Changes",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                            fontFamily: "Audiowide",
-                          ),
-                        ),
+                          IconButton(
+                              onPressed: () {
+                                userService.signOut();
+                                Navigator.pushNamedAndRemoveUntil(context, RoutesName.signup,(route) => false);
+                              },
+                              icon: Icon(
+                                Icons.logout,
+                                color: Colors.white,
+                              ),),
+                        ],
                       ),
                       const SizedBox(height: 30),
                     ],

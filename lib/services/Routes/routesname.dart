@@ -17,5 +17,5 @@ class RoutesName{
   static const String chemical='Chemical';
   static const String civil='Civil';
   static const String mme='MME';
-
+  static const String notification = 'notification';
 }
