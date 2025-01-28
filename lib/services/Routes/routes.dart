@@ -5,6 +5,7 @@ import 'package:abhiyanth/views/departments/chemical.dart';
 import 'package:abhiyanth/views/departments/civil.dart';
 import 'package:abhiyanth/views/departments/mechanical.dart';
 import 'package:abhiyanth/views/departments/mme.dart';
+import 'package:abhiyanth/views/notification_screen.dart';
 import 'package:abhiyanth/views/signup_view.dart';
 import 'package:abhiyanth/views/splash_screen.dart';
 import 'package:abhiyanth/views/stalls_page.dart';
@@ -20,6 +21,8 @@ import '../../views/departments/eee.dart';
 class Routes{
   static Route<dynamic> generateRoute(RouteSettings settings){
     switch(settings.name){
+      case RoutesName.notification:
+        return MaterialPageRoute(builder: (BuildContext context)=> NotificationScreen());
       case RoutesName.signup:
         return MaterialPageRoute(builder: (BuildContext context)=> SignupPage());
       case RoutesName.splash:
