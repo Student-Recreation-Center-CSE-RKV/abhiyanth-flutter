@@ -90,7 +90,7 @@ class _AuditionsPageState extends ConsumerState<AuditionsPage> {
                   ...upcomingAuditions.map((audition) {
                     return AuditionCard(
                       title: audition['title'] ?? 'No Title',
-                      date: audition['date_time'] ?? 'No Date',
+                      date:" DateTime.now()",
                       time: audition['time'] ?? 'No Time',
                       venue: audition['venue'] ?? 'No Venue',
                       description: audition['description'] ?? 'No Description',

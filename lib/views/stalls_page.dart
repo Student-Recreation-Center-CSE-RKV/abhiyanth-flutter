@@ -55,7 +55,7 @@ class StallsPage extends StatelessWidget {
               // Audition Card Widget
               AuditionCard (
                 title: "Build your 3D anime Character",
-                date: "1st March 2025",
+                date:" DateTime.now()",
                 time: '',
                 venue: '',
                 description: '',

@@ -1,3 +1,4 @@
+import 'package:abhiyanth/services/size_config.dart';
 import 'package:flutter/material.dart';
 
 class AuditionCard extends StatelessWidget {
@@ -33,101 +34,140 @@ class AuditionCard extends StatelessWidget {
           width: 2,
         ),
       ),
-      child: Row(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Image Placeholder
-          Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                image, // Replace `image` with your local variable containing the URL
-                width: 100,
+          SizedBox(height: 10,),
+          Row(
+            children: [
+              Container(
+                width: 140,
                 height: 100,
-                fit: BoxFit
-                    .cover, // Ensures the image fits within the dimensions
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              (loadingProgress.expectedTotalBytes ?? 1)
-                          : null,
-                    ),
-                  );
-                },
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    width: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    image, // Replace `image` with your local variable containing the URL
+                    width: 140,
                     height: 100,
-                    color:
-                        Colors.grey[400], // Fallback color in case of an error
-                    child: Icon(
-                      Icons.broken_image,
-                      color: Colors.white,
+                    fit: BoxFit
+                        .cover, // Ensures the image fits within the dimensions
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  (loadingProgress.expectedTotalBytes ?? 1)
+                              : null,
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        width: 100,
+                        height: 100,
+                        color:
+                            Colors.grey[400], // Fallback color in case of an error
+                        child: Icon(
+                          Icons.broken_image,
+                          color: Colors.white,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+
+              const SizedBox(width: 16), // Spacing between image and text
+              // Text Content
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        color: Colors.lightBlueAccent,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Audiowide",
+                      ),
                     ),
-                  );
-                },
+                    const SizedBox(height: 6),
+                    Text(
+                      "Date: $date",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontFamily: "Audiowide",
+                      ),
+                    ),
+                    Text(
+                      "Time: $time",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontFamily: "Audiowide",
+                      ),
+                    ),
+                    Text(
+                      "Venue: $venue",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontFamily: "Audiowide",
+                      ),
+                    ),
+                    // Text(
+                    //   "Description: $description",
+                    //   style: const TextStyle(
+                    //     color: Colors.white,
+                    //     fontSize: 13,
+                    //     fontFamily: "Audiowide",
+                    //   ),
+                    // ),
+
+                  ],
+                ),
+              ),
+
+            ],
+          ),
+          SizedBox(height: 10,),
+
+          TextButton(
+            onPressed: () {
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: const Color(0xFFFF3366),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                    SizeConfig.blockSizeHorizontal * 2.5),
+              ),
+              padding: EdgeInsets.symmetric(
+                vertical: SizeConfig.blockSizeVertical * 1,
+                horizontal: SizeConfig.blockSizeHorizontal * 5,
               ),
             ),
-          ),
-
-          const SizedBox(width: 16), // Spacing between image and text
-          // Text Content
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              mainAxisSize: MainAxisSize
+                  .min, // Ensures the row takes only as much space as needed
               children: [
                 Text(
-                  title,
-                  style: const TextStyle(
-                    color: Colors.lightBlueAccent,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Audiowide",
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  "Date: $date",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontFamily: "Audiowide",
-                  ),
-                ),
-                Text(
-                  "Time: $time",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontFamily: "Audiowide",
-                  ),
-                ),
-                Text(
-                  "Venue: $venue",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontFamily: "Audiowide",
-                  ),
-                ),
-                Text(
-                  "Description: $description",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
+                  "Read More",
+                  style: TextStyle(
+                    fontSize: SizeConfig.blockSizeHorizontal * 4,
                     fontFamily: "Audiowide",
                   ),
                 ),
               ],
             ),
-          ),
+          )
         ],
       ),
     );

@@ -6,7 +6,6 @@ final culturalsServiceProvider = Provider<CulturalsService>((ref) {
   return CulturalsService();
 });
 
-// Create a Notifier to manage the state of Ongoing Culturals
 class CulturalsNotifier extends StateNotifier<AsyncValue<List<Map<String, String>>>> {
   final CulturalsService _service;
 
