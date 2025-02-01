@@ -58,6 +58,8 @@ dependencies:
   awesome_notifications: ^0.9.3+1
   firebase_messaging: ^15.2.1
   timeago: ^3.7.0
+  flutter_pdfview: ^1.4.0
+  syncfusion_flutter_pdfviewer: ^28.2.3
 
 dev_dependencies:
   flutter_test:
