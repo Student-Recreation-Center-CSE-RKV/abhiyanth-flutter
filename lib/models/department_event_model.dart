@@ -45,6 +45,7 @@ class DepartmentEventModel {
 class Event {
   final String id;
   final String description;
+  final String short_description;
   final String image;
   final String venue;
   final List<dynamic> prizes;
@@ -53,6 +54,7 @@ class Event {
   final List<dynamic> sponsors;
   final DateTime date;
   final String title;
+  final int registrationFee;
 
   Event({
     required this.id,
@@ -64,7 +66,9 @@ class Event {
     required this.sponsors,
     required this.date,
     required this.title,
-    required this.venue
+    required this.venue,
+    required this.short_description,
+   required this.registrationFee
   });
 
   factory Event.fromMap(String id, Map<String, dynamic> eventData, String eventDate) {
@@ -79,6 +83,9 @@ class Event {
       date: DateTime.parse(eventData['date']),
       venue: eventData['venue']?.toString()??"",
       title: eventData['title']?.toString() ?? 'CSE tech',
+      short_description: eventData['short_description']?.toString()??'',
+      registrationFee: eventData['registrationFee']??0,
+
     );
   }
 
@@ -93,6 +100,8 @@ class Event {
       'sponsors': sponsors,
       'date': date,
       'title': title,
+      'short_description':short_description,
+      'registrationFee':registrationFee
     };
   }
 }

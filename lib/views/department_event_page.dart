@@ -249,14 +249,7 @@ class _DepartmentEventState extends ConsumerState<DepartmentEventPage> {
                   ...ongoingEvents.map(
                         (event) {
                       return AuditionCard(
-                        image: event.image,
-                        title: event.title,
-                        date:
-                        '${event.date.day}-${event.date.month}-${event.date.year}',
-                        time:
-                        '${event.date.hour % 12}:${event.date.minute.toString().padLeft(2, '0')} ${event.date.hour < 12 ? 'AM' : 'PM'}',
-                        venue: event.venue,
-                        description: event.description,
+                        event: event,
                       );
                     },
                   ),
@@ -274,14 +267,7 @@ class _DepartmentEventState extends ConsumerState<DepartmentEventPage> {
                   ...upcomingEvents.map(
                     (event) {
                       return AuditionCard(
-                        image: event.image,
-                        title: event.title,
-                        date:
-                            '${event.date.day}-${event.date.month}-${event.date.year}',
-                        time:
-                            '${event.date.hour % 12}:${event.date.minute.toString().padLeft(2, '0')} ${event.date.hour < 12 ? 'AM' : 'PM'}',
-                        venue: event.venue,
-                        description: event.description,
+                        event: event,
                       );
                     },
                   ),

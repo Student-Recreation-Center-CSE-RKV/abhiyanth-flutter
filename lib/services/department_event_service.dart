@@ -87,6 +87,8 @@ class DepartmentEventService {
             'date': eventDate.toIso8601String(),
             'venue': eventData['venue']?.toString()??"",
             'title': eventData['title'] ?? 'CSE tech',
+            'short_description':eventData['short_description']??'',
+            'registrationFee': eventData['registrationFee']??0,
           });
         } else {
           print('Event with ID ${doc.id} has a null date.');

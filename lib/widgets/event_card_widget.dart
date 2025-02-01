@@ -1,25 +1,31 @@
+import 'package:abhiyanth/services/Routes/navigation_service.dart';
+import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:flutter/material.dart';
-
+import 'package:abhiyanth/models/department_event_model.dart';
+import 'package:abhiyanth/services/notification_service.dart';
 class AuditionCard extends StatelessWidget {
-  final String title;
-  final String date;
-  final String time;
-  final String venue;
-  final String description;
-  final String image;
+  final Event? event;
+  final String ?title;
+  final String ?date;
+  final String? time;
+  final String? venue;
+  final String ?description;
+  final String?short_description;
+  final String ?image;
 
-  const AuditionCard({
+   AuditionCard({
     super.key,
-    required this.title,
-    required this.date,
-    required this.time,
-    required this.venue,
-    required this.description,
-    this.image =
-        "https://i.pinimg.com/236x/42/dc/0c/42dc0c3f341a3b336b2ae285f5c873de.jpg",
+    this.event,
+     this.title,
+     this.date,
+     this.time,
+     this.venue,
+    this.description,
+    this.short_description,
+    this.image ,
   });
-
+  final NavigationService navigationService=NavigationService();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,7 +56,7 @@ class AuditionCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Image.network(
-                    image, // Replace `image` with your local variable containing the URL
+                    event?.image ?? image!,
                     width: 140,
                     height: 100,
                     fit: BoxFit
@@ -71,7 +77,7 @@ class AuditionCard extends StatelessWidget {
                         width: 100,
                         height: 100,
                         color:
-                            Colors.grey[400], // Fallback color in case of an error
+                            Colors.grey[400],
                         child: Icon(
                           Icons.broken_image,
                           color: Colors.white,
@@ -89,7 +95,7 @@ class AuditionCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                     event?.title ?? title!,
                       style: const TextStyle(
                         color: Colors.lightBlueAccent,
                         fontSize: 18,
@@ -99,7 +105,7 @@ class AuditionCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      "Date: $date",
+                      'Date : ${event?.date != null ? "${event!.date.day}-${event!.date.month}-${event!.date.year}": date!}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 13,
@@ -107,7 +113,7 @@ class AuditionCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Time: $time",
+                      'Time : ${event?.date != null ? '${event!.date.hour % 12}:${event!.date.minute.toString().padLeft(2, '0')} ${event!.date.hour < 12 ? 'AM' : 'PM'}': time!}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 13,
@@ -115,22 +121,13 @@ class AuditionCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Venue: $venue",
+                      'Venue : ${event?.venue ?? venue!}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 13,
                         fontFamily: "Audiowide",
                       ),
                     ),
-                    // Text(
-                    //   "Description: $description",
-                    //   style: const TextStyle(
-                    //     color: Colors.white,
-                    //     fontSize: 13,
-                    //     fontFamily: "Audiowide",
-                    //   ),
-                    // ),
-
                   ],
                 ),
               ),
@@ -138,9 +135,19 @@ class AuditionCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10,),
+          Text(
+            event?.short_description ?? short_description!,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 13,
+              fontFamily: "Audiowide",
+            ),
+          ),
+          SizedBox(height: 10,),
 
           TextButton(
             onPressed: () {
+              navigationService.pushScreen(RoutesName.showEvent,arguments: event);
             },
             style: TextButton.styleFrom(
               foregroundColor: Colors.white,

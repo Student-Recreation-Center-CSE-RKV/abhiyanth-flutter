@@ -12,4 +12,6 @@ class RoutesName{
   static const String technical='TechnicalsPage';
   static const String notification = 'notification';
   static const String departmentEvent='departmentEventPage';
+  static const String showEvent='showEventPage';
+
 }
