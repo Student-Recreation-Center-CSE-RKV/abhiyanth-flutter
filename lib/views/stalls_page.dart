@@ -1,68 +1,141 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:abhiyanth/views/stall_details_page.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
-import 'package:abhiyanth/widgets/event_card_widget.dart';
+import 'package:abhiyanth/providers/stalls_provider.dart';
 
-class StallsPage extends StatelessWidget {
+class StallsPage extends ConsumerWidget {
   const StallsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     SizeConfig.init(context);
+    final stallsState = ref.watch(stallsProvider);
 
     return GradientBackground(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           title: const Text(
-            "Abhiyanth 2K25",
+            "Abhiyanth Stalls",
             style: TextStyle(
               fontFamily: "Audiowide",
               fontWeight: FontWeight.w400,
               color: Colors.white,
             ),
           ),
+          centerTitle: true,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios),
             color: Colors.white,
-            iconSize: SizeConfig.safeBlockHorizontal * 6, // Responsive icon size
+            iconSize: SizeConfig.safeBlockHorizontal * 6,
             onPressed: () {
-              Navigator.pop(context); // Navigate to previous page
+              Navigator.pop(context);
             },
           ),
           elevation: 0,
         ),
         backgroundColor: Colors.transparent,
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: SizeConfig.safeBlockHorizontal * 4), // Responsive padding
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: SizeConfig.safeBlockVertical * 5), // Top margin (responsive)
-
-              // Title Text
-              const Text(
-                "Stalls",
-                style: TextStyle(
-                  color: Colors.lightBlueAccent,
-                  fontSize: 22,
-                  fontFamily: "Audiowide",
-                  fontWeight: FontWeight.w400,
-                ),
+          padding: EdgeInsets.symmetric(
+              horizontal: SizeConfig.safeBlockHorizontal * 4),
+          child: stallsState.when(
+            data: (stalls) => GridView.builder(
+              padding: const EdgeInsets.all(10),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, // Two stalls per row
+                childAspectRatio: 0.9, // Adjusted aspect ratio
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
               ),
-              const SizedBox(height: 16), // Space between title and card
-
-              // Audition Card Widget
-              AuditionCard (
-                title: "Build your 3D anime Character",
-                date:" DateTime.now()",
-                time: '',
-                venue: '',
-                description: '',
-                image: '',
-              ),
-            ],
+              itemCount: stalls.length,
+              itemBuilder: (context, index) {
+                final stall = stalls[index];
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => StallDetailPage(stall: stall),
+                      ),
+                    );
+                  },
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
+                    elevation: 4,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(12)),
+                          child: stall.image != null
+                              ? Image.network(
+                                  stall.image!,
+                                  width: double.infinity,
+                                  height: 130,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                (loadingProgress
+                                                        .expectedTotalBytes ??
+                                                    1)
+                                            : null,
+                                      ),
+                                    );
+                                  },
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Container(
+                                    width: double.infinity,
+                                    height: 130,
+                                    color: Colors.grey[300],
+                                    child: const Icon(Icons.image_not_supported,
+                                        size: 50),
+                                  ),
+                                )
+                              : Container(
+                                  width: double.infinity,
+                                  height: 130,
+                                  color: Colors.grey[400],
+                                  child: const Icon(Icons.image_not_supported,
+                                      size: 50),
+                                ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 4.0, horizontal: 4.0),
+                          child: Text(
+                            stall.name ?? "Unnamed Stall",
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (error, stackTrace) => Center(child: Text("Error: $error")),
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => ref.read(stallsProvider.notifier).fetchStalls(),
+          child: const Icon(Icons.refresh),
         ),
       ),
     );
