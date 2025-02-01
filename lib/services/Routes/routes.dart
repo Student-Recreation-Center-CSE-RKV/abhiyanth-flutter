@@ -59,7 +59,7 @@ class Routes{
         return MaterialPageRoute(builder: (_){
           return Scaffold(
             body: Center(
-              child: Text('No Routes Defined'),
+              child: Text('No Routes Defined for ${settings.name}'),
             ),
           );
         });
