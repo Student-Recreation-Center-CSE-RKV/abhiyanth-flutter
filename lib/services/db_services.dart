@@ -4,4 +4,6 @@ class DBService {
   static CollectionReference FCM_Tokens = FirebaseFirestore.instance.collection('FCM_Tokens');
   static CollectionReference users = FirebaseFirestore.instance.collection('Users');
   static CollectionReference departmentCarousel = FirebaseFirestore.instance.collection('department_carousels');
+  static CollectionReference culutrals = FirebaseFirestore.instance.collection('events');
+
 }

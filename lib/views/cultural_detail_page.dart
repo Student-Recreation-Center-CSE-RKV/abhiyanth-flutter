@@ -1,22 +1,20 @@
-import 'package:abhiyanth/models/stalls_model.dart';
+
+import 'package:abhiyanth/models/culturals_model.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
 import 'package:abhiyanth/widgets/gradient_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
-import 'package:http/http.dart' as http;
-import 'dart:typed_data';
 
-class StallDetailPage extends StatefulWidget {
-  const StallDetailPage({super.key, required this.stall});
-  final StallModel stall;
+
+class CulturalDetailPage extends StatefulWidget {
+  const CulturalDetailPage({super.key, required this.cultural});
+  final CulturalsModel cultural;
 
   @override
-  State<StallDetailPage> createState() => _StallDetailPageState();
+  State<CulturalDetailPage> createState() => _CulturalDetailPageState();
 }
 
-class _StallDetailPageState extends State<StallDetailPage> {
-  bool _isLoading = false;
+class _CulturalDetailPageState extends State<CulturalDetailPage> {
   @override
   Widget build(BuildContext context) {
     return GradientBackground(
@@ -59,7 +57,7 @@ class _StallDetailPageState extends State<StallDetailPage> {
                           horizontal: SizeConfig.safeBlockHorizontal * 5,
                           vertical: SizeConfig.safeBlockVertical * 1.5),
                       child: Text(
-                        widget.stall.name.toString(),
+                        widget.cultural.name.toString(),
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: "Audiowide",
@@ -85,7 +83,7 @@ class _StallDetailPageState extends State<StallDetailPage> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         image: DecorationImage(
-                            image: NetworkImage(widget.stall.image.toString()),
+                            image: NetworkImage(widget.cultural.images.mainImage.toString()),
                             fit: BoxFit.cover),
                       ),
                     ),
@@ -101,7 +99,7 @@ class _StallDetailPageState extends State<StallDetailPage> {
                             borderRadius: BorderRadius.circular(5),
                             image: DecorationImage(
                                 image: NetworkImage(
-                                    widget.stall.imageLeft.toString()),
+                                    widget.cultural.images.descImageLeft.toString()),
                                 fit: BoxFit.cover),
                           ),
                         ),
@@ -115,7 +113,7 @@ class _StallDetailPageState extends State<StallDetailPage> {
                             borderRadius: BorderRadius.circular(5),
                             image: DecorationImage(
                                 image: NetworkImage(
-                                    widget.stall.imageRight.toString()),
+                                    widget.cultural.images.descImageRight.toString()),
                                 fit: BoxFit.cover),
                           ),
                         )
@@ -128,7 +126,7 @@ class _StallDetailPageState extends State<StallDetailPage> {
 
               // Stall Name
               Text(
-                widget.stall.name ?? "Unnamed Stall",
+                widget.cultural.name ?? "Unnamed Stall",
                 style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -140,7 +138,7 @@ class _StallDetailPageState extends State<StallDetailPage> {
 
               // Stall Owner
               Text(
-                "from ${widget.stall.belongTo ?? "Unknown"}",
+                "Date: ${widget.cultural.date.day}-${widget.cultural.date.month}-${widget.cultural.date.year}",
                 style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -150,10 +148,8 @@ class _StallDetailPageState extends State<StallDetailPage> {
 
               const SizedBox(height: 8),
 
-              // Timings
-              if (widget.stall.timings != null)
                 Text(
-                  "Timings: ${widget.stall.timings!}",
+                  "Timings:  ${widget.cultural.date.hour % 12}:${widget.cultural.date.minute.toString().padLeft(2, '0')} ${widget.cultural.date.hour < 12 ? 'AM' : 'PM'}",
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -162,10 +158,17 @@ class _StallDetailPageState extends State<StallDetailPage> {
                 ),
 
               const SizedBox(height: 16),
+              Text(
+                "Venue : ${widget.cultural.venue}",
+                style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                    fontFamily: "Audiowide"),
+              ),
 
-              // Main Description
-              if (widget.stall.mainDescription != null)
-                Text(widget.stall.mainDescription!,
+              const SizedBox(height: 16),
+                Text(widget.cultural.mainDescription,
                     style: const TextStyle(
                       fontSize: 16,
                       color: Colors.white,
@@ -173,21 +176,30 @@ class _StallDetailPageState extends State<StallDetailPage> {
                     ),
                     textAlign: TextAlign.justify),
 
-              if (widget.stall.items != null)
+              const SizedBox(height: 16),
+
+                Text(widget.cultural.mainDescription,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontFamily: "Audiowide",
+                    ),
+                    textAlign: TextAlign.justify),
+              if (widget.cultural.organizers.isNotEmpty)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Items",
+                    const Text("Organizers",
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.blueAccent,
                             fontFamily: "Audiowide")),
                     const SizedBox(height: 8),
-                    ...widget.stall.items!.split(',').map((item) {
+                    ...widget.cultural.organizers.map((item) {
                       return Padding(
                         padding:
-                            EdgeInsets.all(SizeConfig.blockSizeHorizontal * 1),
+                        EdgeInsets.all(SizeConfig.blockSizeHorizontal * 1),
                         child: Row(children: [
                           SizedBox(
                             width: SizeConfig.screenWidth * 0.02,
@@ -201,7 +213,7 @@ class _StallDetailPageState extends State<StallDetailPage> {
                             width: SizeConfig.screenWidth * 0.03,
                           ),
                           Text(
-                            item,
+                            '${item.name}-${item.mobile}',
                             style: TextStyle(
                                 fontFamily: "Audiowide",
                                 color: Colors.white,
@@ -216,8 +228,7 @@ class _StallDetailPageState extends State<StallDetailPage> {
               const SizedBox(height: 16),
 
               // Offers
-              if (widget.stall.offers != null &&
-                  widget.stall.offers!.isNotEmpty)
+              if (widget.cultural.results .isNotEmpty)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -229,28 +240,28 @@ class _StallDetailPageState extends State<StallDetailPage> {
                             fontFamily: "Audiowide")),
                     const SizedBox(height: 8),
                     Column(
-                      children: widget.stall.offers!
+                      children: widget.cultural.results
                           .map((offer) => Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 4.0),
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.local_offer,
-                                        color: Colors.green),
-                                    const SizedBox(width: 8),
-                                    Expanded(
-                                      child: Text(
-                                        offer,
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          fontFamily: "Audiowide",
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                        padding:
+                        const EdgeInsets.symmetric(vertical: 4.0),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.circle_outlined,
+                                color: Colors.green),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                offer,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontFamily: "Audiowide",
                                 ),
-                              ))
+                              ),
+                            ),
+                          ],
+                        ),
+                      ))
                           .toList(),
                     ),
                   ],
@@ -259,138 +270,41 @@ class _StallDetailPageState extends State<StallDetailPage> {
               const SizedBox(height: 16),
 
               // Contact Details
-              if (widget.stall.contact != null &&
-                  widget.stall.contact!.isNotEmpty)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text("Contact",
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blueAccent,
-                            fontFamily: "Audiowide")),
-                    const SizedBox(height: 8),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: widget.stall.contact!.entries.map((entry) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4.0),
-                          child: Text(
-                            "${entry.key}: ${entry.value}",
-                            style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "Audiowide",
-                                color: Colors.white),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ],
-                ),
+              // if (widget.stall.contact != null &&
+              //     widget.stall.contact!.isNotEmpty)
+              //   Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       const Text("Contact",
+              //           style: TextStyle(
+              //               fontSize: 18,
+              //               fontWeight: FontWeight.bold,
+              //               color: Colors.blueAccent,
+              //               fontFamily: "Audiowide")),
+              //       const SizedBox(height: 8),
+              //       Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: widget.stall.contact!.entries.map((entry) {
+              //           return Padding(
+              //             padding: const EdgeInsets.symmetric(vertical: 4.0),
+              //             child: Text(
+              //               "${entry.key}: ${entry.value}",
+              //               style: const TextStyle(
+              //                   fontSize: 16,
+              //                   fontWeight: FontWeight.w500,
+              //                   fontFamily: "Audiowide",
+              //                   color: Colors.white),
+              //             ),
+              //           );
+              //         }).toList(),
+              //       ),
+              //     ],
+              //   ),
             ],
           ),
         ),
-        floatingActionButton: widget.stall.menuCard != null
-            ? BorderGradient(
-                borderWidth: 6.0,
-                gradientColors: const [Color(0xFFFF6AB7), Color(0xFF6AE4FF)],
-                borderRadius:
-                    BorderRadius.circular(SizeConfig.safeBlockHorizontal * 5),
-                child: FloatingActionButton.extended(
-                  onPressed: () {
-                    _showPdfDialog(context, widget.stall.menuCard!);
-                  },
-                  backgroundColor: Colors.black,
-                  label: _isLoading
-                      ? SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2,
-                          ),
-                        )
-                      : Text(
-                          "View Menu",
-                          style: TextStyle(
-                              fontFamily: "Audiowide",
-                              color: Colors.white,
-                              fontSize: 14),
-                        ),
-                ),
-              )
-            : null,
       ),
     );
   }
 
-  void _showPdfDialog(BuildContext context, String pdfUrl) async {
-    if (_isLoading) return;
-    setState(() {
-      _isLoading = true;
-    });
-    final response = await http.get(Uri.parse(pdfUrl));
-
-    if (response.statusCode == 200) {
-      Uint8List pdfBytes = response.bodyBytes;
-      setState(() {
-        _isLoading = false;
-      });
-
-      // Show dialog with the PDF content
-      showDialog(
-        context: context,
-        builder: (context) {
-          return Dialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            child: SizedBox(
-              width: SizeConfig.screenWidth,
-              height: SizeConfig.screenHeight,
-              child: Column(
-                children: [
-                  AppBar(
-                    title: const Text(
-                      "Menu Card",
-                      style: TextStyle(
-                          fontFamily: "Audiowide", color: Colors.white),
-                    ),
-                    backgroundColor: Colors.black,
-                    centerTitle: true,
-                    automaticallyImplyLeading: false,
-                    actions: [
-                      IconButton(
-                        icon: const Icon(Icons.close),
-                        color: Colors.white,
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding:
-                          EdgeInsets.all(SizeConfig.blockSizeHorizontal * 2),
-                      child: PDFView(
-                        pdfData: pdfBytes,
-                        enableSwipe: true,
-                        swipeHorizontal: false,
-                        autoSpacing: false,
-                        pageFling: false,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      );
-    } else {
-      // Handle error if PDF could not be fetched
-      print('Failed to load PDF from URL');
-      // You can show an alert or a message here
-    }
-  }
 }

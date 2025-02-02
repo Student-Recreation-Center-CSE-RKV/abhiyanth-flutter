@@ -1,9 +1,9 @@
+import 'package:abhiyanth/models/culturals_model.dart';
 import 'package:abhiyanth/services/Routes/navigation_service.dart';
 import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/models/department_event_model.dart';
-import 'package:abhiyanth/services/notification_service.dart';
 class AuditionCard extends StatelessWidget {
   final Event? event;
   final String ?title;
@@ -13,9 +13,11 @@ class AuditionCard extends StatelessWidget {
   final String ?description;
   final String?short_description;
   final String ?image;
+  final CulturalsModel? cultural;
 
    AuditionCard({
     super.key,
+     this.cultural,
     this.event,
      this.title,
      this.date,
@@ -56,7 +58,7 @@ class AuditionCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Image.network(
-                    event?.image ?? image!,
+                    event?.image ?? cultural?.images.mainImage?? image!,
                     width: 140,
                     height: 100,
                     fit: BoxFit
@@ -95,7 +97,7 @@ class AuditionCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                     event?.title ?? title!,
+                     event?.title ?? cultural?.name ?? title!,
                       style: const TextStyle(
                         color: Colors.lightBlueAccent,
                         fontSize: 18,
@@ -105,7 +107,7 @@ class AuditionCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Date : ${event?.date != null ? "${event!.date.day}-${event!.date.month}-${event!.date.year}": date!}',
+                      'Date : ${event?.date != null ? "${event!.date.day}-${event!.date.month}-${event!.date.year}":"${cultural!.date.day}-${cultural!.date.month}-${cultural!.date.year}"}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 13,
@@ -113,7 +115,7 @@ class AuditionCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Time : ${event?.date != null ? '${event!.date.hour % 12}:${event!.date.minute.toString().padLeft(2, '0')} ${event!.date.hour < 12 ? 'AM' : 'PM'}': time!}',
+                      'Time : ${event?.date != null ? '${event!.date.hour % 12}:${event!.date.minute.toString().padLeft(2, '0')} ${event!.date.hour < 12 ? 'AM' : 'PM'}' : (cultural?.date != null ? '${cultural!.date.hour % 12}:${cultural!.date.minute.toString().padLeft(2, '0')} ${cultural!.date.hour < 12 ? 'AM' : 'PM'}' : '')}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 13,
@@ -121,7 +123,7 @@ class AuditionCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Venue : ${event?.venue ?? venue!}',
+                      'Venue : ${event?.venue ?? cultural?.venue?? venue!}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 13,
@@ -136,7 +138,7 @@ class AuditionCard extends StatelessWidget {
           ),
           SizedBox(height: 10,),
           Text(
-            event?.short_description ?? short_description!,
+            event?.short_description ?? cultural?.description?? short_description!,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 13,
@@ -147,7 +149,13 @@ class AuditionCard extends StatelessWidget {
 
           TextButton(
             onPressed: () {
+              if(event!=null){
               navigationService.pushScreen(RoutesName.showEvent,arguments: event);
+              }else
+                {
+                  navigationService.pushScreen(RoutesName.showCultural,arguments: cultural);
+
+                }
             },
             style: TextButton.styleFrom(
               foregroundColor: Colors.white,

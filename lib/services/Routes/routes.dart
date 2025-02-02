@@ -1,6 +1,8 @@
+import 'package:abhiyanth/models/culturals_model.dart';
 import 'package:abhiyanth/models/department_event_model.dart';
 import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/views/auditions_page.dart';
+import 'package:abhiyanth/views/cultural_detail_page.dart';
 import 'package:abhiyanth/views/culturals_page.dart';
 import 'package:abhiyanth/views/notification_screen.dart';
 import 'package:abhiyanth/views/show_event_page.dart';
@@ -17,6 +19,8 @@ import 'package:abhiyanth/views/aboutus_page.dart';
 class Routes{
   static Route<dynamic> generateRoute(RouteSettings settings){
     switch(settings.name){
+      case RoutesName.showCultural:
+        return MaterialPageRoute(builder: (BuildContext context)=> CulturalDetailPage(cultural: settings.arguments as CulturalsModel));
       case RoutesName.showEvent:
         return MaterialPageRoute(builder: (BuildContext context)=> ShowEventPage(event: settings.arguments as Event));
       case RoutesName.departmentEvent:
