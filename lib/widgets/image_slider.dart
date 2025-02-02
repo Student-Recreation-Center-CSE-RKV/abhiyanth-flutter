@@ -32,31 +32,32 @@ class ImageSliderWidget extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
                     child: Image.network(
-                      item['image']!,
+                      item['image'],
                       width: double.infinity,
                       height: double.infinity,
                       fit: BoxFit.cover,
                     ),
                   ),
-                  Positioned(
-                    bottom: 0.0,
-                    left: 0.0,
-                    right: 0.0,
-                    child: Container(
-                      color: Colors.black.withOpacity(0.5),
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        item['text']!,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontFamily: "Audiowide",
+                  if (item['text'] != null)
+                    Positioned(
+                      bottom: 0.0,
+                      left: 0.0,
+                      right: 0.0,
+                      child: Container(
+                        color: Colors.black.withOpacity(0.5),
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          item['text'],
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontFamily: "Audiowide",
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
                       ),
                     ),
-                  ),
                 ],
               ),
             );

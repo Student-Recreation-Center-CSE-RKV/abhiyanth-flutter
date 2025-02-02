@@ -1,24 +1,33 @@
+import 'package:abhiyanth/models/culturals_model.dart';
+import 'package:abhiyanth/services/Routes/navigation_service.dart';
+import 'package:abhiyanth/services/Routes/routesname.dart';
+import 'package:abhiyanth/services/size_config.dart';
 import 'package:flutter/material.dart';
-
+import 'package:abhiyanth/models/department_event_model.dart';
 class AuditionCard extends StatelessWidget {
-  final String title;
-  final String date;
-  final String time;
-  final String venue;
-  final String description;
-  final String image;
+  final Event? event;
+  final String ?title;
+  final String ?date;
+  final String? time;
+  final String? venue;
+  final String ?description;
+  final String?short_description;
+  final String ?image;
+  final CulturalsModel? cultural;
 
-  const AuditionCard({
+   AuditionCard({
     super.key,
-    required this.title,
-    required this.date,
-    required this.time,
-    required this.venue,
-    required this.description,
-    this.image =
-        "https://i.pinimg.com/236x/42/dc/0c/42dc0c3f341a3b336b2ae285f5c873de.jpg",
+     this.cultural,
+    this.event,
+     this.title,
+     this.date,
+     this.time,
+     this.venue,
+    this.description,
+    this.short_description,
+    this.image ,
   });
-
+  final NavigationService navigationService=NavigationService();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,101 +42,147 @@ class AuditionCard extends StatelessWidget {
           width: 2,
         ),
       ),
-      child: Row(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Image Placeholder
-          Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                image, // Replace `image` with your local variable containing the URL
-                width: 100,
+          SizedBox(height: 10,),
+          Row(
+            children: [
+              Container(
+                width: 140,
                 height: 100,
-                fit: BoxFit
-                    .cover, // Ensures the image fits within the dimensions
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              (loadingProgress.expectedTotalBytes ?? 1)
-                          : null,
-                    ),
-                  );
-                },
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    width: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    event?.image ?? cultural?.images.mainImage?? image!,
+                    width: 140,
                     height: 100,
-                    color:
-                        Colors.grey[400], // Fallback color in case of an error
-                    child: Icon(
-                      Icons.broken_image,
-                      color: Colors.white,
-                    ),
-                  );
-                },
+                    fit: BoxFit
+                        .cover, // Ensures the image fits within the dimensions
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  (loadingProgress.expectedTotalBytes ?? 1)
+                              : null,
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        width: 100,
+                        height: 100,
+                        color:
+                            Colors.grey[400],
+                        child: Icon(
+                          Icons.broken_image,
+                          color: Colors.white,
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ),
+
+              const SizedBox(width: 16), // Spacing between image and text
+              // Text Content
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                     event?.title ?? cultural?.name ?? title!,
+                      style: const TextStyle(
+                        color: Colors.lightBlueAccent,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Audiowide",
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      'Date : ${event?.date != null ? "${event!.date.day}-${event!.date.month}-${event!.date.year}":"${cultural!.date.day}-${cultural!.date.month}-${cultural!.date.year}"}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontFamily: "Audiowide",
+                      ),
+                    ),
+                    Text(
+                      'Time : ${event?.date != null ? '${event!.date.hour % 12}:${event!.date.minute.toString().padLeft(2, '0')} ${event!.date.hour < 12 ? 'AM' : 'PM'}' : (cultural?.date != null ? '${cultural!.date.hour % 12}:${cultural!.date.minute.toString().padLeft(2, '0')} ${cultural!.date.hour < 12 ? 'AM' : 'PM'}' : '')}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontFamily: "Audiowide",
+                      ),
+                    ),
+                    Text(
+                      'Venue : ${event?.venue ?? cultural?.venue?? venue!}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontFamily: "Audiowide",
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+            ],
+          ),
+          SizedBox(height: 10,),
+          Text(
+            event?.short_description ?? cultural?.description?? short_description!,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 13,
+              fontFamily: "Audiowide",
             ),
           ),
+          SizedBox(height: 10,),
 
-          const SizedBox(width: 16), // Spacing between image and text
-          // Text Content
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          TextButton(
+            onPressed: () {
+              if(event!=null){
+              navigationService.pushScreen(RoutesName.showEvent,arguments: event);
+              }else
+                {
+                  navigationService.pushScreen(RoutesName.showCultural,arguments: cultural);
+
+                }
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: const Color(0xFFFF3366),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                    SizeConfig.blockSizeHorizontal * 2.5),
+              ),
+              padding: EdgeInsets.symmetric(
+                vertical: SizeConfig.blockSizeVertical * 1,
+                horizontal: SizeConfig.blockSizeHorizontal * 5,
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize
+                  .min, // Ensures the row takes only as much space as needed
               children: [
                 Text(
-                  title,
-                  style: const TextStyle(
-                    color: Colors.lightBlueAccent,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Audiowide",
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  "Date: $date",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontFamily: "Audiowide",
-                  ),
-                ),
-                Text(
-                  "Time: $time",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontFamily: "Audiowide",
-                  ),
-                ),
-                Text(
-                  "Venue: $venue",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontFamily: "Audiowide",
-                  ),
-                ),
-                Text(
-                  "Description: $description",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
+                  "Read More",
+                  style: TextStyle(
+                    fontSize: SizeConfig.blockSizeHorizontal * 4,
                     fontFamily: "Audiowide",
                   ),
                 ),
               ],
             ),
-          ),
+          )
         ],
       ),
     );

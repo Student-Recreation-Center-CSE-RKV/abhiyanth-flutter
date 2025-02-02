@@ -21,12 +21,11 @@ class _LandingPageState extends State<LandingPage> {
   @override
   void initState() {
     super.initState();
-    fetchDynamicData(); // Fetch dynamic data on initialization
+    fetchDynamicData();
   }
 
   Future<void> fetchDynamicData() async {
     try {
-      // Fetch events for the slider
       final events = await eventService.getEvents();
       setState(() {
         sliderItems = events.map((event) {
@@ -37,7 +36,6 @@ class _LandingPageState extends State<LandingPage> {
         }).toList();
       });
 
-      // Set hardcoded items (can also fetch dynamically if needed)
       setState(() {
         items = [
           {

@@ -1,26 +1,30 @@
+import 'package:abhiyanth/models/culturals_model.dart';
+import 'package:abhiyanth/models/department_event_model.dart';
 import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/views/auditions_page.dart';
+import 'package:abhiyanth/views/cultural_detail_page.dart';
 import 'package:abhiyanth/views/culturals_page.dart';
-import 'package:abhiyanth/views/departments/chemical.dart';
-import 'package:abhiyanth/views/departments/civil.dart';
-import 'package:abhiyanth/views/departments/mechanical.dart';
-import 'package:abhiyanth/views/departments/mme.dart';
 import 'package:abhiyanth/views/notification_screen.dart';
+import 'package:abhiyanth/views/show_event_page.dart';
 import 'package:abhiyanth/views/signup_view.dart';
 import 'package:abhiyanth/views/splash_screen.dart';
 import 'package:abhiyanth/views/stalls_page.dart';
 import 'package:abhiyanth/views/technicals_page.dart';
 import 'package:abhiyanth/views/workshops_page.dart';
 import 'package:flutter/material.dart';
+import 'package:abhiyanth/views/department_event_page.dart';
 import 'package:abhiyanth/views/home_page.dart';
 import 'package:abhiyanth/views/aboutus_page.dart';
-import '../../views/departments/cse.dart';
-import '../../views/departments/ece.dart';
-import '../../views/departments/eee.dart';
 
 class Routes{
   static Route<dynamic> generateRoute(RouteSettings settings){
     switch(settings.name){
+      case RoutesName.showCultural:
+        return MaterialPageRoute(builder: (BuildContext context)=> CulturalDetailPage(cultural: settings.arguments as CulturalsModel));
+      case RoutesName.showEvent:
+        return MaterialPageRoute(builder: (BuildContext context)=> ShowEventPage(event: settings.arguments as Event));
+      case RoutesName.departmentEvent:
+        return MaterialPageRoute(builder: (BuildContext context)=> DepartmentEventPage(department: settings.arguments as String));
       case RoutesName.notification:
         return MaterialPageRoute(builder: (BuildContext context)=> NotificationScreen());
       case RoutesName.signup:
@@ -41,20 +45,6 @@ class Routes{
         return MaterialPageRoute(builder: (BuildContext context)=> CulturalsPage());
       case RoutesName.workshop:
         return MaterialPageRoute(builder: (BuildContext context)=> WorkshopsPage());
-      case RoutesName.mech:
-        return MaterialPageRoute(builder: (BuildContext context)=>ME());
-      case RoutesName.ece:
-        return MaterialPageRoute(builder: (BuildContext context)=>ECE());
-      case RoutesName.cse:
-        return MaterialPageRoute(builder: (BuildContext context)=>CSE());
-      case RoutesName.mme:
-        return MaterialPageRoute(builder: (BuildContext context)=>MME());
-      case RoutesName.chemical:
-        return MaterialPageRoute(builder: (BuildContext context)=>Chemical());
-      case RoutesName.civil:
-        return MaterialPageRoute(builder: (BuildContext context)=>Civil());
-      case RoutesName.eee:
-        return MaterialPageRoute(builder: (BuildContext context)=>EEE());
       default:
         return MaterialPageRoute(builder: (_){
           return Scaffold(

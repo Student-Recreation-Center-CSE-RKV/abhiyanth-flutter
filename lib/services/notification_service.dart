@@ -7,7 +7,6 @@ class NotificationServices {
 
   Future<String> getToken() async {
     String? token = await _messaging.getToken();
-    print(token);
     return token!;
   }
 

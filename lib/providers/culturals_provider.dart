@@ -1,31 +1,30 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../services/culturals_service.dart';
+import 'package:abhiyanth/models/culturals_model.dart';
 
 // Create a service provider
 final culturalsServiceProvider = Provider<CulturalsService>((ref) {
   return CulturalsService();
 });
 
-// Create a Notifier to manage the state of Ongoing Culturals
-class CulturalsNotifier extends StateNotifier<AsyncValue<List<Map<String, String>>>> {
+class CulturalsNotifier extends StateNotifier<AsyncValue<List<CulturalsModel>>> {
   final CulturalsService _service;
 
   CulturalsNotifier(this._service) : super(const AsyncValue.loading());
 
-  // Fetch ongoing culturals
-  Future<void> fetchOngoingCulturals() async {
+  Future<void> fetchCulturals() async {
     try {
       state = const AsyncValue.loading();
-      final data = await _service.getOngoingCulturals();
+      final data = await _service.getCulturals();
       state = AsyncValue.data(data);
-    } catch (e) {
-      state = AsyncValue.error(e, StackTrace.current);
+    } catch (e, stackTrace) {
+      state = AsyncValue.error(e, stackTrace);
     }
   }
 }
 
 // Create a StateNotifierProvider for the notifier
 final culturalsProvider =
-    StateNotifierProvider<CulturalsNotifier, AsyncValue<List<Map<String, String>>>>(
-  (ref) => CulturalsNotifier(ref.watch(culturalsServiceProvider)),
+StateNotifierProvider<CulturalsNotifier, AsyncValue<List<CulturalsModel>>>(
+      (ref) => CulturalsNotifier(ref.watch(culturalsServiceProvider)),
 );
