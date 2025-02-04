@@ -1,6 +1,7 @@
 import 'package:abhiyanth/services/Routes/navigation_service.dart';
 import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/widgets/coming_soon.dart';
+import 'package:abhiyanth/widgets/glowing_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/widgets/image_slider.dart';
 import 'package:abhiyanth/services/size_config.dart';
@@ -101,7 +102,7 @@ class _LandingPageState extends State<LandingPage> {
             const SizedBox(height: 20),
             // Image Slider
             sliderItems.isEmpty
-                ? Center(child: CircularProgressIndicator())
+                ? Center(child: BlinkingLogo())
                 : ImageSliderWidget(items: sliderItems),
             const SizedBox(height: 20),
             // Circular buttons

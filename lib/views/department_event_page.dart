@@ -1,4 +1,5 @@
 import 'package:abhiyanth/providers/department_event_provider.dart';
+import 'package:abhiyanth/widgets/glowing_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/constants/Department_Event_Names.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -275,12 +276,10 @@ class _DepartmentEventState extends ConsumerState<DepartmentEventPage> {
               ),
             );
           },
-          loading: () => Center(
-            child: LoadingAnimationWidget.inkDrop(
-              color: Colors.white,
-              size: SizeConfig.safeBlockHorizontal * 10,
+          loading: () => const Center(
+              child : BlinkingLogo(logoPath: "assets/images/Abhiyanthlogo2.png",),
+              // child: CircularProgressIndicator(color: Colors.white),
             ),
-          ),
           error: (error, _) => Center(
             child: Text(
               "Error loading events: $error",

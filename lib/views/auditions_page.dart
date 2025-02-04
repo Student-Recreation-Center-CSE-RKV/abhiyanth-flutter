@@ -1,4 +1,5 @@
 import 'package:abhiyanth/providers/auditions_provider.dart';
+import 'package:abhiyanth/widgets/glowing_logo.dart';
 import 'package:abhiyanth/widgets/image_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/services/size_config.dart';
@@ -90,7 +91,7 @@ class _AuditionsPageState extends ConsumerState<AuditionsPage> {
                   ...upcomingAuditions.map((audition) {
                     return AuditionCard(
                       title: audition['title'] ?? 'No Title',
-                      date:" DateTime.now()",
+                      date: audition['date'] ?? "DateTime.now()",
                       time: audition['time'] ?? 'No Time',
                       venue: audition['venue'] ?? 'No Venue',
                       description: audition['description'] ?? 'No Description',
@@ -100,7 +101,8 @@ class _AuditionsPageState extends ConsumerState<AuditionsPage> {
               );
             },
             loading: () => const Center(
-              child: CircularProgressIndicator(color: Colors.white),
+              child : BlinkingLogo(logoPath: "assets/images/Abhiyanthlogo2.png",),
+              // child: CircularProgressIndicator(color: Colors.white),
             ),
             error: (error, _) => Center(
               child: Text(

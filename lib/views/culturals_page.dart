@@ -1,4 +1,5 @@
 import 'package:abhiyanth/widgets/event_card_widget.dart';
+import 'package:abhiyanth/widgets/glowing_logo.dart';
 import 'package:abhiyanth/widgets/image_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -112,7 +113,10 @@ class _CulturalsPageState extends ConsumerState<CulturalsPage> {
                     ),
                   );
               },
-            loading: () {}),
+            loading: () => const Center(
+              child : BlinkingLogo(logoPath: "assets/images/Abhiyanthlogo2.png",),
+              // child: CircularProgressIndicator(color: Colors.white),
+            ),),
       ),
     );
   }
