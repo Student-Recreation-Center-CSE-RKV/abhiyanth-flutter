@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import './event_state_provider.dart';
+import '../providers/event_state_provider.dart';
 
 class EventViewModel {
   final WidgetRef ref;

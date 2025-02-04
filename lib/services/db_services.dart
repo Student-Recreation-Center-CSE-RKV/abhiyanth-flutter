@@ -5,5 +5,7 @@ class DBService {
   static CollectionReference users = FirebaseFirestore.instance.collection('Users');
   static CollectionReference departmentCarousel = FirebaseFirestore.instance.collection('department_carousels');
   static CollectionReference culutrals = FirebaseFirestore.instance.collection('events');
+  static CollectionReference mainEvents = FirebaseFirestore.instance.collection('TechEvents_MainEvents');
+
 
 }

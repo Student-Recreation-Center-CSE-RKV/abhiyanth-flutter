@@ -3,7 +3,9 @@ import 'package:abhiyanth/models/culturals_model.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
 import 'package:abhiyanth/widgets/gradient_border.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class CulturalDetailPage extends StatefulWidget {
@@ -126,7 +128,7 @@ class _CulturalDetailPageState extends State<CulturalDetailPage> {
 
               // Stall Name
               Text(
-                widget.cultural.name ?? "Unnamed Stall",
+                widget.cultural.name,
                 style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -267,6 +269,41 @@ class _CulturalDetailPageState extends State<CulturalDetailPage> {
                   ],
                 ),
 
+              const SizedBox(height: 16),
+              widget.cultural.registerLink.isNotEmpty ? Center(
+                child: TextButton(
+                  onPressed: () async {
+                      Uri uri = Uri.parse(widget.cultural.registerLink);
+                      await launchUrl(uri,
+                          mode: LaunchMode.externalApplication);
+                  },
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: const Color(0xFFFF3366),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          SizeConfig.blockSizeHorizontal * 2.5),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      vertical: SizeConfig.blockSizeVertical * 1,
+                      horizontal: SizeConfig.blockSizeHorizontal * 5,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize
+                        .min, // Ensures the row takes only as much space as needed
+                    children: [
+                      Text(
+                        "Register Now",
+                        style: TextStyle(
+                          fontSize: SizeConfig.blockSizeHorizontal * 4,
+                          fontFamily: "Audiowide",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ):SizedBox(),
               const SizedBox(height: 16),
 
               // Contact Details

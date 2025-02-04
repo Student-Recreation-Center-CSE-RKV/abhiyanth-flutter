@@ -9,7 +9,7 @@ class BlinkingLogo extends StatefulWidget {
     Key? key,
     this.logoPath ="assets/images/Abhiyanthlogo2.png",
     this.size = 100.0,
-    this.speed = const Duration(seconds: 3), // Default speed
+    this.speed = const Duration(seconds: 2), // Default speed
   }) : super(key: key);
 
   @override
