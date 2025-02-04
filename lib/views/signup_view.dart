@@ -1,3 +1,4 @@
+import 'package:abhiyanth/widgets/glowing_logo.dart';
 import 'package:abhiyanth/widgets/grid_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -94,8 +95,7 @@ class _SignupPageState extends State<SignupPage> {
                                     ? SizedBox(
                                         height: 30,
                                         width: 30,
-                                        child: CircularProgressIndicator(
-                                            color: Colors.black),
+                                        child: BlinkingLogo(),
                                       )
                                     : Row(
                                         mainAxisAlignment:

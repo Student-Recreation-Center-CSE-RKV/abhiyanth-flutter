@@ -153,7 +153,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (user != null) {
       navigationService.pushReplacementScreen(RoutesName.home);
     } else {
-      navigationService.pushReplacementScreen(RoutesName.login);
+      navigationService.pushReplacementScreen(RoutesName.signup);
     }
   }
 

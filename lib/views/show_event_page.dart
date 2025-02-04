@@ -147,65 +147,29 @@ class ShowEventPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: SizeConfig.safeBlockVertical*1,),
-                        event.prizes.isNotEmpty?Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: SizeConfig.safeBlockHorizontal * 5),
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: const Text(
-                                "Prizes :",
-                                style: TextStyle(
-                                  color: Colors.lightBlueAccent,
-                                  fontSize: 25,
-                                  fontFamily: "Audiowide",
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                textAlign: TextAlign.start,
-                              )),
-                        ):SizedBox(),
-                       ...event.prizes.map((prize){
-                          return Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: SizeConfig.safeBlockHorizontal * 7),
-                            child: Row(
-                              children: <Widget>[
-                              Icon(
-                                  Icons.circle,
-                                  size: 12,
-                                  color: Colors.lightBlueAccent,
-                                ),
-                            SizedBox(width: SizeConfig.safeBlockHorizontal * 2,),
-                            Text(
-                                '$prize',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "Audiowide",
-                                  fontSize: SizeConfig.safeBlockHorizontal * 5,
-                                ),
-                              ),
-                              ],
-                            ),
-                          );
-                        }),
-                        SizedBox(height: SizeConfig.safeBlockVertical*1,),
-                        event.result.isNotEmpty?Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: SizeConfig.safeBlockHorizontal * 5),
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: const Text(
-                                "Winners :",
-                                style: TextStyle(
-                                  color: Colors.lightBlueAccent,
-                                  fontSize: 25,
-                                  fontFamily: "Audiowide",
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                textAlign: TextAlign.start,
-                              )),
-                        ):SizedBox(),
-                        ...event.result.map((prize){
+                        SizedBox(
+                          height: SizeConfig.safeBlockVertical * 1,
+                        ),
+                        event.prizes.isNotEmpty
+                            ? Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        SizeConfig.safeBlockHorizontal * 5),
+                                child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: const Text(
+                                      "Prizes :",
+                                      style: TextStyle(
+                                        color: Colors.lightBlueAccent,
+                                        fontSize: 25,
+                                        fontFamily: "Audiowide",
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      textAlign: TextAlign.start,
+                                    )),
+                              )
+                            : SizedBox(),
+                        ...event.prizes.map((prize) {
                           return Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: SizeConfig.safeBlockHorizontal * 7),
@@ -216,37 +180,45 @@ class ShowEventPage extends StatelessWidget {
                                   size: 12,
                                   color: Colors.lightBlueAccent,
                                 ),
-                                SizedBox(width: SizeConfig.safeBlockHorizontal * 2,),
+                                SizedBox(
+                                  width: SizeConfig.safeBlockHorizontal * 2,
+                                ),
                                 Text(
                                   '$prize',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: "Audiowide",
-                                    fontSize: SizeConfig.safeBlockHorizontal * 5,
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 5,
                                   ),
                                 ),
                               ],
                             ),
                           );
                         }),
-                        SizedBox(height: SizeConfig.safeBlockVertical*1,),
-                        event.sponsors.isNotEmpty?Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: SizeConfig.safeBlockHorizontal * 5),
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: const Text(
-                                "Sponsors :",
-                                style: TextStyle(
-                                  color: Colors.lightBlueAccent,
-                                  fontSize: 25,
-                                  fontFamily: "Audiowide",
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                textAlign: TextAlign.start,
-                              )),
-                        ):SizedBox(),
-                        ...event.sponsors.map((prize){
+                        SizedBox(
+                          height: SizeConfig.safeBlockVertical * 1,
+                        ),
+                        event.result.isNotEmpty
+                            ? Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        SizeConfig.safeBlockHorizontal * 5),
+                                child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: const Text(
+                                      "Winners :",
+                                      style: TextStyle(
+                                        color: Colors.lightBlueAccent,
+                                        fontSize: 25,
+                                        fontFamily: "Audiowide",
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      textAlign: TextAlign.start,
+                                    )),
+                              )
+                            : SizedBox(),
+                        ...event.result.map((prize) {
                           return Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: SizeConfig.safeBlockHorizontal * 7),
@@ -257,26 +229,85 @@ class ShowEventPage extends StatelessWidget {
                                   size: 12,
                                   color: Colors.lightBlueAccent,
                                 ),
-                                SizedBox(width: SizeConfig.safeBlockHorizontal * 2,),
+                                SizedBox(
+                                  width: SizeConfig.safeBlockHorizontal * 2,
+                                ),
                                 Text(
                                   '$prize',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: "Audiowide",
-                                    fontSize: SizeConfig.safeBlockHorizontal * 5,
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 5,
                                   ),
                                 ),
                               ],
                             ),
                           );
                         }),
-                        SizedBox(height: SizeConfig.safeBlockVertical*2,),
+                        SizedBox(
+                          height: SizeConfig.safeBlockVertical * 1,
+                        ),
+                        event.sponsors.isNotEmpty
+                            ? Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        SizeConfig.safeBlockHorizontal * 5),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: const Text(
+                                    "Sponsors :",
+                                    style: TextStyle(
+                                      color: Colors.lightBlueAccent,
+                                      fontSize: 25,
+                                      fontFamily: "Audiowide",
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                ),
+                              )
+                            : SizedBox(),
+                        ...event.sponsors.map((prize) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: SizeConfig.safeBlockHorizontal * 7),
+                            child: Row(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.circle,
+                                  size: 12,
+                                  color: Colors.lightBlueAccent,
+                                ),
+                                SizedBox(
+                                  width: SizeConfig.safeBlockHorizontal * 2,
+                                ),
+                                Text(
+                                  '$prize',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "Audiowide",
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 5,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+                        SizedBox(
+                          height: SizeConfig.safeBlockVertical * 2,
+                        ),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => SoloEventRegistartionPage(event: event,)),
-                            );                            // navigationService.pushScreen(RoutesName.showEvent,arguments: event);
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      SoloEventRegistartionPage(
+                                        event: event,
+                                      )),
+                            ); // navigationService.pushScreen(RoutesName.showEvent,arguments: event);
                           },
                           style: TextButton.styleFrom(
                             foregroundColor: Colors.white,
@@ -304,12 +335,13 @@ class ShowEventPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(height: SizeConfig.safeBlockVertical*2,),
+                        SizedBox(
+                          height: SizeConfig.safeBlockVertical * 2,
+                        ),
                       ],
                     ),
                   ),
                 ),
-
               ],
             ),
           ),

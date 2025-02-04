@@ -1,6 +1,7 @@
 import 'package:abhiyanth/models/stalls_model.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
+import 'package:abhiyanth/widgets/glowing_logo.dart';
 import 'package:abhiyanth/widgets/gradient_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
@@ -307,10 +308,7 @@ class _StallDetailPageState extends State<StallDetailPage> {
                       ? SizedBox(
                           width: 20,
                           height: 20,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2,
-                          ),
+                          child: BlinkingLogo()
                         )
                       : Text(
                           "View Menu",

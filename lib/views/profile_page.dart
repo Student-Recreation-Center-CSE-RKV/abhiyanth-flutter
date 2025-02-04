@@ -1,3 +1,4 @@
+import 'package:abhiyanth/widgets/glowing_logo.dart';
 import 'package:abhiyanth/widgets/gradient_border.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -130,9 +131,7 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: Colors.transparent,
         body: isLoading
             ? Center(
-                child: CircularProgressIndicator(
-                  color: Colors.blue,
-                ),
+                child: BlinkingLogo()
               )
             : SingleChildScrollView(
                 child: Padding(
@@ -259,15 +258,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ),
                                 ),
-                                // IconButton(
-                                //   onPressed: () {
-                                //     userService.signOut();
-                                //     Navigator.pushNamedAndRemoveUntil(context, RoutesName.signup,(route) => false);
-                                //   },
-                                //   icon: Icon(
-                                //     Icons.logout,
-                                //     color: Colors.white,
-                                //   ),),
+                                IconButton(
+                                  onPressed: () {
+                                    userService.signOut();
+                                    Navigator.pushNamedAndRemoveUntil(context, RoutesName.signup,(route) => false);
+                                  },
+                                  icon: Icon(
+                                    Icons.logout,
+                                    color: Colors.white,
+                                  ),),
                               ],
                             )
                           : SizedBox(),

@@ -1,3 +1,4 @@
+import 'package:abhiyanth/widgets/glowing_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:abhiyanth/views/stall_details_page.dart';
@@ -172,7 +173,7 @@ class StallsPage extends ConsumerWidget {
                 );
               },
             ),
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const Center(child: BlinkingLogo()),
             error: (error, stackTrace) => Center(child: Text("Error: $error")),
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:abhiyanth/utilities/gradient_background.dart';
+import 'package:abhiyanth/widgets/glowing_logo.dart';
 import 'package:abhiyanth/widgets/notification_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,7 +51,7 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
         body: RefreshIndicator(
           onRefresh: _refreshPage, // Call the refresh method
           child: notificationsState.isLoading
-              ? const Center(child: CircularProgressIndicator(color: Colors.white,))
+              ? const Center(child: BlinkingLogo())
               : notificationsState.notifications.isEmpty
               ? const Center(child: Text("No notifications available"))
               : ListView.builder(
