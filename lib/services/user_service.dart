@@ -12,9 +12,51 @@ class UserService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   User? get getUser => _auth.currentUser;
 
+  // Future<User?> signInWithGoogle() async {
+  //   try {
+  //
+  //     final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+  //     if (googleUser == null) {
+  //       return null;
+  //     }
+  //
+  //     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+  //
+  //     final OAuthCredential credential = GoogleAuthProvider.credential(
+  //       accessToken: googleAuth.accessToken,
+  //       idToken: googleAuth.idToken,
+  //     );
+  //
+  //     final UserCredential userCredential = await _auth.signInWithCredential(credential);
+  //
+  //     String FCM_Token=await notificationServices.getToken();
+  //     final FCM_TokenCollection = await DBService.FCM_Tokens.doc("Tokens");
+  //     final String token = await notificationServices.getToken();
+  //     FCM_TokenCollection.update({
+  //       "Token": FieldValue.arrayUnion([token])
+  //     });
+  //     await userService.createNewUser(
+  //       UserModel(
+  //           uid: userCredential.user!.uid,
+  //           name: userCredential.user!.displayName,
+  //           email:userCredential.user!.email,
+  //           mobile:"",
+  //           branch: "",
+  //           batch: "",
+  //           id: "",
+  //           role: "student",
+  //           createdAt:DateTime.now(),
+  //         FCM_Token:FCM_Token,
+  //       ),
+  //     );
+  //     return userCredential.user;
+  //   } catch (e) {
+  //     print('Error during Google sign-in: $e');
+  //     return null;
+  //   }
+  // }
   Future<User?> signInWithGoogle() async {
     try {
-
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
         return null;
@@ -28,30 +70,46 @@ class UserService {
       );
 
       final UserCredential userCredential = await _auth.signInWithCredential(credential);
+      final User? firebaseUser = userCredential.user;
 
-      String FCM_Token=await notificationServices.getToken();
+      if (firebaseUser == null) {
+        return null;
+      }
+
+      // Get FCM Token
+      String FCM_Token = await notificationServices.getToken();
       final FCM_TokenCollection = await DBService.FCM_Tokens.doc("Tokens");
-      final String token = await notificationServices.getToken();
-      FCM_TokenCollection.update({
-        "Token": FieldValue.arrayUnion([token])
-      });
-      await userService.createNewUser(
-        UserModel(
-            uid: userCredential.user!.uid,
-            name: userCredential.user!.displayName,
-            email:userCredential.user!.email,
-            mobile:"",
+
+      final DocumentReference userDocRef = DBService.users.doc(firebaseUser.uid);
+      final DocumentSnapshot userDoc = await userDocRef.get();
+
+      if (userDoc.exists) {
+            FCM_TokenCollection.update({
+              "Token": FieldValue.arrayUnion([FCM_Token])
+            });
+        await userDocRef.update({
+          "FCM_Token": FCM_Token
+        });
+      } else {
+        await userService.createNewUser(
+          UserModel(
+            uid: firebaseUser.uid,
+            name: firebaseUser.displayName ?? "",
+            email: firebaseUser.email ?? "",
+            mobile: "",
             branch: "",
             batch: "",
             id: "",
             role: "student",
-            createdAt:DateTime.now(),
-          FCM_Token:FCM_Token,
-        ),
-      );
-      return userCredential.user;
+            createdAt: DateTime.now(),
+            FCM_Token: FCM_Token,
+          ),
+        );
+      }
+
+
+      return firebaseUser;
     } catch (e) {
-      print(e);
       print('Error during Google sign-in: $e');
       return null;
     }
@@ -116,7 +174,7 @@ class UserService {
         });
       }
       await DBService.users.doc(userId).update({
-        'FCM_Token': FieldValue.delete(), // Removes the FCM_Token field
+        'FCM_Token': "",
       });
 
       await _googleSignIn.signOut();

@@ -14,4 +14,5 @@ class RoutesName{
   static const String departmentEvent='departmentEventPage';
   static const String showEvent='showEventPage';
   static const String showCultural='showCulturalPage';
+
 }
