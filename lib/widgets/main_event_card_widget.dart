@@ -1,19 +1,13 @@
-import 'package:abhiyanth/views/register_page.dart';
+import 'package:abhiyanth/views/show_event_page.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/services/size_config.dart';
-
+import 'package:abhiyanth/models/department_event_model.dart';
 class EventCard extends StatelessWidget {
-  final String date;
-  final String title;
-  final String location;
-  final String imageUrl;
+  final Event event;
 
   const EventCard({
     super.key,
-    required this.date,
-    required this.title,
-    required this.location,
-    required this.imageUrl,
+    required this.event,
   });
 
   @override
@@ -38,7 +32,7 @@ class EventCard extends StatelessWidget {
             borderRadius:
                 BorderRadius.circular(SizeConfig.blockSizeHorizontal * 3),
             child: Image.network(
-              imageUrl,
+              event.image,
               fit: BoxFit.cover,
               width: double.infinity,
               height: double.infinity,
@@ -79,7 +73,7 @@ class EventCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  date,
+                  "${event.date.day}-${event.date.month}-${event.date.year} ${event.date.hour % 12}:${event.date.minute.toString().padLeft(2, '0')} ${event.date.hour < 12 ? 'AM' : 'PM'}",
                   style: TextStyle(
                     color: Colors.white70,
                     fontFamily: "Audiowide",
@@ -88,7 +82,7 @@ class EventCard extends StatelessWidget {
                 ),
                 SizedBox(height: SizeConfig.blockSizeVertical * 1),
                 Text(
-                  title,
+                  event.title,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: SizeConfig.blockSizeHorizontal * 5.5,
@@ -98,7 +92,7 @@ class EventCard extends StatelessWidget {
                 ),
                 SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
                 Text(
-                  location,
+                  event.venue,
                   style: TextStyle(
                     color: Colors.white54,
                     fontFamily: "Audiowide",
@@ -111,7 +105,7 @@ class EventCard extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => RegisterPage(eventTitle: title),
+                        builder: (context) => ShowEventPage(event: event),
                       ),
                     );
                   },
@@ -135,6 +129,7 @@ class EventCard extends StatelessWidget {
                         "Register Now",
                         style: TextStyle(
                           fontSize: SizeConfig.blockSizeHorizontal * 4.5,
+                          fontFamily: "Audiowide"
                         ),
                       ),
                       SizedBox(

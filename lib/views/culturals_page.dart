@@ -1,6 +1,5 @@
 import 'package:abhiyanth/widgets/event_card_widget.dart';
 import 'package:abhiyanth/widgets/glowing_logo.dart';
-import 'package:abhiyanth/widgets/image_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:abhiyanth/services/size_config.dart';
@@ -64,7 +63,7 @@ class _CulturalsPageState extends ConsumerState<CulturalsPage> {
                   children: [
                     SizedBox(height: SizeConfig.safeBlockVertical * 2),
                     const Text(
-                      "Ongoing Culturals",
+                      " Culturals ",
                       style: TextStyle(
                         color: Colors.lightBlueAccent,
                         fontSize: 22,
@@ -74,31 +73,7 @@ class _CulturalsPageState extends ConsumerState<CulturalsPage> {
                     ),
 
                     ...culturals.map((cultural){
-                      if(cultural.status=="live"){
                         return AuditionCard(cultural: cultural);
-                      }
-                      else {
-                        return Container();
-                      }
-                    }),
-                    const SizedBox(height: 16),
-                    const Text(
-                      "Upcoming Culturals",
-                      style: TextStyle(
-                        color: Colors.lightBlueAccent,
-                        fontSize: 22,
-                        fontFamily: "Audiowide",
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    ...culturals.map((cultural){
-                      if(cultural.status!="live"){
-                        return AuditionCard(cultural: cultural);
-                      }
-                      else {
-                        return Container();
-                      }
                     }),
                   ],
                 ),

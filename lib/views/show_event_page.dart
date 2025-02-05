@@ -1,4 +1,4 @@
-import 'package:abhiyanth/locator.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:abhiyanth/models/department_event_model.dart';
 import 'package:abhiyanth/services/size_config.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
@@ -156,17 +156,18 @@ class ShowEventPage extends StatelessWidget {
                                     horizontal:
                                         SizeConfig.safeBlockHorizontal * 5),
                                 child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: const Text(
-                                      "Prizes :",
-                                      style: TextStyle(
-                                        color: Colors.lightBlueAccent,
-                                        fontSize: 25,
-                                        fontFamily: "Audiowide",
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                      textAlign: TextAlign.start,
-                                    )),
+                                  alignment: Alignment.centerLeft,
+                                  child: const Text(
+                                    "Prizes :",
+                                    style: TextStyle(
+                                      color: Colors.lightBlueAccent,
+                                      fontSize: 25,
+                                      fontFamily: "Audiowide",
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                ),
                               )
                             : SizedBox(),
                         ...event.prizes.map((prize) {
@@ -299,15 +300,21 @@ class ShowEventPage extends StatelessWidget {
                           height: SizeConfig.safeBlockVertical * 2,
                         ),
                         TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      SoloEventRegistartionPage(
-                                        event: event,
-                                      )),
-                            ); // navigationService.pushScreen(RoutesName.showEvent,arguments: event);
+                          onPressed: () async {
+                            if (event.registration_link.isNotEmpty) {
+                              Uri uri = Uri.parse(event.registration_link);
+                              await launchUrl(uri,
+                                  mode: LaunchMode.externalApplication);
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        SoloEventRegistartionPage(
+                                          event: event,
+                                        )),
+                              );
+                            }
                           },
                           style: TextButton.styleFrom(
                             foregroundColor: Colors.white,

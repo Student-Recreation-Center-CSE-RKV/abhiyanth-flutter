@@ -1,7 +1,5 @@
 import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:abhiyanth/services/custom_snackbar.dart';
-import 'package:abhiyanth/services/db_services.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:abhiyanth/locator.dart';

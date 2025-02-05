@@ -1,34 +1,22 @@
 class DepartmentEventModel {
   final List<Event> ongoingEvents;
-  final List<Event> upcomingEvents;
-  final List<String> departmentCarousel;
+  final List<String> ? departmentCarousel;
 
   DepartmentEventModel({
     required this.ongoingEvents,
-    required this.upcomingEvents,
-    required this.departmentCarousel,
+     this.departmentCarousel,
   });
 
   factory DepartmentEventModel.fromList(List<Map<String, dynamic>> eventDataList, List<String> departmentCarousel) {
     List<Event> ongoing = [];
-    List<Event> upcoming = [];
-    final now = DateTime.now();
 
     for (var data in eventDataList) {
-      final eventDate = DateTime.tryParse(data['date'] ?? '');
-      if (eventDate != null) {
         final event = Event.fromMap(data['id'], data, data['date']);
-        if (eventDate.isBefore(now)) {
           ongoing.add(event);
-        } else {
-          upcoming.add(event);
-        }
-      }
     }
 
     return DepartmentEventModel(
       ongoingEvents: ongoing,
-      upcomingEvents: upcoming,
       departmentCarousel: departmentCarousel,
     );
   }
@@ -36,7 +24,6 @@ class DepartmentEventModel {
   Map<String, dynamic> toMap() {
     return {
       'ongoingEvents': ongoingEvents.map((event) => event.toMap()).toList(),
-      'upcomingEvents': upcomingEvents.map((event) => event.toMap()).toList(),
       'departmentCarousel': departmentCarousel,
     };
   }
@@ -49,26 +36,26 @@ class Event {
   final String image;
   final String venue;
   final List<dynamic> prizes;
-  final String registrationLink;
+  final String registration_link;
   final List<dynamic> result;
   final List<dynamic> sponsors;
   final DateTime date;
   final String title;
-  final int registrationFee;
+  final int amount;
 
   Event({
     required this.id,
     required this.description,
     required this.image,
     required this.prizes,
-    required this.registrationLink,
+    required this.registration_link,
     required this.result,
     required this.sponsors,
     required this.date,
     required this.title,
     required this.venue,
     required this.short_description,
-   required this.registrationFee
+   required this.amount
   });
 
   factory Event.fromMap(String id, Map<String, dynamic> eventData, String eventDate) {
@@ -77,14 +64,14 @@ class Event {
       description: eventData['description']?.toString() ?? 'No Description',
       image: eventData['image']?.toString() ?? 'https://via.placeholder.com/150',
       prizes: List<dynamic>.from(eventData['prizes'] ?? []),
-      registrationLink: eventData['registration_link']?.toString() ?? '',
+      registration_link: eventData['registration_link']?.toString() ?? '',
       result: List<dynamic>.from(eventData['result'] ?? []),
       sponsors: List<dynamic>.from(eventData['sponsors'] ?? []),
       date: DateTime.parse(eventData['date']),
       venue: eventData['venue']?.toString()??"",
       title: eventData['title']?.toString() ?? 'CSE tech',
       short_description: eventData['short_description']?.toString()??'',
-      registrationFee: eventData['registrationFee']??0,
+      amount: eventData['amount']??0,
 
     );
   }
@@ -95,13 +82,13 @@ class Event {
       'description': description,
       'image': image,
       'prizes': prizes,
-      'registration_link': registrationLink,
+      'registration_link': registration_link,
       'result': result,
       'sponsors': sponsors,
       'date': date,
       'title': title,
       'short_description':short_description,
-      'registrationFee':registrationFee
+      'amount':amount
     };
   }
 }

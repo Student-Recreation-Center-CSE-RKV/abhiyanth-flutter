@@ -24,6 +24,7 @@ class _SoloEventRegistartionPageState extends State<SoloEventRegistartionPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.event.amount);
     return Scaffold(
       body: GradientBackground(
         child: Scaffold(
@@ -104,7 +105,7 @@ class _SoloEventRegistartionPageState extends State<SoloEventRegistartionPage> {
                           type: "phone"
                           ),
                           _buildTextField(
-                            value: '${widget.event.registrationFee} Rs.',
+                            value: '${widget.event.amount} Rs.',
                               title: "Registration Fee",
                             readOnly: true
                           )
