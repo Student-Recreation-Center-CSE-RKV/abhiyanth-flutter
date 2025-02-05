@@ -7,14 +7,13 @@ class AboutUsPage extends StatelessWidget {
       "category": "Mobile Devs",
       "developers": [
         {
-          "name": "S. Asif Basha",
+          "name": "Syed Sahil",
           "image":
-              "https://raw.githubusercontent.com/Student-Recreation-Center-CSE-RKV/Abhiyanth-Client/refs/heads/main/src/assets/images/ourTeam/asif.jpeg",
+              "https://raw.githubusercontent.com/Student-Recreation-Center-CSE-RKV/Abhiyanth-Client/refs/heads/main/src/assets/images/ourTeam/sahel.jpeg",
           "socials": {
-            "github": "https://github.com/sayyad-asifbasha",
-            "linkedin":
-                "https://www.linkedin.com/in/sayyad-asifbasha-b15731305/",
-            "instagram": "https://www.instagram.com/sayyad._.asif._/",
+            "github": "https://github.com/SyedShahil",
+            "linkedin": "https://www.linkedin.com/in/syed-sahil-076546286/",
+            "instagram": "https://www.instagram.com/______s_a_i_f_______05/#",
           },
         },
         {
@@ -28,13 +27,14 @@ class AboutUsPage extends StatelessWidget {
           },
         },
         {
-          "name": "Syed Sahil",
+          "name": "S. Asif Basha",
           "image":
-              "https://raw.githubusercontent.com/Student-Recreation-Center-CSE-RKV/Abhiyanth-Client/refs/heads/main/src/assets/images/ourTeam/sahel.jpeg",
+              "https://raw.githubusercontent.com/Student-Recreation-Center-CSE-RKV/Abhiyanth-Client/refs/heads/main/src/assets/images/ourTeam/asif.jpeg",
           "socials": {
-            "github": "https://github.com/SyedShahil",
-            "linkedin": "https://www.linkedin.com/in/syed-sahil-076546286/",
-            "instagram": "https://www.instagram.com/______s_a_i_f_______05/#",
+            "github": "https://github.com/sayyad-asifbasha",
+            "linkedin":
+                "https://www.linkedin.com/in/sayyad-asifbasha-b15731305/",
+            "instagram": "https://www.instagram.com/sayyad._.asif._/",
           },
         },
       ],
