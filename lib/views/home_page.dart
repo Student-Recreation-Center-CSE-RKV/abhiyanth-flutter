@@ -1,4 +1,5 @@
 import 'package:abhiyanth/services/Routes/routesname.dart';
+import 'package:abhiyanth/views/aboutus_page.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
 import 'package:abhiyanth/widgets/gradient_icon.dart';
@@ -78,11 +79,12 @@ class _HomePageState extends State<HomePage> {
         body: PageView(
           controller: _pageController,
           onPageChanged: _onPageChanged,
-          children: const [
+          children:  [
             LandingPage(),
             EventPage(),
             DepartmentsPage(),
-            ProfilePage(),
+            AboutUsPage(),
+            // ProfilePage(),
             // MapPage(),
           ],
         ),
