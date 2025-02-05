@@ -19,13 +19,12 @@ class NavigationService {
   }
 
   Future<dynamic> removeAllAndPush(
-      String routeName,
-      String tillRoute, {
+      String routeName, {
         dynamic arguments,
       }) {
     return navigatorKey.currentState!.pushNamedAndRemoveUntil(
       routeName,
-      ModalRoute.withName(tillRoute),
+          (Route<dynamic> route) => false,
       arguments: arguments,
     );
   }

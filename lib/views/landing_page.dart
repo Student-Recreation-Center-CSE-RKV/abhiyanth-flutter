@@ -46,12 +46,6 @@ class _LandingPageState extends State<LandingPage> {
             "page": 'culturals'
           },
           {
-            "title": "Auditions",
-            "image":
-                "https://i.pinimg.com/736x/90/b2/26/90b22654bdd3b47ee3cfea2ac729ed00.jpg",
-            "page": 'auditions'
-          },
-          {
             "title": "Stalls",
             "image":
                 "https://i.pinimg.com/736x/06/5f/97/065f97bf7a68e9f3e4923450624d122c.jpg",
@@ -67,20 +61,11 @@ class _LandingPageState extends State<LandingPage> {
   void navigateToPage(String page) {
     NavigationService navigationService = NavigationService();
     switch (page) {
-      case 'Workshops':
-        navigationService.pushScreen(RoutesName.workshop);
-        break;
       case 'Culturals':
         navigationService.pushScreen(RoutesName.culturals);
         break;
-      case 'Auditions':
-        navigationService.pushScreen(RoutesName.auditions);
-        break;
       case 'Stalls':
         navigationService.pushScreen(RoutesName.stalls);
-        break;
-      case 'Technical':
-        navigationService.pushScreen(RoutesName.technical);
         break;
       default:
         break;

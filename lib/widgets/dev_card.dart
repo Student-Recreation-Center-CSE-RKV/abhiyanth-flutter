@@ -1,20 +1,8 @@
+import 'package:abhiyanth/services/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SizeConfig {
-  static double screenWidth = 0;
-  static double screenHeight = 0;
-  static double blockSizeHorizontal = 0;
-  static double blockSizeVertical = 0;
-
-  void init(BuildContext context) {
-    screenWidth = MediaQuery.of(context).size.width;
-    screenHeight = MediaQuery.of(context).size.height;
-    blockSizeHorizontal = screenWidth / 100;
-    blockSizeVertical = screenHeight / 100;
-  }
-}
 
 class DevCard extends StatelessWidget {
   final Map<String, dynamic> dev;
@@ -31,7 +19,6 @@ class DevCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
 
     List<Map<String, dynamic>> socialIcons = [];
 
@@ -83,8 +70,8 @@ class DevCard extends StatelessWidget {
             borderRadius:
                 BorderRadius.circular(SizeConfig.blockSizeHorizontal * 3)),
         child: Container(
-          // width: SizeConfig.blockSizeHorizontal * 44, // Responsive width
-          // height: SizeConfig.blockSizeVertical * 25, // Adjusted height
+          width: SizeConfig.blockSizeHorizontal * 44, // Responsive width
+          height: SizeConfig.blockSizeVertical * 28, // Adjusted height
           padding: EdgeInsets.all(SizeConfig.blockSizeHorizontal * 1),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -105,8 +92,10 @@ class DevCard extends StatelessWidget {
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: SizeConfig.blockSizeHorizontal *
-                        4, // Responsive font size
-                    fontWeight: FontWeight.bold),
+                        4,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Audiowide"
+                ),
               ),
 
               // Social Media Icons (Auto-adjust based on count)
@@ -119,7 +108,7 @@ class DevCard extends StatelessWidget {
                       social["icon"],
                       color: Colors.white,
                       size: SizeConfig.blockSizeHorizontal *
-                          4, // Adjust for 3 socials
+                          6, // Adjust for 3 socials
                     ),
                     onPressed: () => _launchURL(social["url"]),
                   );

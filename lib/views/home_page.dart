@@ -1,12 +1,12 @@
+import 'package:abhiyanth/services/Routes/navigation_service.dart';
 import 'package:abhiyanth/services/Routes/routesname.dart';
-import 'package:abhiyanth/views/aboutus_page.dart';
+import 'package:abhiyanth/views/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/utilities/gradient_background.dart';
 import 'package:abhiyanth/widgets/gradient_icon.dart';
 import 'package:abhiyanth/views/landing_page.dart';
 import 'package:abhiyanth/views/departments_page.dart';
 import 'package:abhiyanth/views/event_page.dart';
-import 'package:abhiyanth/views/profile_page.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:abhiyanth/locator.dart';
 
@@ -52,16 +52,16 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          // leading: Icon(
-          //   Icons.menu,
-          //   color: Colors.white,
-          //   size: 30,
-          // ),
           leadingWidth: 60,
           backgroundColor: Colors.transparent,
-          title: const Text(
-            "Abhiyanth 2K25",
-            style: TextStyle(color: Colors.white, fontFamily: "Audiowide"),
+          title: InkWell(
+            onTap: (){
+              NavigationService().pushScreen(RoutesName.aboutus);
+            },
+            child: const Text(
+              "Abhiyanth 2K25",
+              style: TextStyle(color: Colors.white, fontFamily: "Audiowide"),
+            ),
           ),
           actions: [
             IconButton(
@@ -83,8 +83,8 @@ class _HomePageState extends State<HomePage> {
             LandingPage(),
             EventPage(),
             DepartmentsPage(),
-            AboutUsPage(),
-            // ProfilePage(),
+            // AboutUsPage(),
+            ProfilePage(),
             // MapPage(),
           ],
         ),

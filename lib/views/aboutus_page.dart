@@ -1,3 +1,4 @@
+import 'package:abhiyanth/services/Routes/routesname.dart';
 import 'package:flutter/material.dart';
 import 'package:abhiyanth/widgets/dev_card.dart';
 
@@ -27,7 +28,7 @@ class AboutUsPage extends StatelessWidget {
           },
         },
         {
-          "name": "S. Asif Basha",
+          "name": "S. Asifbasha",
           "image":
               "https://raw.githubusercontent.com/Student-Recreation-Center-CSE-RKV/Abhiyanth-Client/refs/heads/main/src/assets/images/ourTeam/asif.jpeg",
           "socials": {
@@ -102,7 +103,8 @@ class AboutUsPage extends StatelessWidget {
       "developers": [
         {
           "name": "J.Revanth Kumar",
-          "image": "https://raw.githubusercontent.com/Student-Recreation-Center-CSE-RKV/Abhiyanth-Client/refs/heads/main/src/assets/images/ourTeam/revanth.jpeg",
+          "image":
+              "https://raw.githubusercontent.com/Student-Recreation-Center-CSE-RKV/Abhiyanth-Client/refs/heads/main/src/assets/images/ourTeam/revanth.jpeg",
           "socials": {
             "github": "https://github.com/revanthkumarJ",
             "linkedin": "https://www.linkedin.com/in/jilakararevanthkumar/",
@@ -111,7 +113,8 @@ class AboutUsPage extends StatelessWidget {
         },
         {
           "name": "V.Achyutha",
-          "image": "https://raw.githubusercontent.com/Student-Recreation-Center-CSE-RKV/Abhiyanth-Client/refs/heads/main/src/assets/images/ourTeam/achyutha.jpeg",
+          "image":
+              "https://raw.githubusercontent.com/Student-Recreation-Center-CSE-RKV/Abhiyanth-Client/refs/heads/main/src/assets/images/ourTeam/achyutha.jpeg",
           "socials": {
             "github": "https://github.com/AchyuthaVikaram",
             "linkedin": "https://www.linkedin.com/in/achyuthavikaram",
@@ -120,7 +123,8 @@ class AboutUsPage extends StatelessWidget {
         },
         {
           "name": "T.Srikanth",
-          "image": "https://raw.githubusercontent.com/Student-Recreation-Center-CSE-RKV/Abhiyanth-Client/refs/heads/main/src/assets/images/ourTeam/sreekanth.jpeg",
+          "image":
+              "https://raw.githubusercontent.com/Student-Recreation-Center-CSE-RKV/Abhiyanth-Client/refs/heads/main/src/assets/images/ourTeam/sreekanth.jpeg",
           "socials": {
             "github": "https://github.com/THOTA-SRIKANTH",
             "linkedin": "https://www.linkedin.com/in/thota-srikanth-725757280/",
@@ -128,7 +132,8 @@ class AboutUsPage extends StatelessWidget {
         },
         {
           "name": "S.Rakshita",
-          "image": "https://raw.githubusercontent.com/Student-Recreation-Center-CSE-RKV/Abhiyanth-Client/refs/heads/main/src/assets/images/ourTeam/rakshitha.jpeg",
+          "image":
+              "https://raw.githubusercontent.com/Student-Recreation-Center-CSE-RKV/Abhiyanth-Client/refs/heads/main/src/assets/images/ourTeam/rakshitha.jpeg",
           "socials": {
             "github": "https://github.com/Rakshita4121",
             "linkedin":
@@ -138,7 +143,8 @@ class AboutUsPage extends StatelessWidget {
         },
         {
           "name": "M.Rajeswari",
-          "image": "https://raw.githubusercontent.com/Student-Recreation-Center-CSE-RKV/Abhiyanth-Client/refs/heads/main/src/assets/images/ourTeam/rajeswari.jpeg",
+          "image":
+              "https://raw.githubusercontent.com/Student-Recreation-Center-CSE-RKV/Abhiyanth-Client/refs/heads/main/src/assets/images/ourTeam/rajeswari.jpeg",
           "socials": {
             "github": "https://github.com/Rajeswari-Machina",
             "linkedin": "https://www.linkedin.com/in/rajeswari-machina",
@@ -146,7 +152,8 @@ class AboutUsPage extends StatelessWidget {
         },
         {
           "name": "N.Thanisha",
-          "image": "https://raw.githubusercontent.com/Student-Recreation-Center-CSE-RKV/Abhiyanth-Client/refs/heads/main/src/assets/images/ourTeam/tanisha.jpeg",
+          "image":
+              "https://raw.githubusercontent.com/Student-Recreation-Center-CSE-RKV/Abhiyanth-Client/refs/heads/main/src/assets/images/ourTeam/tanisha.jpeg",
           "socials": {
             "github": "https://github.com/thanishanitturu",
             "linkedin":
@@ -163,6 +170,27 @@ class AboutUsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        leadingWidth: 60,
+        backgroundColor: Colors.transparent,
+        title: const Text(
+          "Abhiyanth 2K25",
+          style: TextStyle(color: Colors.white, fontFamily: "Audiowide"),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, RoutesName.notification);
+            },
+            icon: Icon(
+              Icons.notifications,
+              color: Colors.white,
+            ),
+          ),
+        ],
+        centerTitle: true,
+        elevation: 0,
+      ),
       body: ListView(
         padding: EdgeInsets.all(10),
         children: devTeams.map((team) {
@@ -175,7 +203,8 @@ class AboutUsPage extends StatelessWidget {
                     style: TextStyle(
                         color: Colors.blueAccent,
                         fontSize: 20,
-                        fontWeight: FontWeight.bold)),
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Audiowide")),
               ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
